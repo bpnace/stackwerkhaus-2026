@@ -106,7 +106,7 @@ export function ProjectCard({ index, project }: ProjectCardProps) {
     >
       <div
         ref={previewRef}
-        className="pointer-events-none fixed left-0 top-0 z-40 hidden h-[300px] w-[300px] overflow-hidden rounded-[1.5rem] border border-white/12 bg-white shadow-[0_24px_80px_rgba(0,0,0,0.45)] md:block"
+        className="pointer-events-none fixed left-0 top-0 z-40 hidden invisible h-[300px] w-[300px] overflow-hidden rounded-[1.5rem] border border-white/12 bg-white opacity-0 shadow-[0_24px_80px_rgba(0,0,0,0.45)] md:block"
         aria-hidden="true"
       >
         <div className="flex h-full w-full items-end bg-linear-to-br from-white via-zinc-100 to-zinc-300 p-6">
