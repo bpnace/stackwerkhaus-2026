@@ -73,8 +73,14 @@ export function Hero() {
       }> = [];
 
       lines.forEach((line) => {
-        const lineMasks = gsap.utils.toArray<HTMLElement>(".hero-word-mask", line);
-        const lineTexts = gsap.utils.toArray<HTMLElement>(".hero-word-text", line);
+        const lineMasks = gsap.utils.toArray<HTMLElement>(
+          ".hero-word-mask",
+          line,
+        );
+        const lineTexts = gsap.utils.toArray<HTMLElement>(
+          ".hero-word-text",
+          line,
+        );
 
         lineMasks.forEach((mask, lineWordIndex) => {
           const text = lineTexts[lineWordIndex];
@@ -178,18 +184,30 @@ export function Hero() {
             ))}
           </div>
           <div className="hero-copy text-[11px] uppercase tracking-[0.38em] text-muted md:text-xs">
-            Für Webdesign · Für Entwicklung · Für Relaunch · Für SEO · Für Automatisierung
+            Für Webdesign · Für Entwicklung · Für Relaunch · Für AEO · Für
+            Automatisierung
           </div>
-          <div className="hero-copy grid gap-6 lg:grid-cols-[max-content_minmax(260px,360px)] lg:items-center lg:justify-between">
+          <div className="hero-copy grid gap-6 lg:grid-cols-[max-content_minmax(260px,360px)] lg:items-start lg:justify-between">
             <div className="min-w-[9ch]">
               <StaggeredCycle words={["Planen.", "Bauen.", "Liefern."]} />
             </div>
-            <div className="grid w-full max-w-[360px] grid-cols-1 gap-3 justify-center">
-              <Link href="/#kontakt" className="hero-action link-arrow px-6 py-4">
-                <LinkRippleText text="Jetzt Erstgespräch buchen" baseWeight={560} /> <span aria-hidden>✚</span>
+            <div className="grid w-full max-w-[360px] grid-cols-1 gap-3 justify-self-center">
+              <Link
+                href="/#kontakt"
+                className="hero-action link-arrow px-6 py-4"
+              >
+                <LinkRippleText
+                  text="Jetzt Erstgespräch buchen"
+                  baseWeight={560}
+                />{" "}
+                <span aria-hidden>✚</span>
               </Link>
-              <Link href="/#leistungen" className="hero-action link-arrow px-6 py-4 text-muted hover:text-foreground">
-                <LinkRippleText text="Leistungen" baseWeight={560} /> <span aria-hidden>✚</span>
+              <Link
+                href="/#leistungen"
+                className="hero-action link-arrow px-6 py-4 text-muted hover:text-foreground"
+              >
+                <LinkRippleText text="Leistungen" baseWeight={560} />{" "}
+                <span aria-hidden>✚</span>
               </Link>
             </div>
           </div>
