@@ -5,14 +5,22 @@ import { ensureGsap, gsap, shouldReduceMotion, useGSAP } from "@/lib/gsap";
 
 type StaggeredCycleProps = {
   words: string[];
+  size?: "xl" | "lg" | "md";
+  className?: string;
 };
 
-export function StaggeredCycle({ words }: StaggeredCycleProps) {
+export function StaggeredCycle({
+  words,
+  size = "xl",
+  className,
+}: StaggeredCycleProps) {
   const scope = useRef<HTMLDivElement | null>(null);
   const longestWord = words.reduce(
     (longest, word) => (word.length > longest.length ? word : longest),
     words[0] ?? "",
   );
+  const sizeClassName =
+    size === "lg" ? "display-lg" : size === "md" ? "display-md" : "display-xl";
 
   useGSAP(
     () => {
@@ -103,7 +111,9 @@ export function StaggeredCycle({ words }: StaggeredCycleProps) {
   return (
     <div
       ref={scope}
-      className="display-xl relative inline-block h-[1.18em] overflow-x-visible overflow-y-hidden px-[0.04em] md:h-[1.2em]"
+      className={`${sizeClassName} relative inline-block h-[1.18em] overflow-x-visible overflow-y-hidden px-[0.04em] md:h-[1.2em]${
+        className ? ` ${className}` : ""
+      }`}
     >
       <span
         className="pointer-events-none invisible block whitespace-nowrap"

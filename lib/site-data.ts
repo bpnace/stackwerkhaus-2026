@@ -112,55 +112,78 @@ export const testimonials = [
   },
 ] as const;
 
+export type PricingFeature = {
+  label: string;
+  enabled: boolean;
+};
+
+export type PricingTier = {
+  name: string;
+  price: string;
+  description: string;
+  timeline: string;
+  pages: string;
+  features: readonly PricingFeature[];
+  highlight?: boolean;
+};
+
 export const pricingTiers = [
   {
     name: "Starter",
     price: "899",
-    description: "Fokussierte Website für Einzelunternehmer und Dienstleister.",
+    description:
+      "Für Dienstleister, die schnell online gehen wollen, mit fokussiertem Einstieg und klarer technischer Basis.",
     timeline: "3 Wochen",
     pages: "5 Seiten",
     features: [
-      "Individuelles Design",
-      "Responsive Umsetzung",
-      "Technisches SEO-Grundsetup",
-      "DSGVO-Basis",
-      "Kontaktformular",
-      "Live-Schaltung & Übergabe",
+      { label: "5-seitige Next.js Website", enabled: true },
+      { label: "Responsive & mobiloptimiert", enabled: true },
+      { label: "DSGVO-konform inkl. Consent-Setup", enabled: true },
+      { label: "Ø 95+ Lighthouse Score", enabled: false },
+      { label: "Kontaktformular", enabled: false },
+      { label: "Deployment & Hosting-Setup", enabled: false },
+      { label: "SEO-Grundstruktur", enabled: false },
+      { label: "Saubere Launch-Begleitung", enabled: false },
     ],
   },
   {
     name: "Business",
     price: "1.499",
     description:
-      "Professionelle Website mit Content-Bereich für wachsende Unternehmen.",
+      "Alles aus Starter, plus CMS, Blog, SEO-Grundlagen und Analytics für Marken mit mehr Inhalt und mehr Bewegung.",
     timeline: "4 Wochen",
     pages: "bis 8 Seiten",
     highlight: true,
     features: [
-      "Alles aus Starter",
-      "Blog- oder Portfolio-Bereich",
-      "Erweiterte SEO-Struktur",
-      "Analytics-Setup",
-      "Consent-orientierte Umsetzung",
-      "Redaktionsfähige Inhalte",
+      { label: "Bis zu 8 Seiten", enabled: true },
+      { label: "CMS-Integration", enabled: true },
+      { label: "Blog & Artikel-Bereich", enabled: true },
+      { label: "SEO-Grundoptimierung", enabled: true },
+      { label: "Google Analytics Setup", enabled: true },
+      { label: "Erweiterte Animationen", enabled: false },
+      { label: "Newsletter-Anbindung", enabled: false },
+      { label: "Individuelle Funnel-Logik", enabled: false },
     ],
   },
   {
     name: "Premium",
     price: "2.499",
-    description: "Maßgeschneiderte Lösung mit Animationen und Integrationen.",
+    description:
+      "Maximale digitale Präsenz mit Custom Features, Integrationen und vollständigerem System für Wachstum und Launch.",
     timeline: "5–6 Wochen",
     pages: "10+ Seiten",
     features: [
-      "Alles aus Business",
-      "Custom GSAP Animationen",
-      "CRM- oder Buchungsintegration",
-      "Mehrsprachigkeit möglich",
-      "Performance-Ziel 90+",
-      "Launch-Support",
+      { label: "10+ Seiten inkl. Landingpages", enabled: true },
+      { label: "Custom-Funktionen & Integrationen", enabled: true },
+      { label: "Online-Buchungssystem", enabled: true },
+      { label: "Newsletter-Automation", enabled: true },
+      { label: "Performance-Optimierung", enabled: true },
+      { label: "Brand-System & Style Guide", enabled: true },
+      { label: "Launch-Support & QA", enabled: true },
+      { label: "Übergabe mit Ausbau-Perspektive", enabled: true },
     ],
   },
-] as const;
+] satisfies readonly PricingTier[];
 
 export const faqs = [
   {
