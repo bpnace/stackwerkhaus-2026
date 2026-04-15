@@ -61,12 +61,12 @@ export function Contact() {
 
   return (
     <section id="kontakt" className="section-space">
-      <div className="section-shell grid gap-12 lg:grid-cols-[1fr_1fr]">
+      <div className="section-shell grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:gap-20">
         <div>
           <SectionHeader label="Kontakt" marker="(SKWKHS® — 10)" />
           <div className="space-y-6">
             <h2 className="display-lg">Gib uns 30 Minuten, um dein Projekt zu verstehen.</h2>
-            <p className="max-w-2xl text-lg leading-8 text-muted">
+            <p className="max-w-4xl text-lg leading-8 text-muted">
               Im Erstgespräch klären wir Angebot, Zielgruppe und Projektumfang,
               damit eine saubere Entscheidung möglich wird – ohne künstlichen
               Sales-Druck.
@@ -83,33 +83,35 @@ export function Contact() {
           </div>
         </div>
 
-        <form onSubmit={onSubmit} className="space-y-5 border-t border-border pt-6">
-          <div>
-            <label htmlFor="name" className="eyebrow">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              required
-              className="mt-2 w-full rounded-none border-b border-border bg-transparent px-0 py-3 outline-none transition focus:border-foreground"
-              placeholder="Wie sollen wir dich ansprechen?"
-            />
+        <form onSubmit={onSubmit} className="border-t border-border pt-6">
+          <div className="grid gap-5 md:grid-cols-2">
+            <div>
+              <label htmlFor="name" className="eyebrow">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                required
+                className="mt-2 w-full rounded-none border-b border-border bg-transparent px-0 py-3 outline-none transition focus:border-foreground"
+                placeholder="Wie sollen wir dich ansprechen?"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="eyebrow">
+                E-Mail
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="mt-2 w-full rounded-none border-b border-border bg-transparent px-0 py-3 outline-none transition focus:border-foreground"
+                placeholder="name@unternehmen.de"
+              />
+            </div>
           </div>
-          <div>
-            <label htmlFor="email" className="eyebrow">
-              E-Mail
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className="mt-2 w-full rounded-none border-b border-border bg-transparent px-0 py-3 outline-none transition focus:border-foreground"
-              placeholder="name@unternehmen.de"
-            />
-          </div>
-          <div>
+          <div className="mt-6">
             <label htmlFor="project" className="eyebrow">
               Projekt
             </label>
@@ -117,26 +119,24 @@ export function Contact() {
               id="project"
               name="project"
               required
-              rows={6}
-              className="mt-2 w-full rounded-none border-b border-border bg-transparent px-0 py-3 outline-none transition focus:border-foreground"
+              rows={9}
+              className="mt-2 min-h-[18rem] w-full rounded-none border-b border-border bg-transparent px-0 py-3 outline-none transition focus:border-foreground"
               placeholder="Worum geht es, was soll die Website leisten, und was ist der aktuelle Stand?"
             />
           </div>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="link-arrow rounded-full border border-foreground px-6 py-4 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isSubmitting ? "Wird gesendet ..." : "Jetzt Erstgespräch anfragen"}{" "}
-            <span aria-hidden>↘</span>
-          </button>
-          {status.type !== "idle" ? (
-            <p
-              className={`text-sm ${status.type === "success" ? "text-foreground" : "text-red-300"}`}
+          <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="link-arrow w-fit border border-border px-6 py-4 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {status.message}
-            </p>
-          ) : null}
+              {isSubmitting ? "Wird gesendet ..." : "Jetzt Erstgespräch anfragen"}{" "}
+              <span aria-hidden>↘</span>
+            </button>
+            {status.type !== "idle" ? (
+              <p className="max-w-xl text-sm text-muted">{status.message}</p>
+            ) : null}
+          </div>
         </form>
       </div>
     </section>
