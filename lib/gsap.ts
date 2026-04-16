@@ -25,14 +25,15 @@ export function withMotionPreference(options: {
   reduce: () => void;
   motion: () => void;
 }) {
-  const mm = gsap.matchMedia();
-  mm.add("(prefers-reduced-motion: reduce)", () => {
+  if (shouldReduceMotion()) {
     options.reduce();
-  });
-  mm.add("(prefers-reduced-motion: no-preference)", () => {
+  } else {
     options.motion();
-  });
-  return () => mm.revert();
+  }
+
+  // useGSAP already owns the surrounding GSAP context lifecycle.
+  // Returning a noop avoids recursively reverting nested GSAP contexts.
+  return () => {};
 }
 
 export function refreshScrollTriggers() {
