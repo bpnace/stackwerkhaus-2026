@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
+import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 
 type ProjectPageProps = {
@@ -56,7 +57,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <article className="section-shell">
         <div className="mb-15">
           <Link href="/#projekte" className="link-arrow">
-            <b>Zurück zu den Projekten</b>
+            <LinkRippleText text="Zurück zu den Projekten" baseWeight={560} />
           </Link>
         </div>
 
@@ -110,7 +111,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         ) : null}
 
-        <div className="mt-14">
+        <div className="mt-14 pb-10">
           <CustomMDX source={project.content} />
         </div>
       </article>
