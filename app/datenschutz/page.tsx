@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LinkRippleText } from "@/components/ui/LinkRippleText";
 
 export const metadata: Metadata = {
   title: "Datenschutz",
