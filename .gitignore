@@ -34,7 +34,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (do not commit)
 .env*
 
 # vercel
@@ -45,5 +45,3 @@ yarn-error.log*
 next-env.d.ts
 
 .flaskenv*
-!.env.project
-!.env.vault
