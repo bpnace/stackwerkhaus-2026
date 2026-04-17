@@ -22,7 +22,8 @@ export default function ImpressumPage() {
           <div className="eyebrow">Rechtliches</div>
           <h1 className="display-md">Impressum</h1>
           <p className="text-muted">
-            Rechtliche Informationen und Kontaktdaten von Stackwerkhaus.
+            Rechtliche Informationen und Kontaktdaten von Codariq /
+            STACKWERKHAUS.
           </p>
         </div>
 

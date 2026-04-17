@@ -243,6 +243,19 @@ function ContactForm({ selectedPackage }: ContactFormProps) {
         >
           {isSubmitting ? (
             "Wird gesendet ..."
+          ) : status.type !== "idle" ? (
+            <>
+              <span className="text-center normal-case tracking-normal md:hidden">
+                {status.message}
+              </span>
+              <span className="hidden md:inline">
+                <LinkRippleText
+                  text="Jetzt Erstgespräch anfragen"
+                  baseWeight={900}
+                  activeWeight={900}
+                />
+              </span>
+            </>
           ) : (
             <LinkRippleText
               text="Jetzt Erstgespräch anfragen"
@@ -258,7 +271,9 @@ function ContactForm({ selectedPackage }: ContactFormProps) {
           </p>
         ) : null}
         {status.type !== "idle" ? (
-          <p className="max-w-xl text-sm text-muted">{status.message}</p>
+          <p className="hidden max-w-xl text-sm text-muted md:block">
+            {status.message}
+          </p>
         ) : null}
       </div>
     </form>

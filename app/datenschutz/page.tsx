@@ -24,7 +24,8 @@ export default function DatenschutzPage() {
           <p>
             Diese Datenschutzerklärung informiert über die Art, den Umfang und
             Zweck der Verarbeitung personenbezogener Daten auf dieser Website
-            sowie im Rahmen der Kontaktaufnahme und Terminbuchung.
+            sowie im Rahmen der Kontaktaufnahme über das Formular und per
+            E-Mail.
           </p>
 
           <div>
@@ -39,7 +40,9 @@ export default function DatenschutzPage() {
             <p className="mt-2">
               Arthur Marshall
               <br />
-              STACKWERKHAUS
+              Codariq
+              <br />
+              (STACKWERKHAUS ist Teil von Codariq)
               <br />
               Sigmaringer Str. 27
               <br />
@@ -54,6 +57,14 @@ export default function DatenschutzPage() {
                 className="hover-weight-link hover:text-foreground"
               >
                 <LinkRippleText text="info@stackwerkhaus.de" />
+              </a>
+              <br />
+              <strong className="text-foreground">Telefon:</strong>{" "}
+              <a
+                href="tel:017631378294"
+                className="hover-weight-link hover:text-foreground"
+              >
+                <LinkRippleText text="0176 31378294" />
               </a>
             </p>
             <p className="mt-2">
@@ -91,9 +102,11 @@ export default function DatenschutzPage() {
               3. Kontaktaufnahme
             </h2>
             <p className="mt-3">
-              Wenn du uns per E-Mail oder Telefon kontaktierst, verarbeiten wir
-              die von dir mitgeteilten Daten (z. B. Name, E-Mail-Adresse,
-              Telefonnummer und Nachricht), um deine Anfrage zu beantworten.
+              Wenn du uns per E-Mail, Telefon oder über das Kontaktformular
+              kontaktierst, verarbeiten wir die von dir mitgeteilten Daten,
+              insbesondere Name, E-Mail-Adresse, Nachricht, freiwillige
+              Zusatzangaben sowie den Zeitpunkt deiner Anfrage, um dein Anliegen
+              zu bearbeiten und zu beantworten.
             </p>
             <p className="mt-2">
               <strong className="text-foreground">Rechtsgrundlage:</strong> Art.
@@ -111,7 +124,37 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="text-lg font-semibold uppercase tracking-[0.18em] text-foreground">
-              4. Cookies und Einwilligungsmanagement (CCM19)
+              4. Technische Verarbeitung des Kontaktformulars
+            </h2>
+            <p className="mt-3">
+              Anfragen aus dem Kontaktformular werden serverseitig an eine von
+              uns betriebene Automatisierungsinstanz auf
+              <strong className="text-foreground"> automation.codariq.de </strong>
+              weitergeleitet, um die Anfrage technisch zu prüfen,
+              Spam-Eingaben zu filtern und intern strukturiert zu verarbeiten.
+              Dabei können zusätzlich technische Metadaten wie Seiten-URL,
+              Seitentitel, Referrer, Browserkennung, Sprache und Zeitzone
+              verarbeitet werden, soweit diese vom Formular bzw. Browser
+              übermittelt werden.
+            </p>
+            <p className="mt-2">
+              <strong className="text-foreground">Rechtsgrundlage:</strong> Art.
+              6 Abs. 1 lit. b DSGVO (Bearbeitung deiner Anfrage) sowie Art. 6
+              Abs. 1 lit. f DSGVO (Missbrauchs- und Spam-Abwehr)
+              <br />
+              <strong className="text-foreground">Zweck:</strong> Sichere
+              Übermittlung, Spam-Prüfung und strukturierte Bearbeitung von
+              Kontaktanfragen
+              <br />
+              <strong className="text-foreground">Empfänger:</strong> Interne,
+              von uns betriebene Systeme und Personen, die mit der Bearbeitung
+              der Anfrage betraut sind
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-semibold uppercase tracking-[0.18em] text-foreground">
+              5. Cookies und Einwilligungsmanagement (CCM19)
             </h2>
             <p className="mt-3">
               Wir verwenden CCM19, um deine Einwilligungen in das Setzen von
@@ -139,36 +182,41 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="text-lg font-semibold uppercase tracking-[0.18em] text-foreground">
-              5. Terminbuchung über Calendly
+              6. Google Analytics
             </h2>
             <p className="mt-3">
-              Für die Terminbuchung verwenden wir den Dienst Calendly. Bei der
-              Nutzung werden die von dir eingegebenen Daten (z. B. Name,
-              E-Mail-Adresse, gewünschter Termin und optionale Hinweise)
-              verarbeitet, um den Termin zu organisieren.
+              Wir verwenden Google Analytics 4 zur statistischen Auswertung der
+              Nutzung dieser Website. Dabei können insbesondere Seitenaufrufe,
+              Interaktionen, technische Informationen zu Browser und Gerät,
+              Referrer-Daten sowie ungefähre Standortinformationen verarbeitet
+              werden. Nach Angaben von Google speichert Google Analytics 4 keine
+              vollständigen IP-Adressen; IP-Daten von Nutzern aus der EU werden
+              vor einer Protokollierung nur zur Geo-Ableitung verwendet und
+              anschließend verworfen.
             </p>
             <p className="mt-2">
-              <strong className="text-foreground">Anbieter:</strong> Calendly
-              LLC, 115 E Main St, Ste A1B, Buford, GA 30518, USA.
+              <strong className="text-foreground">Anbieter:</strong> Google
+              Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
             </p>
             <p className="mt-2">
               <strong className="text-foreground">Rechtsgrundlage:</strong> Art.
-              6 Abs. 1 lit. b DSGVO (Terminvereinbarung); Cookies bzw.
-              vergleichbare Technologien nur nach Einwilligung gemäß § 25 Abs. 1
-              TDDDG
+              6 Abs. 1 lit. a DSGVO sowie § 25 Abs. 1 TDDDG, soweit du über das
+              Consent-Management in die Analyse eingewilligt hast
               <br />
               <strong className="text-foreground">
                 Datenübermittlung:
               </strong>{" "}
-              Bei Calendly kann eine Verarbeitung in Drittländern (z. B. USA)
-              stattfinden. Es gelten die von Calendly bereitgestellten
-              geeigneten Garantien (z. B. SCCs).
+              Eine Verarbeitung durch Google kann auch durch Google LLC in den
+              USA erfolgen. Dabei kann ein Drittlandtransfer nicht
+              ausgeschlossen werden. Maßgeblich sind die von Google
+              bereitgestellten Datenschutzinformationen und ggf. zusätzliche
+              vertragliche Garantien.
             </p>
           </div>
 
           <div>
             <h2 className="text-lg font-semibold uppercase tracking-[0.18em] text-foreground">
-              6. Social-Media-Links
+              7. Social-Media-Links
             </h2>
             <p className="mt-3">
               Auf der Website sind nur Links zu Instagram und LinkedIn
@@ -179,7 +227,7 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="text-lg font-semibold uppercase tracking-[0.18em] text-foreground">
-              7. Deine Rechte
+              8. Deine Rechte
             </h2>
             <p className="mt-3">
               Du hast das Recht auf Auskunft, Berichtigung, Löschung,
@@ -190,7 +238,7 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="text-lg font-semibold uppercase tracking-[0.18em] text-foreground">
-              8. Beschwerderecht
+              9. Beschwerderecht
             </h2>
             <p className="mt-3">
               <strong className="text-foreground">
@@ -212,7 +260,7 @@ export default function DatenschutzPage() {
           </div>
 
           <p>
-            <strong className="text-foreground">Stand:</strong> Januar 2026
+            <strong className="text-foreground">Stand:</strong> April 2026
           </p>
         </section>
       </div>
