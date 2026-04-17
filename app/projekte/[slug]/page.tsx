@@ -1,9 +1,9 @@
 import { ViewTransition } from "react";
 import Image from "next/image";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
+import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 import { getProjectMedia } from "@/lib/project-media";
@@ -74,13 +74,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       >
         <article className="section-shell">
           <div className="mb-15">
-            <Link
+            <HashLink
               href="/#projekte"
               transitionTypes={["nav-back"]}
               className="link-arrow"
             >
               <LinkRippleText text="Zurück zu den Projekten" baseWeight={560} />
-            </Link>
+            </HashLink>
           </div>
 
           <ViewTransition
@@ -168,13 +168,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
 
           <div className="mt-16 border-t border-border pt-8 pb-8">
-            <Link
+            <HashLink
               href="/#projekte"
               transitionTypes={["nav-back"]}
               className="link-arrow"
             >
               <LinkRippleText text="Zurück zu den Projekten" baseWeight={560} />
-            </Link>
+            </HashLink>
           </div>
         </article>
       </ViewTransition>

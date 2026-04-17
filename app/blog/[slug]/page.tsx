@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { ViewTransition } from "react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { renderDrupalRichText } from "@/components/DrupalRichText";
 import { CustomMDX } from "@/components/mdx";
+import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { getDrupalPlainTextParagraphs } from "@/lib/drupal-rich-text.mjs";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
@@ -90,13 +90,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       >
         <article className="section-shell">
           <div className="mb-15">
-            <Link
+            <HashLink
               href="/#blog"
               className="link-arrow"
               transitionTypes={["nav-back"]}
             >
               <LinkRippleText text="Zurück zu den Artikeln" baseWeight={560} />
-            </Link>
+            </HashLink>
           </div>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">
             <div className="min-w-0 space-y-6 lg:pr-4">

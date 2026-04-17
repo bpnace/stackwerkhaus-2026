@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
+import { HashLink } from "@/components/ui/HashLink";
 
 const legalLinks = [
   { label: "Impressum", href: "/impressum" },
@@ -44,7 +44,7 @@ export function Footer() {
                 </div>
                 <div className="space-y-3 text-sm uppercase tracking-[0.22em] text-black/68">
                   {siteConfig.navigation.map((item) => (
-                    <Link
+                    <HashLink
                       key={item.href}
                       href={item.href}
                       className="hover-weight-link block w-fit hover:text-black"
@@ -54,7 +54,7 @@ export function Footer() {
                         baseWeight={500}
                         activeWeight={820}
                       />
-                    </Link>
+                    </HashLink>
                   ))}
                 </div>
 
@@ -64,7 +64,7 @@ export function Footer() {
                   </div>
                   <div className="space-y-3 text-sm uppercase tracking-[0.22em] text-black/68">
                     {legalLinks.map((item) => (
-                      <Link
+                      <HashLink
                         key={item.href}
                         href={item.href}
                         className="hover-weight-link block w-fit hover:text-black"
@@ -74,7 +74,7 @@ export function Footer() {
                           baseWeight={500}
                           activeWeight={820}
                         />
-                      </Link>
+                      </HashLink>
                     ))}
                   </div>
                 </div>

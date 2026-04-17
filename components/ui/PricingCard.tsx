@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import type { PricingTier } from "@/lib/site-data";
 
@@ -39,14 +39,14 @@ export function PricingCard({
         <div>{timeline}</div>
       </div>
 
-      <Link
+      <HashLink
         href={`/?paket=${encodeURIComponent(name)}#kontakt`}
         className={`link-arrow mt-6 w-full justify-between bg-foreground px-4 py-3 text-background transition-opacity hover:opacity-80 ${
           highlight ? "opacity-100" : "opacity-92"
         }`}
       >
         <LinkRippleText text="Jetzt Anfragen" baseWeight={560} />
-      </Link>
+      </HashLink>
 
       <ul className="mt-6 space-y-2.5 text-sm">
         {features.map((feature) => (

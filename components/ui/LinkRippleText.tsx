@@ -54,6 +54,10 @@ export function LinkRippleText({
         return;
       }
 
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        return;
+      }
+
       const chars = Array.from(
         node.querySelectorAll<HTMLElement>("[data-ripple-char='true']"),
       );
@@ -176,6 +180,9 @@ export function LinkRippleText({
       }
     >
       <span className="sr-only">{text}</span>
+      <span className="link-ripple-static" aria-hidden="true">
+        {text}
+      </span>
       <span className="link-ripple-visual" aria-hidden="true">
         {glyphs.map((glyph, index) =>
           glyph.type === "space" ? (

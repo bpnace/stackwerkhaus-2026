@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { siteConfig } from "@/lib/site-config";
@@ -12,6 +11,7 @@ import {
   useNavScrolled,
 } from "@/components/layout/nav-hooks";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
+import { HashLink } from "@/components/ui/HashLink";
 
 function renderAnimatedNavLabel(text: string) {
   return (
@@ -196,16 +196,16 @@ export function Nav() {
       }`}
     >
       <div className="section-shell flex h-20 items-center justify-between">
-        <Link
+        <HashLink
           href="/"
           className="text-[11px] font-black uppercase text-foreground md:text-[13px]"
         >
           {renderAnimatedNavLabel(siteConfig.name)}
-        </Link>
+        </HashLink>
 
         <nav className="hidden items-center gap-7 text-[length:var(--label)] uppercase tracking-[0.34em] text-muted md:flex">
           {siteConfig.navigation.map((item) => (
-            <Link
+            <HashLink
               key={item.href}
               href={item.href}
               className={`hover-weight-link hover:text-foreground ${
@@ -223,7 +223,7 @@ export function Nav() {
                     }
                   : undefined,
               )}
-            </Link>
+            </HashLink>
           ))}
         </nav>
 
@@ -245,14 +245,14 @@ export function Nav() {
       >
         <nav className="flex flex-col gap-5 text-xl font-bold tracking-[-0.04em] text-foreground">
           {siteConfig.navigation.map((item) => (
-            <Link
+            <HashLink
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
               className="hover-weight-link border-b border-border pb-4"
             >
               <LinkRippleText text={item.label} baseWeight={700} />
-            </Link>
+            </HashLink>
           ))}
         </nav>
       </div>

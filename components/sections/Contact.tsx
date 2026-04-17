@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { pricingTiers } from "@/lib/site-data";
@@ -136,7 +137,7 @@ function ContactForm({ selectedPackage }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="pt-26">
+    <form onSubmit={onSubmit} className="pt-12 md:pt-26">
       <div className="grid gap-5 md:grid-cols-2">
         <div>
           <label htmlFor="name" className="eyebrow text-white">
@@ -205,7 +206,7 @@ function ContactForm({ selectedPackage }: ContactFormProps) {
               setShowValidationHint(false);
             }
           }}
-          className="mt-2 min-h-[18rem] w-full bg-transparent px-0 py-3 outline-none transition focus:border-foreground placeholder:text-white/35 placeholder:italic"
+          className="mt-2 min-h-[12rem] w-full bg-transparent px-0 py-3 outline-none transition focus:border-foreground placeholder:text-white/35 placeholder:italic md:min-h-[18rem]"
           placeholder="Worum geht es, was soll die Website leisten, und was ist der aktuelle Stand?"
         />
       </div>
@@ -225,18 +226,30 @@ function ContactForm({ selectedPackage }: ContactFormProps) {
             required
           />
           <span>
-            Ich stimme der Verarbeitung meiner Angaben zur Bearbeitung meiner
-            Anfrage zu.
+            Ich akzeptiere die{" "}
+            <Link href="/datenschutz" className="font-semibold text-foreground">
+              Datenschutzerklärung
+            </Link>{" "}
+            und stimme der Verarbeitung meiner Angaben gemäß Art. 6 Abs. 1 lit.
+            a DSGVO zur Bearbeitung meiner Anfrage zu.
           </span>
         </label>
       </div>
-      <div className="mt-6 flex flex-col items-center gap-4 border-t border-border pt-6">
+      <div className="mt-6 flex flex-col items-center gap-4 pt-6">
         <button
           type="submit"
           disabled={isSubmitting || !isFormValid}
           className="link-arrow mx-auto w-fit border border-border px-6 py-4 font-bold disabled:cursor-not-allowed disabled:opacity-30"
         >
-          {isSubmitting ? "Wird gesendet ..." : "Jetzt Erstgespräch anfragen"}{" "}
+          {isSubmitting ? (
+            "Wird gesendet ..."
+          ) : (
+            <LinkRippleText
+              text="Jetzt Erstgespräch anfragen"
+              baseWeight={900}
+              activeWeight={900}
+            />
+          )}{" "}
         </button>
         {showValidationHint ? (
           <p className="max-w-xl text-center text-xs text-muted">

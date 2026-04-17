@@ -559,6 +559,11 @@
     align-items: baseline;
   }
 
+  .link-ripple-static {
+    display: none;
+    font-variation-settings: "opsz" 32, "wght" var(--link-ripple-active-wght, 900);
+  }
+
   .link-ripple-visual {
     white-space: pre;
   }
@@ -594,6 +599,16 @@
 
   .link-ripple-space {
     white-space: pre;
+  }
+
+  @media (max-width: 767px) {
+    .link-ripple-static {
+      display: inline;
+    }
+
+    .link-ripple-visual {
+      display: none;
+    }
   }
 
   .profile-name {
