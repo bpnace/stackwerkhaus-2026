@@ -94,7 +94,7 @@ export const testimonials = [
     quote:
       "Den gesamten Relaunch hat Arthur eigenständig durchgezogen – von Konzept bis Go-Live. Das Ergebnis ist deutlich ästhetischer, komplett responsive und klarer im Angebot.",
     name: "Leonie",
-    company: "Geschäftsführerin bei ginione",
+    company: "Geschäftsführerin bei ginione (Ehemals bloom)",
   },
   {
     highlight: "Kreativ mit Business Know-How",
