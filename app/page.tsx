@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import { BlogSection } from "@/components/sections/Blog";
 import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
@@ -21,18 +22,32 @@ export default async function Home() {
 
   return (
     <main>
-      <PinnedIntroShell hero={<Hero />}>
-        <Ticker />
-        <Projects projects={projects} />
-        <Services />
-        <Profile />
-        <Experience />
-        <Testimonials />
-        <Contact />
-        <Pricing />
-        <BlogSection posts={posts} />
-        <FAQ />
-      </PinnedIntroShell>
+      <ViewTransition
+        enter={{
+          "nav-forward": "nav-forward",
+          "nav-back": "nav-back",
+          default: "none",
+        }}
+        exit={{
+          "nav-forward": "nav-forward",
+          "nav-back": "nav-back",
+          default: "none",
+        }}
+        default="none"
+      >
+        <PinnedIntroShell hero={<Hero />}>
+          <Ticker />
+          <Projects projects={projects} />
+          <Services />
+          <Profile />
+          <Experience />
+          <Testimonials />
+          <Contact />
+          <Pricing />
+          <BlogSection posts={posts} />
+          <FAQ />
+        </PinnedIntroShell>
+      </ViewTransition>
     </main>
   );
 }

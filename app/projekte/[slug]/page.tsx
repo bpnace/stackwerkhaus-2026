@@ -166,6 +166,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="mt-14 pb-10">
             <CustomMDX source={project.content} />
           </div>
+
+          <div className="mt-16 border-t border-border pt-8 pb-8">
+            <Link
+              href="/#projekte"
+              transitionTypes={["nav-back"]}
+              className="link-arrow"
+            >
+              <LinkRippleText text="Zurück zu den Projekten" baseWeight={560} />
+            </Link>
+          </div>
         </article>
       </ViewTransition>
     </main>
