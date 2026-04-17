@@ -90,3 +90,22 @@ test("Drupal text derivation stays plain text for metadata", () => {
   assert.equal(getExcerptFromText(summaryText, bodyText), "Short summary.");
   assert.equal(getReadingTimeFromText(bodyText), "1 min");
 });
+
+test("Drupal sanitizer decodes escaped CMS markup into rich content", () => {
+  const html = [
+    "<p>&lt;p&gt;<br>&nbsp;Ich nutze &lt;strong&gt;Micrography&lt;/strong&gt; nicht dekorativ.<br>&lt;/p&gt;</p>",
+    "<p>&lt;h2&gt;Design als Positionierung&lt;/h2&gt;</p>",
+  ].join("");
+  const rendered = renderDrupalHtml(html);
+
+  assert.match(
+    rendered,
+    /<p>\s*Ich nutze <strong>Micrography<\/strong> nicht dekorativ\.\s*<\/p>/,
+  );
+  assert.match(rendered, /<h2>Design als Positionierung<\/h2>/);
+  assert.doesNotMatch(rendered, /&lt;(?:p|h2|strong)&gt;/);
+  assert.equal(
+    normalizeDrupalHtmlToText(html),
+    "Ich nutze Micrography nicht dekorativ.\n\nDesign als Positionierung",
+  );
+});

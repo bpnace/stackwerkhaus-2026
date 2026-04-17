@@ -111,12 +111,12 @@ export function Testimonials() {
 
         <div className="mb-10 max-w-4xl space-y-4 md:mb-16">
           <h2 className="display-lg">
-            Ist Ganz gut geworden, wäre untertrieben.
+            Ist ganz gut geworden, wäre untertrieben.
           </h2>
           <p className="text-lg leading-8 text-muted">
-            Die Rückmeldungen aus Projekten zeigen ziemlich klar, worauf es am Ende ankommt:
-            Erkentnis, Perfomance, Vertrauen und dieses Gefühl, dass endlich alles an seinem
-            Platz ist.
+            Die Rückmeldungen aus Projekten zeigen ziemlich klar, worauf es am
+            Ende ankommt: Erkenntnis, Performance, Vertrauen und dieses Gefühl,
+            dass endlich alles an seinem Platz ist.
           </p>
         </div>
         <div className="relative overflow-hidden">
@@ -130,7 +130,7 @@ export function Testimonials() {
                 data-testimonial-row="true"
                 className="grid gap-8 border-b border-white/10 px-6 py-8 md:px-10 md:py-10 lg:grid-cols-[96px_minmax(220px,0.34fr)_minmax(0,1fr)] lg:gap-10"
               >
-                <div className="flex items-start justify-between gap-4 text-[11px] uppercase tracking-[0.34em] text-white/34">
+                <div className="flex items-start justify-between gap-4 text-[11px] uppercase tracking-[0.34em] text-white/55">
                   <span>{getLedgerId(index)}</span>
                   <span className="lg:hidden">Voice</span>
                 </div>
@@ -142,7 +142,7 @@ export function Testimonials() {
                     </h3>
                   </div>
 
-                  <div className="grid gap-3 border-t border-white/10 pt-4 text-[11px] uppercase tracking-[0.3em] text-white/46">
+                  <div className="grid gap-3 border-t border-white/10 pt-4 text-[11px] uppercase tracking-[0.3em] text-white/60">
                     <div>{testimonial.company}</div>
                     <div>{`Log ${index + 1} / verified project note`}</div>
                   </div>
@@ -150,7 +150,7 @@ export function Testimonials() {
 
                 <div className="space-y-6 lg:space-y-8">
                   <div className="grid gap-4 border-b border-white/10 pb-5 md:grid-cols-[minmax(120px,0.18fr)_minmax(0,1fr)] md:items-start">
-                    <div className="text-[11px] uppercase tracking-[0.34em] text-white/34">
+                    <div className="text-[11px] uppercase tracking-[0.34em] text-white/55">
                       Statement*
                     </div>
                     <div
@@ -162,11 +162,11 @@ export function Testimonials() {
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(180px,0.42fr)] lg:items-end">
-                    <p className="max-w-3xl text-base leading-8 text-foreground/84 md:text-lg">
+                    <p className="max-w-3xl text-base leading-8 text-foreground/90 md:text-lg">
                       “{testimonial.quote}”
                     </p>
 
-                    <div className="space-y-2 text-[11px] uppercase tracking-[0.3em] text-white/38">
+                    <div className="space-y-2 text-[11px] uppercase tracking-[0.3em] text-white/60">
                       <div>Status / <b>Delivered</b></div>
                     </div>
                   </div>
@@ -175,7 +175,7 @@ export function Testimonials() {
             ))}
           </div>
 
-          <div className="grid gap-4 px-6 py-5 text-[11px] uppercase tracking-[0.32em] text-white/34 md:px-10 lg:grid-cols-[1fr_auto_auto] lg:items-center">
+          <div className="grid gap-4 px-6 py-5 text-[11px] uppercase tracking-[0.32em] text-white/55 md:px-10 lg:grid-cols-[1fr_auto_auto] lg:items-center">
             <span>(SKWKHS®)</span>
             <span>[Website, Frontend, Relaunch]</span>
           </div>

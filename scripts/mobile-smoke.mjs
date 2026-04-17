@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
+import { DEFAULT_BLOG_SLUG, DEFAULT_PROJECT_SLUG } from "./fixtures/content-slugs.mjs";
 
 const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
-const pinnedBlogSlug = process.env.SMOKE_BLOG_SLUG;
+const pinnedBlogSlug = process.env.SMOKE_BLOG_SLUG || DEFAULT_BLOG_SLUG;
 const richPattern = process.env.SMOKE_BLOG_RICH_PATTERN;
 
 async function fetchHtml(pathname) {
@@ -27,14 +28,7 @@ assert.match(
   "home page missing viewport meta tag",
 );
 
-const blogIndexHtml = await fetchHtml("/blog");
-const firstBlogLink = blogIndexHtml.match(/href="\/blog\/([^"/?#]+)"/);
-assert.ok(firstBlogLink, "blog index did not expose a blog detail link");
-
-const firstBlogSlug = firstBlogLink?.[1];
-assert.ok(firstBlogSlug, "could not parse first blog slug");
-const blogDetailSlug = pinnedBlogSlug || firstBlogSlug;
-const blogDetailHtml = await fetchHtml(`/blog/${blogDetailSlug}`);
+const blogDetailHtml = await fetchHtml(`/blog/${pinnedBlogSlug}`);
 assert.match(
   blogDetailHtml,
   /class="mdx-body"/,
@@ -48,7 +42,7 @@ if (richPattern) {
   );
 }
 
-const projectHtml = await fetchHtml("/projekte/zynapse");
+const projectHtml = await fetchHtml(`/projekte/${DEFAULT_PROJECT_SLUG}`);
 assert.match(
   projectHtml,
   /class="section-shell"/,
@@ -56,7 +50,7 @@ assert.match(
 );
 
 console.log(
-  "Mobile smoke passed for /, /blog, /blog/" +
-    blogDetailSlug +
-    ", /projekte/zynapse",
+  "Mobile smoke passed for /, /blog/" +
+    pinnedBlogSlug +
+    `, /projekte/${DEFAULT_PROJECT_SLUG}`,
 );

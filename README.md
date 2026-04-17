@@ -46,7 +46,7 @@ tests/          Additional verification assets
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js 22.19+
 - `pnpm`
 
 ### Install
@@ -75,6 +75,8 @@ pnpm test:content         # content-level checks
 pnpm test:drupal-richtext # Drupal rich text parser tests
 pnpm test:mobile          # rich text tests + mobile smoke pass
 pnpm test:smoke           # rich text tests + general smoke pass
+pnpm start:local-prod     # start local production server on 127.0.0.1:3000
+pnpm lighthouse           # run local Lighthouse budgets for home, blog, and project detail
 ```
 
 ## Environment Variables
@@ -87,11 +89,41 @@ Copy `.env.example` to `.env.local` and provide only what you need for the curre
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Enables analytics integration when set |
 | `RESEND_API_KEY` | Enables live contact email delivery |
 | `CONTACT_TO_EMAIL` | Override recipient for inbound contact submissions |
+| `STACKWERKHAUS_BLOG_SOURCE` | `auto` by default, `local` for hermetic local verification |
+| `SMOKE_BASE_URL` | Base URL for local smoke and Lighthouse validation |
+| `SMOKE_BLOG_SLUG` | Deterministic local blog detail slug for verification |
 
 ### Runtime Behavior
 
 - If `RESEND_API_KEY` is missing, the contact API stays in validation-only preview mode and returns a successful non-sending response.
 - If `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` is missing, analytics remains disabled in local and preview environments.
+- If `STACKWERKHAUS_BLOG_SOURCE=local`, blog loaders skip Drupal and read only local MDX content.
+
+## Hermetic Local Verification
+
+Use `.env.local.test` for all local signoff work. It pins canonicals to `http://127.0.0.1:3000`, forces blog content to local MDX, and gives the smoke/Lighthouse scripts deterministic route inputs.
+
+```bash
+set -a
+source .env.local.test
+pnpm build
+pnpm start:local-prod
+```
+
+Run verification in a second shell with the same env loaded:
+
+```bash
+set -a
+source .env.local.test
+pnpm lint
+pnpm typecheck
+pnpm test:content
+pnpm test:smoke
+pnpm test:mobile
+pnpm lighthouse
+```
+
+The Lighthouse runner enforces full budgets for the blog and project detail routes. The homepage still audits accessibility, best practices, and SEO, but it treats a `performance: null` result as a warning because the hero shell intentionally stays hidden until the intro animation is ready.
 
 ## Content Workflow
 

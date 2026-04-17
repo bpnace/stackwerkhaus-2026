@@ -20,6 +20,9 @@ const cmsHostnames = Array.from(
 );
 
 const nextConfig: NextConfig = {
+  experimental: {
+    viewTransition: true,
+  },
   transpilePackages: ["next-mdx-remote"],
   images: {
     remotePatterns: cmsHostnames.map((hostname) => ({

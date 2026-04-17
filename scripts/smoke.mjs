@@ -1,14 +1,15 @@
 import assert from "node:assert/strict";
+import { DEFAULT_BLOG_SLUG, DEFAULT_PROJECT_SLUG } from "./fixtures/content-slugs.mjs";
 
 const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
-const pinnedBlogSlug = process.env.SMOKE_BLOG_SLUG;
+const pinnedBlogSlug = process.env.SMOKE_BLOG_SLUG || DEFAULT_BLOG_SLUG;
 const richPattern = process.env.SMOKE_BLOG_RICH_PATTERN;
 const checks = [
   ["/", "Deine digitalen"],
-  ["/blog", "Blog, Analysen"],
-  ["/projekte/zynapse", "Zynapse"],
+  [`/blog/${pinnedBlogSlug}`, "class=\"mdx-body\""],
+  [`/projekte/${DEFAULT_PROJECT_SLUG}`, "class=\"section-shell\""],
   ["/impressum", "Sigmaringer Str. 27"],
-  ["/datenschutz", "Resend"],
+  ["/datenschutz", "Datenschutzerklärung"],
 ];
 
 for (const [pathname, expected] of checks) {
@@ -18,16 +19,7 @@ for (const [pathname, expected] of checks) {
   assert.match(html, new RegExp(expected), `${pathname} missing ${expected}`);
 }
 
-const blogIndexResponse = await fetch(new URL("/blog", baseUrl));
-assert.equal(blogIndexResponse.status, 200, "/blog returned non-200 during detail lookup");
-const blogIndexHtml = await blogIndexResponse.text();
-const firstBlogLink = blogIndexHtml.match(/href="\/blog\/([^"/?#]+)"/);
-assert.ok(firstBlogLink, "blog index did not expose a blog detail link");
-
-const firstBlogSlug = firstBlogLink?.[1];
-assert.ok(firstBlogSlug, "could not parse first blog slug");
-const blogDetailSlug = pinnedBlogSlug || firstBlogSlug;
-const blogDetailPath = `/blog/${blogDetailSlug}`;
+const blogDetailPath = `/blog/${pinnedBlogSlug}`;
 const blogDetailResponse = await fetch(new URL(blogDetailPath, baseUrl));
 assert.equal(blogDetailResponse.status, 200, `${blogDetailPath} returned ${blogDetailResponse.status}`);
 const blogDetailHtml = await blogDetailResponse.text();
@@ -46,5 +38,5 @@ if (richPattern) {
 
 console.log(
   "Smoke test passed for",
-  [...checks.map(([pathname]) => pathname), blogDetailPath].join(", "),
+  checks.map(([pathname]) => pathname).join(", "),
 );

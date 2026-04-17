@@ -27,6 +27,7 @@ build_instructions.md
 # misc
 .DS_Store
 *.pem
+scripts
 
 # debug
 npm-debug.log*

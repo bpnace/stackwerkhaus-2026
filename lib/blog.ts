@@ -43,6 +43,7 @@ const DRUPAL_CMS_URL =
   process.env.STACKWERKHAUS_CMS_URL ?? "https://cms.stackwerkhaus.de";
 const DRUPAL_ARTICLE_ENDPOINT =
   `${DRUPAL_CMS_URL}/jsonapi/node/article?include=field_image,field_tags`;
+const BLOG_SOURCE = process.env.STACKWERKHAUS_BLOG_SOURCE?.trim().toLowerCase() ?? "auto";
 
 type DrupalArticleResponse = {
   data?: DrupalArticleResource[];
@@ -237,12 +238,20 @@ async function getDrupalPosts(): Promise<DrupalBlogPost[]> {
 }
 
 export const getAllPosts = cache(async () => {
+  if (BLOG_SOURCE === "local") {
+    return getLocalPosts();
+  }
+
   try {
     const drupalPosts = await getDrupalPosts();
     if (drupalPosts.length > 0) {
       return drupalPosts;
     }
   } catch (error) {
+    if (BLOG_SOURCE === "drupal") {
+      throw error;
+    }
+
     console.error("Failed to fetch Drupal posts", error);
   }
 

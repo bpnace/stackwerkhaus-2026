@@ -2,6 +2,9 @@
   "name": "stackwerkhaus-bootstrap",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.19.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +14,12 @@
     "test:content": "node --test scripts/content.test.mjs",
     "test:drupal-richtext": "node --test scripts/drupal-rich-text.test.mjs",
     "test:mobile": "pnpm test:drupal-richtext && node scripts/mobile-smoke.mjs",
-    "test:smoke": "pnpm test:drupal-richtext && node scripts/smoke.mjs"
+    "test:smoke": "pnpm test:drupal-richtext && node scripts/smoke.mjs",
+    "start:local-prod": "next start --hostname 127.0.0.1 --port 3000",
+    "lighthouse": "node scripts/lighthouse.mjs all",
+    "lighthouse:home": "node scripts/lighthouse.mjs home",
+    "lighthouse:blog": "node scripts/lighthouse.mjs blog",
+    "lighthouse:project": "node scripts/lighthouse.mjs project"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -24,8 +32,7 @@
     "react-dom": "19.2.4",
     "rehype-parse": "^9.0.1",
     "rehype-sanitize": "^6.0.0",
-    "resend": "^6.11.0"
-    ,
+    "resend": "^6.11.0",
     "unified": "^11.0.5"
   },
   "devDependencies": {
@@ -35,6 +42,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
+    "lighthouse": "13.1.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

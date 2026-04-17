@@ -92,16 +92,17 @@ export const testimonials = [
   {
     highlight: "Klarer im Angebot",
     quote:
-      "Den gesamten Relaunch hat Arthur eigenständig durchgezogen – von Konzept bis Launch. Das Ergebnis ist deutlich ästhetischer, komplett responsive und klarer im Angebot.",
+      "Den gesamten Relaunch hat Arthur eigenständig durchgezogen – von Konzept bis Go-Live. Das Ergebnis ist deutlich ästhetischer, komplett responsive und klarer im Angebot.",
     name: "Leonie",
-    company: "Geschäftsführerin bei ginione",
+    company: "Geschäftsführerin bei ginione (Ehemals bloom)",
   },
   {
-    highlight: "Technik mit Business-Verständnis",
+    highlight: "Kreativ mit Business Know-How",
     quote:
       "Arthur verbindet technische Exzellenz mit einem sehr guten Verständnis für Business-Anforderungen. Genau diese Mischung hat unser Projekt deutlich beschleunigt.",
     name: "Denis",
     company: "Partner bei Immo-Pal",
+    projectHref: "/projekte/immo-pal",
   },
   {
     highlight: "Endlich passend zum Angebot",
@@ -109,6 +110,7 @@ export const testimonials = [
       "Die Zusammenarbeit war unkompliziert und das Ergebnis hat unsere Erwartungen übertroffen. Endlich eine Website, die zu unserem Angebot passt.",
     name: "Sarah",
     company: "Inhaberin, Atelier Heimat",
+    projectHref: "/projekte/bloom",
   },
 ] as const;
 

@@ -184,6 +184,7 @@ export function Nav() {
       ref={scope}
       data-site-nav="true"
       data-nav-ready={navReady ? "true" : "false"}
+      style={{ viewTransitionName: "site-header" }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         useIntroNavState
           ? introCovered

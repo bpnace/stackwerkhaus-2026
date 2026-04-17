@@ -6,46 +6,12 @@ import type { CSSProperties } from "react";
 import { useRef } from "react";
 import type { Project } from "@/lib/projects";
 import { ensureGsap, gsap, shouldReduceMotion, useGSAP } from "@/lib/gsap";
+import { ViewTransition } from "react";
+import { getProjectMedia } from "@/lib/project-media";
 
 type ProjectCardProps = {
   index: number;
   project: Project;
-};
-
-const projectPreviewMedia: Record<
-  string,
-  { src: string; alt: string; objectPosition?: CSSProperties["objectPosition"] }
-> = {
-  "atelier-heimat": {
-    src: "/projekte/heimat.webp",
-    alt: "Preview von Atelier Heimat",
-    objectPosition: "center 50%",
-  },
-  bloom: {
-    src: "/projekte/small/bloomSmall.webp",
-    alt: "Preview von Bloom",
-    objectPosition: "center 42%",
-  },
-  codariq: {
-    src: "/projekte/small/codariqSmall.webp",
-    alt: "Preview von Codariq",
-    objectPosition: "center 52%",
-  },
-  "immo-pal": {
-    src: "/projekte/small/immopalSmall.webp",
-    alt: "Preview von Immo Pal",
-    objectPosition: "center 50%",
-  },
-  uncloud: {
-    src: "/projekte/small/uncloudSmall.webp",
-    alt: "Preview von uncloud",
-    objectPosition: "center 46%",
-  },
-  zynapse: {
-    src: "/projekte/small/zynapseSmall.webp",
-    alt: "Preview von Zynapse",
-    objectPosition: "center 48%",
-  },
 };
 
 function getProjectPreviewTitleStyle(title: string) {
@@ -74,12 +40,7 @@ function getProjectPreviewTitleStyle(title: string) {
 export function ProjectCard({ index, project }: ProjectCardProps) {
   const scope = useRef<HTMLAnchorElement | null>(null);
   const previewRef = useRef<HTMLDivElement | null>(null);
-  const previewMedia =
-    projectPreviewMedia[project.slug] ?? {
-      src: "/blog/blog-section-hero.jpg",
-      alt: `Preview von ${project.title}`,
-      objectPosition: "center 50%" as CSSProperties["objectPosition"],
-    };
+  const previewMedia = getProjectMedia(project);
   const previewTitleStyle = getProjectPreviewTitleStyle(project.title);
 
   useGSAP(
@@ -182,25 +143,36 @@ export function ProjectCard({ index, project }: ProjectCardProps) {
     <Link
       ref={scope}
       href={`/projekte/${project.slug}`}
+      transitionTypes={["nav-forward"]}
       className="group grid gap-4 border-b border-border py-6 transition-colors hover:border-foreground/40 md:grid-cols-[72px_1.2fr_110px_1fr_40px] md:items-center"
     >
       <div
         ref={previewRef}
-        className="project-preview-card pointer-events-none fixed left-0 top-0 z-40 hidden invisible aspect-[700/467] w-[360px] overflow-hidden border border-white/12 opacity-0 shadow-[0_24px_80px_rgba(0,0,0,0.45)] md:block"
+        className="project-preview-card pointer-events-none fixed left-0 top-0 z-40 invisible aspect-[700/467] w-[360px] overflow-hidden border border-white/12 opacity-0 shadow-[0_24px_80px_rgba(0,0,0,0.45)] md:block"
         aria-hidden="true"
       >
-        <Image
-          src={previewMedia.src}
-          alt={previewMedia.alt}
-          fill
-          sizes="360px"
-          className="project-preview-image"
-          style={{ objectPosition: previewMedia.objectPosition }}
-        />
+        <ViewTransition
+          name={`project-image-${project.slug}`}
+          share="project-image-morph"
+        >
+          <Image
+            src={previewMedia.src}
+            alt={previewMedia.alt}
+            fill
+            sizes="360px"
+            className="project-preview-image"
+            style={{ objectPosition: previewMedia.objectPosition }}
+          />
+        </ViewTransition>
         <div className="project-preview-scrim" aria-hidden />
-        <h3 className="project-preview-title" style={previewTitleStyle}>
-          {project.title}
-        </h3>
+        <ViewTransition
+          name={`project-title-${project.slug}`}
+          share="project-title-crossfade"
+        >
+          <h3 className="project-preview-title" style={previewTitleStyle}>
+            {project.title}
+          </h3>
+        </ViewTransition>
       </div>
       <span className="eyebrow text-foreground/80">
         {String(index + 1).padStart(2, "0")}

@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "STACKWERKHAUS",
-  title: "STACKWERKHAUS – Moderne Websites für Dienstleister und Unternehmen",
+  title: "STACKWERKHAUS – Hier wird nicht nur dekoriert, sondern gebaut.",
   description:
-    "Webdesign, Frontend-Entwicklung und technisches SEO aus einer Hand. Für Dienstleister, Selbstständige und neue Marken, die mit einer modernen Website überzeugender auftreten.",
+    "Wir bauen digitale Auftritte, bei denen Fassade, Grundriss und Technik zusammenpassen für Unternehmen die hoch hinaus wollen.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://stackwerkhaus.de",
   email: "info@stackwerkhaus.de",
   location: "Berlin / Remote",

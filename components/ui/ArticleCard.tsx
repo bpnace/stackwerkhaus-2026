@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { BlogPost } from "@/lib/blog";
+import { ViewTransition } from "react";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 
 type ArticleCardProps = {
@@ -81,24 +82,38 @@ export function ArticleCard({ post, variant = "default" }: ArticleCardProps) {
 
     return (
       <article className="blog-preview-card">
-        <Link href={`/blog/${post.slug}`} className="group block">
+        <Link
+          href={`/blog/${post.slug}`}
+          className="group block"
+          transitionTypes={["nav-forward"]}
+        >
           <div className="blog-preview-media">
-            <Image
-              src={previewImage}
-              alt={post.imageAlt || post.title}
-              fill
-              sizes="(min-width: 768px) calc((100vw - 9rem) / 2), calc(100vw - 3rem)"
-              className="blog-preview-image"
-              style={previewStyle}
-            />
+            <ViewTransition
+              name={`blog-image-${post.slug}`}
+              share="project-image-morph"
+            >
+              <Image
+                src={previewImage}
+                alt={post.imageAlt || post.title}
+                fill
+                sizes="(min-width: 768px) calc((100vw - 9rem) / 2), calc(100vw - 3rem)"
+                className="blog-preview-image"
+                style={previewStyle}
+              />
+            </ViewTransition>
             <div className="blog-preview-scrim" aria-hidden />
             <div className="blog-preview-meta">
               <span>{post.category}</span>
               <span>{post.readingTime}</span>
             </div>
-            <h3 className="blog-preview-title" style={titleFitStyle}>
-              {post.title}
-            </h3>
+            <ViewTransition
+              name={`blog-title-${post.slug}`}
+              share="project-title-crossfade"
+            >
+              <h3 className="blog-preview-title" style={titleFitStyle}>
+                {post.title}
+              </h3>
+            </ViewTransition>
           </div>
         </Link>
         <div className="blog-preview-body">
@@ -107,7 +122,11 @@ export function ArticleCard({ post, variant = "default" }: ArticleCardProps) {
           </p>
           <div className="mt-6 flex items-center justify-between gap-4 text-sm text-muted">
             <span>{published}</span>
-            <Link href={`/blog/${post.slug}`} className="link-arrow">
+            <Link
+              href={`/blog/${post.slug}`}
+              className="link-arrow"
+              transitionTypes={["nav-forward"]}
+            >
               <LinkRippleText text="Weiterlesen" baseWeight={560} />
             </Link>
           </div>
@@ -123,12 +142,21 @@ export function ArticleCard({ post, variant = "default" }: ArticleCardProps) {
           <span>{post.category}</span>
           <span>{post.readingTime}</span>
         </div>
-        <h3 className="text-2xl font-semibold tracking-tight">{post.title}</h3>
+        <ViewTransition
+          name={`blog-title-${post.slug}`}
+          share="project-title-crossfade"
+        >
+          <h3 className="text-2xl font-semibold tracking-tight">{post.title}</h3>
+        </ViewTransition>
         <p className="text-muted">{post.excerpt}</p>
       </div>
       <div className="mt-8 flex items-center justify-between gap-4 text-sm text-muted">
         <span>{published}</span>
-        <Link href={`/blog/${post.slug}`} className="link-arrow">
+        <Link
+          href={`/blog/${post.slug}`}
+          className="link-arrow"
+          transitionTypes={["nav-forward"]}
+        >
           <LinkRippleText text="Weiterlesen" baseWeight={560} /> <span aria-hidden>↗</span>
         </Link>
       </div>

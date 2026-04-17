@@ -40,12 +40,12 @@ export function PricingCard({
       </div>
 
       <Link
-        href="/#kontakt"
+        href={`/?paket=${encodeURIComponent(name)}#kontakt`}
         className={`link-arrow mt-6 w-full justify-between bg-foreground px-4 py-3 text-background transition-opacity hover:opacity-80 ${
           highlight ? "opacity-100" : "opacity-92"
         }`}
       >
-        <LinkRippleText text="Paket anfragen" baseWeight={560} />
+        <LinkRippleText text="Jetzt Anfragen" baseWeight={560} />
       </Link>
 
       <ul className="mt-6 space-y-2.5 text-sm">
