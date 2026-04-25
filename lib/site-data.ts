@@ -10,39 +10,59 @@ export const tickerItems = [
 export const services = [
   {
     number: "01",
-    title: "Strategie",
+    title: "Websites mit tragender Struktur",
     description:
-      "Wir schärfen Angebotslogik, Website-Architektur, Seitenstruktur, Nutzerführung und die inhaltische Grundlage für SEO und AEO, damit dein Auftritt nicht nur gut aussieht, sondern logisch funktioniert.",
+      "Webdesign, UI/UX und klare Kontaktwege für Unternehmen, die online professioneller auftreten und Besucher schneller zur Anfrage führen wollen.",
   },
   {
     number: "02",
-    title: "Webdesign",
+    title: "Sanierung statt Schönheitsputz",
     description:
-      "Wir entwickeln eine visuelle Sprache mit klarer Hierarchie, glaubwürdiger Präsentation und sauberen Conversion-Wegen, damit dein Angebot schnell verstanden und ernst genommen wird.",
+      "Relaunches für Websites, die noch stehen, aber nicht mehr richtig tragen. Wir ordnen Struktur, Inhalte, Design und Technik neu.",
   },
   {
     number: "03",
-    title: "Entwicklung",
+    title: "Maschinenraum inklusive",
     description:
-      "Performante Frontends, saubere CMS-Umsetzung und belastbare technische Integrationen auf einem wartbaren Fundament. Schnell, responsiv und ohne unnötige technische Altlasten.",
+      "Full Stack Development für Web Apps, APIs, Backends und digitale Produkte, bei denen nicht nur die Fassade stimmen muss.",
+  },
+] as const;
+
+export const serviceProcessSteps = [
+  {
+    number: "01",
+    title: "Bauaufnahme",
+    description:
+      "Wir prüfen, was schon steht, was wackelt und was dein digitaler Auftritt leisten soll.",
+    tags: ["Analyse", "Ziele", "Website Zustand", "Projektumfang"],
+  },
+  {
+    number: "02",
+    title: "Bauplan",
+    description:
+      "Wir entwickeln Seitenstruktur, Nutzerführung, Inhalte und Funktionen, bevor der erste digitale Stein gesetzt wird.",
+    tags: ["Struktur", "UX", "Content", "Funktionen"],
+  },
+  {
+    number: "03",
+    title: "Rohbau",
+    description:
+      "Wir bauen das technische Fundament mit sauberem Frontend, Backend und stabiler Architektur.",
+    tags: ["Frontend", "Backend", "Komponenten", "Architektur"],
   },
   {
     number: "04",
-    title: "Automatisierung",
+    title: "Ausbau",
     description:
-      "Wir bauen n8n-Workflows, Webhooks und Backend-Automationen für Lead-Anreicherung, E-Mail-Flows, Mailings, CMS-Prozesse und saubere Übergaben zwischen Formularen, CRM, Newsletter, Kalendern und internen Tools.",
+      "Wir schärfen Design, Texte, Interaktionen und Kontaktwege, damit die Fassade nicht nur hübsch aussieht, sondern verkauft.",
+    tags: ["Webdesign", "UI/UX", "Texte", "Conversion"],
   },
   {
     number: "05",
-    title: "Relaunch",
+    title: "Bauabnahme",
     description:
-      "Bestehende Seiten werden neu geordnet, modernisiert und technisch stabilisiert, ohne die bisherige Sichtbarkeit leichtfertig zu riskieren.",
-  },
-  {
-    number: "06",
-    title: "SEO & AEO",
-    description:
-      "Technisches SEO, semantische Struktur und indexierbare Inhalte, die für Google wie für KI-Systeme sauber lesbar, crawlbar und als Antwortquelle nutzbar bleiben.",
+      "Wir testen Performance, mobile Darstellung, Formulare, SEO Basis und Übergabe vor dem Launch.",
+    tags: ["Testing", "Launch", "SEO Basis", "Übergabe"],
   },
 ] as const;
 

@@ -7,6 +7,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { pricingTiers } from "@/lib/site-data";
 import { siteConfig } from "@/lib/site-config";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import type { PricingTier } from "@/lib/site-data";
 
@@ -306,6 +307,20 @@ export function Contact() {
               >
                 <LinkRippleText text={siteConfig.email} />
               </a>
+            </div>
+            <div className="max-w-2xl border-t border-border pt-6">
+              <p className="text-sm leading-6 text-muted">
+                Du willst noch kein direktes Gespräch? Der Website Check zeigt
+                dir zuerst, wo dein Auftritt trägt, knirscht oder neu sortiert
+                werden sollte.
+              </p>
+              <HashLink
+                href="/webseitecheck"
+                className="link-arrow mt-5 w-fit text-foreground"
+              >
+                <LinkRippleText text="Website Check starten" baseWeight={700} />
+                <span aria-hidden>+</span>
+              </HashLink>
             </div>
           </div>
         </div>

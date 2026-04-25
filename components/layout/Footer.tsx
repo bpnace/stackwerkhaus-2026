@@ -56,6 +56,16 @@ export function Footer() {
                       />
                     </HashLink>
                   ))}
+                  <HashLink
+                    href="/webseitecheck"
+                    className="hover-weight-link block w-fit hover:text-black"
+                  >
+                    <LinkRippleText
+                      text="Website Check"
+                      baseWeight={500}
+                      activeWeight={820}
+                    />
+                  </HashLink>
                 </div>
 
                 <div className="space-y-4 pt-4">
