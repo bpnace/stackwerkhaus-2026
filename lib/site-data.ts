@@ -22,7 +22,7 @@ export const services = [
   },
   {
     number: "03",
-    title: "Maschinenraum inklusive",
+    title: "Heizungskeller inklusive",
     description:
       "Full Stack Development für Web Apps, APIs, Backends und digitale Produkte, bei denen nicht nur die Fassade stimmen muss.",
   },
@@ -142,6 +142,9 @@ export type PricingFeature = {
 export type PricingTier = {
   name: string;
   price: string;
+  originalPrice?: string;
+  discountLabel?: string;
+  decision: string;
   description: string;
   timeline: string;
   pages: string;
@@ -149,77 +152,101 @@ export type PricingTier = {
   highlight?: boolean;
 };
 
+const pricingFeatureLabels = [
+  "Mobiloptimiertes Design",
+  "Rechtliches Setup",
+  "Kontaktformular und Hosting",
+  "SEO-Basis und Indexieren",
+  "CMS für eigene Inhalte",
+  "Blog und Auswertung",
+  "Custom-Funktionen",
+  "Buchungssystem",
+  "Newsletter-Automation",
+  "CRM oder n8n-Anbindung",
+  "Performance und QA",
+  "Brand-System und Ausbau-Support",
+] as const;
+
+const pricingFeaturesUntil = (includedCount: number) =>
+  pricingFeatureLabels.map((label, index) => ({
+    label,
+    enabled: index < includedCount,
+  }));
+
 export const pricingTiers = [
   {
     name: "Starter",
-    price: "899",
+    price: "799",
+    originalPrice: "899",
+    discountLabel: "11 % Rabatt für Neukunden",
+    decision: "schnell online",
     description:
-      "Für Dienstleister, die schnell online gehen wollen, mit fokussiertem Einstieg, klarer technischer Basis und sauberer Launch-Begleitung.",
+      "Für Dienstleister, die schnell online gehen wollen, mit fokussiertem Einstieg, SEO Basis und professioneller Begleitung.",
     timeline: "3 Wochen",
     pages: "5 Seiten",
-    features: [
-      { label: "5-seitige Next.js Website", enabled: true },
-      { label: "Responsive & mobiloptimiert", enabled: true },
-      { label: "DSGVO-konform inkl. Consent-Setup", enabled: true },
-      { label: "Impressum & Datenschutz-Seiten", enabled: true },
-      { label: "Klare Seitenstruktur & Nutzerführung", enabled: true },
-      { label: "Ø 95+ Lighthouse Score", enabled: false },
-      { label: "Kontaktformular", enabled: true },
-      { label: "Deployment & Hosting-Setup", enabled: true },
-      { label: "SEO-Grundstruktur", enabled: true },
-      { label: "Google Search Console & Sitemap", enabled: true },
-      { label: "Saubere Launch-Begleitung", enabled: true },
-    ],
+    features: pricingFeaturesUntil(4),
   },
   {
     name: "Business",
     price: "1.499",
+    decision: "Relaunch mit Ausbau",
     description:
       "Alles aus Starter, plus CMS, Blog, SEO-Grundlagen und Analytics für Marken mit mehr Inhalt und mehr Bewegung.",
     timeline: "4 Wochen",
     pages: "bis 8 Seiten",
     highlight: true,
-    features: [
-      { label: "Bis zu 8 Seiten", enabled: true },
-      { label: "CMS-Integration", enabled: true },
-      { label: "Blog & Artikel-Bereich", enabled: true },
-      { label: "SEO-Grundoptimierung", enabled: true },
-      { label: "Google Analytics Setup", enabled: true },
-      { label: "Search Console & saubere Indexierung", enabled: true },
-      { label: "Redaktionsfähige Inhaltsbereiche", enabled: true },
-      { label: "Erweiterte Animationen", enabled: false },
-      { label: "Newsletter-Anbindung", enabled: false },
-      { label: "Conversion-orientierte Landingpages", enabled: false },
-      { label: "Individuelle Funnel-Logik", enabled: false },
-    ],
+    features: pricingFeaturesUntil(7),
   },
   {
     name: "Premium",
     price: "2.499",
+    decision: "Website + Automatisierungen",
     description:
-      "Maximale digitale Präsenz mit Custom Features, Integrationen und vollständigerem System für Wachstum und Launch.",
+      "Maximale digitale Präsenz mit Custom Features, Integrationen und vollständigerem System für Wachstum und Leadgenerierung.",
     timeline: "5–6 Wochen",
     pages: "10+ Seiten",
-    features: [
-      { label: "10+ Seiten inkl. Landingpages", enabled: true },
-      { label: "Custom-Funktionen & Integrationen", enabled: true },
-      { label: "Online-Buchungssystem", enabled: true },
-      { label: "Newsletter-Automation", enabled: true },
-      { label: "Performance-Optimierung", enabled: true },
-      { label: "Tracking- & Event-Konzept", enabled: true },
-      { label: "CRM-, Zapier- oder n8n-Anbindung", enabled: true },
-      { label: "Brand-System & Style Guide", enabled: true },
-      { label: "Launch-Support & QA", enabled: true },
-      { label: "Staging-, Device- & Browser-Testing", enabled: true },
-      { label: "Übergabe mit Ausbau-Perspektive", enabled: true },
-    ],
+    features: pricingFeaturesUntil(pricingFeatureLabels.length),
   },
 ] satisfies readonly PricingTier[];
 
-export const faqs = [
+export const maintenanceOffer = {
+  title: "Nach dem Launch: Wartung & Wachstum ab 59 €/Monat",
+  description:
+    "Für Websites, die nach dem Go-live nicht einfach liegen bleiben sollen. Wir halten den Heizungskeller im Blick und liefern kleine Verbesserungen, bevor aus Kleinkram wieder Baustelle wird.",
+  features: [
+    "Monitoring",
+    "Kleine Änderungen",
+    "Search-Console-Sichtung",
+    "Backup/Updates",
+    "Monatlicher Mini-Report",
+  ],
+} as const;
+
+export type FaqLink = {
+  label: string;
+  href: string;
+};
+
+export type Faq = {
+  q: string;
+  a: string;
+  links?: readonly FaqLink[];
+};
+
+export const faqs: readonly Faq[] = [
   {
     q: "Was kostet eine professionelle Website für ein kleines Unternehmen?",
-    a: "Fokussierte Projekte starten ab 899 €. Der genaue Preis hängt vom Seitenumfang, den Inhalten und den Integrationen ab.",
+    a: "Fokussierte Projekte starten ab 799 €. Der genaue Preis hängt vom Seitenumfang, den Inhalten und den Integrationen ab. Für Neukunden kann bei Buchung ein Rabatt angerechnet werden.",
+    links: [
+      {
+        label: "Website erstellen lassen",
+        href: "/website-erstellen-lassen-deutschland",
+      },
+      {
+        label: "Webdesign für kleine Unternehmen",
+        href: "/webdesign-kleine-unternehmen",
+      },
+    ],
   },
   {
     q: "Wie lange dauert ein Website-Projekt?",
@@ -228,14 +255,40 @@ export const faqs = [
   {
     q: "Für wen ist Stackwerkhaus die richtige Wahl?",
     a: "Vor allem für Dienstleister, kleine Unternehmen und neue Marken, die eine Website mit klarer Nutzerführung und sauberer Technik brauchen.",
+    links: [
+      {
+        label: "Webdesign kleine Unternehmen",
+        href: "/webdesign-kleine-unternehmen",
+      },
+    ],
   },
   {
     q: "Was ist im Projekt normalerweise enthalten?",
     a: "Struktur, Copy-Führung, Design, Frontend-Umsetzung, Responsive-Optimierung, technisches SEO-Grundsetup und ein sauberer Launch.",
+    links: [
+      {
+        label: "Next.js Website",
+        href: "/nextjs-website-erstellen-lassen",
+      },
+      {
+        label: "Landingpage",
+        href: "/landingpage-erstellen-lassen",
+      },
+    ],
   },
   {
     q: "Kann ich Inhalte später selbst anpassen?",
     a: "Ja. Die Struktur ist so geplant, dass spätere Ergänzungen und neue Inhalte ohne Komplettumbau integriert werden können.",
+    links: [
+      {
+        label: "Next.js Website",
+        href: "/nextjs-website-erstellen-lassen",
+      },
+      {
+        label: "KI-Automatisierung",
+        href: "/ki-website-automatisierung",
+      },
+    ],
   },
   {
     q: "Übernehmt ihr auch Relaunches bestehender Websites?",

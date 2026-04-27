@@ -78,7 +78,7 @@ export function LandingPage({ page }: LandingPageProps) {
               Auf den Punkt
             </div>
             <h2 className="mt-4 text-3xl font-black tracking-[-0.045em] text-[#111111] md:text-5xl">
-              Kurz gesagt
+              {page.answerHeading}
             </h2>
           </div>
           <p className="max-w-4xl text-lg leading-8 text-black/72 md:text-xl md:leading-9">
@@ -93,7 +93,7 @@ export function LandingPage({ page }: LandingPageProps) {
             <div className="lg:sticky lg:top-28 lg:self-start">
               <div className="eyebrow">Bauplan</div>
               <h2 className="mt-4 display-md max-w-[11ch]">
-                Was du wissen musst
+                {page.guideHeading}
               </h2>
               <p className="mt-5 max-w-md text-base leading-7 text-muted">
                 Sichtbarer, lesbarer Inhalt für Menschen zuerst. Strukturierte
@@ -112,6 +112,9 @@ export function LandingPage({ page }: LandingPageProps) {
                     {section.heading}
                   </h2>
                   <div className="space-y-5 text-base leading-7 text-muted md:text-lg md:leading-8">
+                    {section.summary ? (
+                      <p className="text-foreground/90">{section.summary}</p>
+                    ) : null}
                     {section.paragraphs.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
@@ -126,6 +129,84 @@ export function LandingPage({ page }: LandingPageProps) {
                           </li>
                         ))}
                       </ul>
+                    ) : null}
+                    {section.steps ? (
+                      <ol className="grid gap-3 pt-2">
+                        {section.steps.map((step, index) => (
+                          <li
+                            key={step.title}
+                            className="grid gap-3 border-t border-border pt-4 sm:grid-cols-[48px_1fr]"
+                          >
+                            <span className="text-[length:var(--label)] font-black uppercase tracking-[0.25em] text-foreground/48">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <div>
+                              <h3 className="text-base font-black tracking-[-0.015em] text-foreground md:text-lg">
+                                {step.title}
+                              </h3>
+                              <p className="mt-1 text-sm leading-6 text-muted md:text-base md:leading-7">
+                                {step.text}
+                              </p>
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
+                    ) : null}
+                    {section.table ? (
+                      <div className="overflow-x-auto border-y border-border">
+                        <table className="min-w-full border-collapse text-left text-sm leading-6">
+                          <caption className="sr-only">
+                            {section.table.caption}
+                          </caption>
+                          <thead className="text-[11px] uppercase tracking-[0.22em] text-foreground/58">
+                            <tr>
+                              {section.table.columns.map((column) => (
+                                <th
+                                  key={column}
+                                  scope="col"
+                                  className="border-b border-border py-3 pr-5 font-medium"
+                                >
+                                  {column}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="text-foreground/78">
+                            {section.table.rows.map((row) => (
+                              <tr key={row.join("|")} className="border-t border-border/70">
+                                {row.map((cell, index) => (
+                                  <td
+                                    key={`${row[0]}-${index}`}
+                                    className={`py-3 pr-5 align-top ${
+                                      index === 0 ? "font-black text-foreground" : ""
+                                    }`}
+                                  >
+                                    {cell}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : null}
+                    {section.contextualLinks ? (
+                      <div className="grid gap-3 border-t border-border pt-5 text-sm leading-6 sm:grid-cols-2">
+                        {section.contextualLinks.map((link) => (
+                          <HashLink
+                            key={link.href}
+                            href={link.href}
+                            className="group block text-foreground transition hover:text-foreground/72"
+                          >
+                            <span className="block font-black tracking-[-0.015em]">
+                              {link.label}
+                            </span>
+                            <span className="mt-1 block text-muted">
+                              {link.description}
+                            </span>
+                          </HashLink>
+                        ))}
+                      </div>
                     ) : null}
                   </div>
                 </article>
@@ -168,12 +249,15 @@ export function LandingPage({ page }: LandingPageProps) {
           <div className="space-y-6">
             <div className="eyebrow">Nächster Schritt</div>
             <h2 className="display-md max-w-[12ch]">
-              Erst sortieren, dann bauen.
+              {page.finalHeading}
             </h2>
             <p className="max-w-2xl text-lg leading-8 text-muted">
               Wenn die Richtung passt, klären wir Umfang, Inhalt, technische
               Anforderungen und den saubersten Weg zum Launch. Kurz, konkret
               und ohne unnötigen Agentur-Nebel.
+            </p>
+            <p className="text-sm uppercase tracking-[0.24em] text-muted">
+              Stand: {page.updatedAt}
             </p>
             <HashLink
               href="/#kontakt"

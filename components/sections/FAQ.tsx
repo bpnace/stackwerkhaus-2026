@@ -17,7 +17,12 @@ export function FAQ() {
         </div>
         <div>
           {faqs.map((item) => (
-            <FAQItem key={item.q} question={item.q} answer={item.a} />
+            <FAQItem
+              key={item.q}
+              question={item.q}
+              answer={item.a}
+              links={item.links}
+            />
           ))}
         </div>
       </div>

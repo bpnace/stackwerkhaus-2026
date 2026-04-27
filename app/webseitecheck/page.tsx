@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { buildingResults, inspectionFields } from "@/lib/baustellencheck.mjs";
 import { siteConfig } from "@/lib/site-config";
+import { AuditOffer } from "@/components/baustellencheck/AuditOffer";
 import { BaustellencheckForm } from "@/components/baustellencheck/BaustellencheckForm";
 import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
@@ -190,10 +191,16 @@ export default function BaustellencheckPage() {
         </div>
       </section>
 
-      <section id="webseitecheck-form" className="section-space border-t border-border">
+      <section id="webseitecheck-form" className="section-space">
         <div className="section-shell">
           <SectionHeader label="Webseitecheck" marker="(CHECK — 01)" />
           <BaustellencheckForm />
+        </div>
+      </section>
+
+      <section>
+        <div className="section-shell">
+          <AuditOffer />
         </div>
       </section>
 
@@ -206,7 +213,7 @@ export default function BaustellencheckPage() {
             </h2>
             <p className="text-lg leading-8 text-muted">
               Nicht jede Website braucht den Abrissbagger. Manchmal reicht ein
-              besserer Grundriss, manchmal muss der Maschinenraum neu sortiert
+              besserer Grundriss, manchmal muss der Heizungskeller aufgeräumt
               werden.
             </p>
           </div>

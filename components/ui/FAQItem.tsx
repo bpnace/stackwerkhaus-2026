@@ -2,13 +2,21 @@
 
 import { useRef, useState } from "react";
 import { ensureGsap, gsap, shouldReduceMotion } from "@/lib/gsap";
+import { HashLink } from "@/components/ui/HashLink";
+import { LinkRippleText } from "@/components/ui/LinkRippleText";
+
+type FAQLink = {
+  label: string;
+  href: string;
+};
 
 type FAQItemProps = {
   question: string;
   answer: string;
+  links?: readonly FAQLink[];
 };
 
-export function FAQItem({ question, answer }: FAQItemProps) {
+export function FAQItem({ question, answer, links = [] }: FAQItemProps) {
   const [open, setOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -55,6 +63,20 @@ export function FAQItem({ question, answer }: FAQItemProps) {
         className="overflow-hidden"
       >
         <p className="pt-4 max-w-3xl text-muted">{answer}</p>
+        {links.length > 0 ? (
+          <div className="flex max-w-3xl flex-col gap-3 pt-5 sm:flex-row sm:flex-wrap">
+            {links.map((link) => (
+              <HashLink
+                key={link.href}
+                href={link.href}
+                className="link-arrow w-full justify-between border border-border px-4 py-3 text-foreground hover:border-foreground sm:w-fit"
+              >
+                <LinkRippleText text={link.label} baseWeight={620} />
+                <span aria-hidden>+</span>
+              </HashLink>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );

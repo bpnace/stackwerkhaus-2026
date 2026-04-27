@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuditOffer } from "@/components/baustellencheck/AuditOffer";
 import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 
@@ -45,9 +46,13 @@ export default function BaustellencheckDankePage() {
         <aside className="border-t border-border pt-6">
           <div className="eyebrow text-foreground/75">Nächster Schritt</div>
           <p className="mt-5 text-base leading-7 text-muted">
-            Während dein Check vorbereitet wird, kannst du dir ansehen, wie
-            Stackwerkhaus digitale Bauwerke plant.
+            Während dein Check vorbereitet wird, kannst du direkt den
+            vollständigen Befund buchen oder dir ansehen, wie Stackwerkhaus
+            digitale Bauwerke plant.
           </p>
+          <div className="mt-8">
+            <AuditOffer variant="compact" />
+          </div>
           <div className="mt-8 grid gap-3">
             {nextLinks.map((item) => (
               <HashLink

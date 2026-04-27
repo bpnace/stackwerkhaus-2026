@@ -226,7 +226,7 @@ export function Hero() {
             <div className="grid w-full max-w-[360px] grid-cols-1 gap-4 justify-self-center md:gap-3">
               <HashLink
                 href="/webseitecheck"
-                className="hero-action link-arrow w-full justify-between gap-2 px-3 py-4 text-left text-[9px] leading-[1.35] tracking-[0.2em] md:w-auto md:justify-start md:gap-3 md:px-6 md:text-[11px] md:tracking-[0.24em]"
+                className="hero-action link-arrow w-full justify-between gap-2 border border-foreground bg-foreground px-3 py-4 text-left text-[9px] leading-[1.35] tracking-[0.2em] text-background hover:bg-foreground/90 md:w-auto md:justify-start md:gap-3 md:px-6 md:text-[11px] md:tracking-[0.24em]"
               >
                 <span className="md:hidden">
                   Der Stackwerkhaus
@@ -239,7 +239,6 @@ export function Hero() {
                     baseWeight={560}
                   />
                 </span>{" "}
-                <span aria-hidden>✚</span>
               </HashLink>
               <HashLink
                 href="/#leistungen"

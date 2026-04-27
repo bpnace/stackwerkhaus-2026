@@ -33,7 +33,7 @@ export default function ImpressumPage() {
               Angaben gemäß § 5 DDG
             </h2>
             <p className="mt-3">
-              Arthur Marshall
+              Tarik Arthur Marshall
               <br />
               Codariq
               <br />
@@ -83,7 +83,7 @@ export default function ImpressumPage() {
               Verantwortlich i. S. d. § 18 Abs. 2 MStV
             </h2>
             <p className="mt-3">
-              Arthur Marshall
+              Tarik Arthur Marshall
               <br />
               Sigmaringer Str. 27
               <br />

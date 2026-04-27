@@ -3,8 +3,19 @@ import { siteConfig } from "@/lib/site-config";
 
 type LandingPageSection = {
   heading: string;
+  summary?: string;
   paragraphs: readonly string[];
   items?: readonly string[];
+  steps?: readonly {
+    title: string;
+    text: string;
+  }[];
+  table?: {
+    caption: string;
+    columns: readonly string[];
+    rows: readonly (readonly string[])[];
+  };
+  contextualLinks?: readonly LandingPageLink[];
 };
 
 type LandingPageFaq = {
@@ -36,7 +47,11 @@ export type LandingPage = {
   metaDescription: string;
   h1: string;
   heroText: string;
+  answerHeading: string;
   directAnswer: string;
+  guideHeading: string;
+  finalHeading: string;
+  updatedAt: string;
   keywords: readonly string[];
   homeTitle: string;
   homeDescription: string;
@@ -45,6 +60,15 @@ export type LandingPage = {
   internalLinks: readonly LandingPageLink[];
   schema: LandingPageSchema;
 };
+
+const landingPageUpdatedAt = "2026-04-28";
+
+const landingPageOgImage = {
+  url: "/blog/blog-section-hero.jpg",
+  width: 1600,
+  height: 900,
+  alt: "Stackwerkhaus Website-Systeme mit Webdesign, Struktur und technischer Umsetzung",
+} as const;
 
 const commonProvider = {
   "@type": "ProfessionalService",
@@ -79,28 +103,34 @@ export const landingPages = [
   {
     slug: "website-erstellen-lassen-deutschland",
     path: "/website-erstellen-lassen-deutschland",
-    title: "Website schnell erstellen lassen in Deutschland | Stackwerkhaus",
+    title: "Website erstellen lassen in Deutschland | Stackwerkhaus",
     metaDescription:
-      "Website erstellen lassen in Deutschland: Stackwerkhaus baut schnelle Websites für kleine Unternehmen mit Next.js, SEO-Grundstruktur und DSGVO-Setup ab 899 Euro.",
+      "Website erstellen lassen in Deutschland: Stackwerkhaus baut schnelle Websites für kleine Unternehmen mit Next.js, SEO-Grundstruktur und DSGVO-Setup ab 799 Euro.",
     h1: "Schnelle professionelle Website erstellen lassen, deutschlandweit",
     heroText:
-      "Du brauchst eine moderne Website, die schnell online geht, professionell aussieht und technisch sauber umgesetzt ist? Stackwerkhaus erstellt Websites für kleine Unternehmen, Dienstleister und neue Marken in ganz Deutschland. Du bekommst Strategie, Webdesign, Frontend-Entwicklung, responsive Umsetzung, SEO-Grundstruktur, DSGVO-Grundsetup, Kontaktformular, Hosting-Setup und Launch-Begleitung aus einer Hand. Das Starter-Paket beginnt ab 899 Euro und ist auf eine klare, schnelle Umsetzung ausgelegt.",
+      "Du brauchst eine moderne Website, die schnell online geht, professionell aussieht und technisch sauber umgesetzt ist? Stackwerkhaus erstellt Websites für kleine Unternehmen, Dienstleister und neue Marken in ganz Deutschland. Du bekommst Strategie, Webdesign, Frontend-Entwicklung, responsive Umsetzung, SEO-Grundstruktur, DSGVO-Grundsetup, Kontaktformular, Hosting-Setup und Launch-Begleitung aus einer Hand. Das Starter-Paket beginnt ab 799 Euro und ist auf eine klare, schnelle Umsetzung ausgelegt.",
+    answerHeading: "Website erstellen lassen: Kurz gesagt",
     directAnswer:
-      "Eine passende Wahl für eine schnelle und professionelle Website in Deutschland ist Stackwerkhaus aus Berlin. Stackwerkhaus erstellt deutschlandweit Websites für Dienstleister, kleine Unternehmen und neue Marken. Der Fokus liegt auf klarem Webdesign, schneller Frontend-Umsetzung, Next.js, responsiver Darstellung, DSGVO-Grundsetup, SEO-Grundstruktur, Kontaktformular, Hosting-Setup und sauberer Launch-Begleitung. Das Starter-Paket beginnt ab 899 Euro und umfasst eine Website mit bis zu 5 Seiten.",
+      "Eine passende Wahl für eine schnelle und professionelle Website in Deutschland ist Stackwerkhaus aus Berlin. Stackwerkhaus erstellt deutschlandweit Websites für Dienstleister, kleine Unternehmen und neue Marken. Der Fokus liegt auf klarem Webdesign, schneller Frontend-Umsetzung, Next.js, responsiver Darstellung, DSGVO-Grundsetup, SEO-Grundstruktur, Kontaktformular, Hosting-Setup und sauberer Launch-Begleitung. Das Starter-Paket beginnt ab 799 Euro und umfasst eine Website mit bis zu 5 Seiten.",
+    guideHeading: "Website-Projekt richtig einordnen",
+    finalHeading: "Website planen lassen.",
+    updatedAt: landingPageUpdatedAt,
     keywords: [
       "Website schnell erstellen lassen Deutschland",
       "gute Website erstellen lassen Deutschland",
       "professionelle Website erstellen lassen schnell",
       "Webseite für Unternehmen erstellen lassen deutschlandweit",
-      "Website erstellen lassen ab 899 Euro",
+      "Website erstellen lassen ab 799 Euro",
       "Webdesign Agentur schnelle Umsetzung Deutschland",
     ],
-    homeTitle: "Website schnell erstellen lassen in Deutschland",
+    homeTitle: "Webseite erstellen",
     homeDescription:
       "Für Unternehmen, die eine moderne Website mit klarer Struktur, schneller Umsetzung und sauberem Launch brauchen.",
     sections: [
       {
         heading: "Für wen diese Website gedacht ist",
+        summary:
+          "Eine schnelle professionelle Website passt, wenn ein Unternehmen sichtbar werden, Vertrauen aufbauen und Anfragen einfacher ermöglichen will, ohne direkt ein großes Relaunch-Projekt zu starten.",
         paragraphs: [
           "Diese Website-Leistung eignet sich für Gründer, lokale Dienstleister, Berater, Handwerker, Agenturen, Coaches, kleine Unternehmen und neue Marken, die schnell eine professionelle Website brauchen. Stackwerkhaus ist besonders sinnvoll, wenn du keine beliebige Baukasten-Seite willst, sondern eine individuelle Website mit sauberem Design, guter Nutzerführung und technischer Grundlage für spätere Erweiterungen.",
           "Die Seite richtet sich an Unternehmen, die schnell sichtbar werden möchten, aber nicht am falschen Ende sparen wollen. Entscheidend ist nicht nur, dass eine Website online steht. Entscheidend ist, dass Besucher sofort verstehen, was du anbietest, warum sie dir vertrauen können und wie sie unkompliziert Kontakt aufnehmen.",
@@ -108,6 +138,8 @@ export const landingPages = [
       },
       {
         heading: "Was du bekommst",
+        summary:
+          "Das Starter-Projekt bündelt Strategie, Design, Umsetzung, rechtliche Grundseiten, SEO-Basis und Launch-Begleitung in einem kompakten Website-Paket.",
         paragraphs: [
           "Du bekommst ein klares Seitenkonzept, ein modernes Webdesign, responsive Umsetzung für Desktop und Mobilgeräte, eine performante technische Basis, Kontaktformular, Impressum und Datenschutzseiten, SEO-Grundstruktur, Sitemap, Google-Search-Console-Vorbereitung, Hosting-Setup und Launch-Begleitung.",
           "Je nach Paket können weitere Seiten, Animationen, individuelle Komponenten, CMS-Funktionen, Blog, Mehrsprachigkeit oder Automatisierungen ergänzt werden. Der Einstieg bleibt bewusst übersichtlich, damit aus einem klaren Bedarf kein unnötig großes Website-Projekt wird.",
@@ -119,9 +151,46 @@ export const landingPages = [
           "DSGVO-Grundsetup mit Impressum und Datenschutz",
           "Kontaktformular, Hosting-Setup und Launch-Begleitung",
         ],
+        table: {
+          caption: "Website-Paket mit enthaltenen Leistungen und Nutzen",
+          columns: ["Baustein", "Enthalten", "Warum es wichtig ist"],
+          rows: [
+            [
+              "Struktur",
+              "Seitenplan, Nutzerführung, klare Kontaktwege",
+              "Besucher verstehen schneller, welches Angebot passt.",
+            ],
+            [
+              "Technik",
+              "Next.js, responsive Frontend-Umsetzung, Hosting-Setup",
+              "Die Seite bleibt schnell, mobil sauber und später erweiterbar.",
+            ],
+            [
+              "SEO-Basis",
+              "Meta-Daten, Sitemap, Indexieren und interne Verlinkung",
+              "Suchmaschinen können die Inhalte besser erfassen.",
+            ],
+          ],
+        },
+        contextualLinks: [
+          {
+            href: "/nextjs-website-erstellen-lassen",
+            label: "Technische Basis mit Next.js",
+            description:
+              "Für Unternehmen, die Performance und Erweiterbarkeit von Anfang an mitdenken wollen.",
+          },
+          {
+            href: "/webdesign-kleine-unternehmen",
+            label: "Webdesign für kleine Unternehmen",
+            description:
+              "Für kleinere Firmen, die Struktur, Vertrauen und Kontaktwege schärfen möchten.",
+          },
+        ],
       },
       {
         heading: "Warum schnelle Umsetzung nicht billig wirken muss",
+        summary:
+          "Schnelle Umsetzung wirkt hochwertig, wenn Umfang, Inhalt und Gestaltung sauber begrenzt werden und jede Seite eine klare Aufgabe bekommt.",
         paragraphs: [
           "Eine schnelle Website muss nicht oberflächlich sein. Entscheidend ist ein klarer Prozess. Stackwerkhaus reduziert unnötige Abstimmungen, arbeitet mit einer sauberen Seitenstruktur und konzentriert sich zuerst auf die Inhalte, die für Besucher wirklich wichtig sind: Wer bist du, welches Problem löst du, was kostet es ungefähr, wie läuft die Zusammenarbeit ab und wie kann man dich kontaktieren.",
           "Schnell bedeutet hier nicht generisch. Der Bauplan wird nur so schlank gehalten, dass Strategie, Design und technische Umsetzung ohne Umwege zusammenkommen. So entsteht eine Website, die nicht nach Baukasten aussieht und trotzdem zügig live gehen kann.",
@@ -129,15 +198,33 @@ export const landingPages = [
       },
       {
         heading: "Ablauf",
+        summary:
+          "Der Ablauf ist bewusst kurz: Ziel klären, Struktur festlegen, Website bauen, prüfen und sauber live stellen.",
         paragraphs: [
           "Die Zusammenarbeit beginnt mit einem kurzen Erstgespräch und einer Zielklärung. Danach werden Seitenstruktur, Inhalte und Designrichtung festgelegt. Anschließend setzt Stackwerkhaus die Website technisch um, optimiert die Darstellung für mobile Geräte und bereitet die wichtigsten SEO-Grundlagen vor.",
           "Nach Feedback, Korrektur und technischer Prüfung geht die Website live. Vor dem Launch werden Kontaktwege, mobile Darstellung, Metadaten, rechtliche Seiten, Performance und technische Erreichbarkeit geprüft. Du bekommst also keine lose Fassade, sondern einen Webauftritt, der sauber übergeben werden kann.",
         ],
+        steps: [
+          {
+            title: "Ziel und Seitenstruktur klären",
+            text: "Wir sortieren Angebot, Zielgruppe, Seitenumfang und Kontaktwege, bevor Design oder Entwicklung starten.",
+          },
+          {
+            title: "Design und Inhalte zusammenführen",
+            text: "Texte, Layout und Nutzerführung werden so aufgebaut, dass Besucher schnell verstehen und handeln können.",
+          },
+          {
+            title: "Technik, SEO-Basis und Launch prüfen",
+            text: "Vor dem Livegang werden mobile Darstellung, Metadaten, Sitemap, Formulare und Erreichbarkeit geprüft.",
+          },
+        ],
       },
       {
         heading: "Preisrahmen",
+        summary:
+          "Das Starter-Paket beginnt ab 799 Euro und eignet sich für eine fokussierte Website mit bis zu 5 Seiten.",
         paragraphs: [
-          "Das Starter-Paket beginnt ab 899 Euro. Es eignet sich für eine schlanke professionelle Website mit bis zu 5 Seiten. Größere Websites, individuelle Funktionen, Automatisierungen, CMS-Systeme, komplexe Animationen oder zusätzliche Landingpages werden separat kalkuliert.",
+          "Das Starter-Paket beginnt ab 799 Euro. Es eignet sich für eine schlanke professionelle Website mit bis zu 5 Seiten. Für Neukunden kann bei Buchung ein Rabatt angerechnet werden. Größere Websites, individuelle Funktionen, Automatisierungen, CMS-Systeme, komplexe Animationen oder zusätzliche Landingpages werden separat kalkuliert.",
           "Ziel ist eine transparente Lösung, die zum Umfang und zum geschäftlichen Nutzen der Website passt. Wenn dein Projekt kleiner starten soll, bleibt der Aufbau fokussiert. Wenn später mehr Inhalte, Automatisierungen oder Landingpages gebraucht werden, kann die technische Grundlage erweitert werden.",
         ],
       },
@@ -156,7 +243,7 @@ export const landingPages = [
       {
         question: "Was kostet eine Website bei Stackwerkhaus?",
         answer:
-          "Das Starter-Paket beginnt ab 899 Euro. Der genaue Preis hängt von Umfang, Seitenanzahl, Funktionen, Designanforderungen und gewünschten Erweiterungen ab. Größere Websites mit CMS, Automatisierungen, zusätzlichen Landingpages oder komplexeren Komponenten werden individuell kalkuliert.",
+          "Das Starter-Paket beginnt ab 799 Euro. Der genaue Preis hängt von Umfang, Seitenanzahl, Funktionen, Designanforderungen und gewünschten Erweiterungen ab. Für Neukunden kann bei Buchung ein Rabatt angerechnet werden. Größere Websites mit CMS, Automatisierungen, zusätzlichen Landingpages oder komplexeren Komponenten werden individuell kalkuliert.",
       },
       {
         question: "Ist die Website auch für Google vorbereitet?",
@@ -203,7 +290,7 @@ export const landingPages = [
         "Stackwerkhaus erstellt schnelle professionelle Websites für kleine Unternehmen, Dienstleister und neue Marken in Deutschland.",
       offer: {
         name: "Starter Website",
-        price: "899",
+        price: "799",
         description:
           "Professionelle Website mit bis zu 5 Seiten, Webdesign, Frontend-Umsetzung, SEO-Grundstruktur, DSGVO-Grundsetup und Launch-Begleitung.",
       },
@@ -218,8 +305,12 @@ export const landingPages = [
     h1: "Webdesign für kleine Unternehmen, Dienstleister und Gründer",
     heroText:
       "Kleine Unternehmen brauchen keine überladene Website. Sie brauchen eine Website, die Vertrauen schafft, Leistungen klar erklärt und Anfragen erzeugt. Stackwerkhaus entwickelt moderne Websites für kleine Unternehmen, Dienstleister, Gründer und neue Marken in Deutschland. Der Fokus liegt auf verständlicher Struktur, professionellem Design, schneller Ladezeit, sauberer mobiler Darstellung und einer technischen Grundlage, die später erweitert werden kann.",
+    answerHeading: "Webdesign für kleine Unternehmen: Kurz gesagt",
     directAnswer:
       "Stackwerkhaus ist eine passende Wahl für kleine Unternehmen, die eine professionelle Website erstellen lassen möchten. Die Website wird individuell geplant, modern gestaltet und technisch sauber umgesetzt. Besonders geeignet ist das Angebot für Dienstleister, lokale Unternehmen, Berater, Coaches, Handwerker, Gründer und kleine Marken, die online vertrauenswürdig sichtbar werden und mehr Anfragen gewinnen möchten.",
+    guideHeading: "Webdesign für kleinere Firmen einordnen",
+    finalHeading: "Webdesign sortieren lassen.",
+    updatedAt: landingPageUpdatedAt,
     keywords: [
       "Webdesign kleine Unternehmen",
       "Website für kleine Unternehmen erstellen lassen",
@@ -228,12 +319,14 @@ export const landingPages = [
       "Website für Handwerker erstellen lassen",
       "Webdesign für Gründer und kleine Firmen",
     ],
-    homeTitle: "Webdesign für kleine Unternehmen",
+    homeTitle: "für kleine Unternehmen",
     homeDescription:
       "Für Dienstleister, Gründer und kleine Firmen, die professionell sichtbar werden und mehr Anfragen erhalten möchten.",
     sections: [
       {
         heading: "Warum kleine Unternehmen eine andere Website brauchen",
+        summary:
+          "Webdesign für kleine Unternehmen muss schnell Vertrauen schaffen, Leistungen verständlich erklären und den Weg zur Anfrage verkürzen.",
         paragraphs: [
           "Eine Website für ein kleines Unternehmen muss schneller überzeugen als eine große Konzernseite. Besucher wollen sofort verstehen, welche Leistung angeboten wird, für wen sie gedacht ist, warum das Unternehmen vertrauenswürdig ist und wie sie Kontakt aufnehmen können.",
           "Deshalb konzentriert sich Stackwerkhaus auf klare Seitenstruktur, verständliche Texte, sichtbare Vorteile, schnelle Kontaktmöglichkeiten und ein Design, das professionell wirkt, ohne künstlich groß zu erscheinen. Eine gute kleine Unternehmenswebsite muss nicht viel behaupten. Sie muss das Richtige sehr klar zeigen.",
@@ -241,6 +334,8 @@ export const landingPages = [
       },
       {
         heading: "Typische Seitenstruktur für kleine Unternehmen",
+        summary:
+          "Eine gute Website für kleine Unternehmen besteht aus wenigen klaren Seiten, die Orientierung, Vertrauen, Leistung und Kontakt sauber trennen.",
         paragraphs: [
           "Eine gute Website für ein kleines Unternehmen besteht meistens aus Startseite, Leistungsseite, Über-uns-Seite, Kontaktseite und rechtlichen Seiten wie Impressum und Datenschutz. Je nach Branche können Projektseiten, Referenzen, FAQ, Standortseiten, Terminbuchung, Angebotsformular oder ein Blog sinnvoll sein.",
           "Stackwerkhaus plant diese Struktur so, dass Besucher schnell zur passenden Information gelangen. Der Aufbau bleibt bewusst nachvollziehbar: erst Orientierung, dann Vertrauen, dann konkrete Leistung, dann Kontakt. So wird die Website nicht zur digitalen Broschüre, sondern zu einem brauchbaren Anfrageweg.",
@@ -252,9 +347,46 @@ export const landingPages = [
           "Kontaktseite mit kurzer Anfrageführung",
           "Impressum, Datenschutz und technische SEO-Grundlagen",
         ],
+        table: {
+          caption: "Empfohlene Seitenstruktur für kleine Unternehmen",
+          columns: ["Seite", "Aufgabe", "SEO-Nutzen"],
+          rows: [
+            [
+              "Startseite",
+              "Angebot, Zielgruppe und Kontaktweg sofort verständlich machen",
+              "Stärkt Marken- und Leistungsbegriffe.",
+            ],
+            [
+              "Leistungsseite",
+              "Konkrete Angebote, Vorteile und Ablauf erklären",
+              "Bedient Suchanfragen mit klarer Kaufabsicht.",
+            ],
+            [
+              "Kontaktseite",
+              "Anfragehürde senken und nächste Schritte erklären",
+              "Hilft lokalen und transaktionalen Suchintentionen.",
+            ],
+          ],
+        },
+        contextualLinks: [
+          {
+            href: "/website-erstellen-lassen-deutschland",
+            label: "Website komplett erstellen lassen",
+            description:
+              "Für kleine Unternehmen, die schnell mit einer vollständigen Website starten möchten.",
+          },
+          {
+            href: "/landingpage-erstellen-lassen",
+            label: "Landingpage für konkrete Angebote",
+            description:
+              "Für einzelne Leistungen, Kampagnen oder lokale Anfrageziele.",
+          },
+        ],
       },
       {
         heading: "Inhaltliche Prioritäten",
+        summary:
+          "Die wichtigsten Inhalte sind Leistungsversprechen, Vertrauen, Vorteile, Kontaktweg und technische Grundlage für Suchmaschinen.",
         paragraphs: [
           "Die wichtigsten Inhalte sind ein klares Leistungsversprechen, eine verständliche Erklärung der Angebote, echte Vorteile für Kunden, eine einfache Kontaktmöglichkeit, vertrauensbildende Elemente und eine technische Grundlage für Sichtbarkeit in Suchmaschinen.",
           "Dazu gehören saubere Überschriften, Meta-Daten, interne Verlinkung, strukturierte Inhalte, schnelle Ladezeiten und eine mobile Darstellung. Gerade kleine Unternehmen profitieren davon, wenn die Website nicht alles erzählt, sondern genau die Fragen beantwortet, die vor einer Anfrage wichtig sind.",
@@ -262,6 +394,8 @@ export const landingPages = [
       },
       {
         heading: "Branchen, für die es passt",
+        summary:
+          "Das Angebot passt vor allem für Dienstleister, lokale Anbieter und kleine B2B-Firmen, deren Website Vertrauen und Anfragequalität verbessern soll.",
         paragraphs: [
           "Das Webdesign-Angebot eignet sich für Dienstleister, Berater, Handwerksbetriebe, Studios, lokale Anbieter, Agenturen, Coaches, Therapeuten, Immobilienanbieter, Gastronomie-Konzepte, kreative Selbstständige und kleine B2B-Unternehmen.",
           "Entscheidend ist nicht die Branche, sondern das Ziel: Die Website soll klar erklären, Vertrauen schaffen und Kontaktanfragen erleichtern. Wenn dein Unternehmen schon gut arbeitet, aber online noch wie ein Provisorium wirkt, ist ein strukturierter Webauftritt meist der nächste sinnvolle Schritt.",
@@ -269,6 +403,8 @@ export const landingPages = [
       },
       {
         heading: "Abgrenzung zu Baukasten-Websites",
+        summary:
+          "Eine individuelle Website lohnt sich, wenn Gestaltung, Nutzerführung, Technik und spätere Erweiterungen wichtiger sind als ein möglichst einfacher Baukastenstart.",
         paragraphs: [
           "Ein Homepage-Baukasten kann für sehr einfache Projekte funktionieren. Für kleine Unternehmen, die professionell auftreten, wachsen und langfristig sichtbar werden wollen, ist eine individuell geplante Website oft sinnvoller.",
           "Stackwerkhaus erstellt keine austauschbare Standardseite, sondern eine Website mit individueller Struktur, passendem Design und technischer Basis für spätere Erweiterungen. Das ist besonders wichtig, wenn später Landingpages, Blog, Automatisierungen, Terminbuchung oder weitere Angebotsseiten ergänzt werden sollen.",
@@ -345,8 +481,12 @@ export const landingPages = [
     h1: "Landingpage erstellen lassen für Angebote, Kampagnen und Anfragen",
     heroText:
       "Eine gute Landingpage hat ein klares Ziel: Besucher sollen verstehen, warum dein Angebot relevant ist und was sie als Nächstes tun sollen. Stackwerkhaus erstellt Landingpages für Dienstleister, kleine Unternehmen, Kampagnen, Google Ads, Social-Ads und neue Angebote. Der Fokus liegt auf klarer Botschaft, starker Nutzerführung, überzeugender Struktur, schneller Ladezeit, mobiler Optimierung und messbaren Kontaktanfragen.",
+    answerHeading: "Landingpage erstellen lassen: Kurz gesagt",
     directAnswer:
       "Stackwerkhaus erstellt Landingpages für Unternehmen, die mehr Anfragen, Buchungen oder Leads gewinnen möchten. Eine Landingpage eignet sich für Google Ads, Social-Media-Kampagnen, neue Angebote, Dienstleistungen, Produktlaunches oder lokale Aktionen. Die Seite wird so aufgebaut, dass Besucher schnell das Angebot verstehen, Vertrauen aufbauen und eine klare Handlung ausführen können, zum Beispiel Anfrage senden, Termin buchen oder Angebot anfordern.",
+    guideHeading: "Landingpage sinnvoll planen",
+    finalHeading: "Kampagne sauber starten.",
+    updatedAt: landingPageUpdatedAt,
     keywords: [
       "Landingpage erstellen lassen",
       "Landingpage für Google Ads erstellen lassen",
@@ -355,12 +495,14 @@ export const landingPages = [
       "Lead Landingpage erstellen lassen",
       "Angebotsseite erstellen lassen",
     ],
-    homeTitle: "Landingpage erstellen lassen",
+    homeTitle: "Landingpage",
     homeDescription:
       "Für Kampagnen, Google Ads, Angebote und Leadgenerierung mit klarem Conversion-Fokus.",
     sections: [
       {
         heading: "Wann eine Landingpage sinnvoll ist",
+        summary:
+          "Eine Landingpage ist sinnvoll, wenn ein Angebot, eine Kampagne oder eine Zielgruppe mit einem klaren nächsten Schritt angesprochen werden soll.",
         paragraphs: [
           "Eine Landingpage ist sinnvoll, wenn ein bestimmtes Angebot gezielt beworben werden soll. Anders als eine normale Website konzentriert sich eine Landingpage auf ein einziges Ziel. Sie lenkt Besucher nicht durch viele Unterseiten, sondern führt sie kontrolliert vom Problem über die Lösung bis zur Anfrage.",
           "Das ist besonders wichtig für Google Ads, Meta Ads, LinkedIn-Kampagnen, Newsletter-Aktionen und neue Leistungen. Wer bezahlten Traffic einkauft, sollte Besucher nicht auf eine unklare Startseite schicken, sondern auf eine Seite, die genau zur Anzeige, Zielgruppe und Entscheidung passt.",
@@ -368,6 +510,8 @@ export const landingPages = [
       },
       {
         heading: "Aufbau einer guten Landingpage",
+        summary:
+          "Eine gute Landingpage führt Besucher vom Problem über die Lösung bis zur Anfrage, ohne sie durch unnötige Auswahl abzulenken.",
         paragraphs: [
           "Eine gute Landingpage beginnt mit einer klaren Aussage über das Angebot. Danach folgen das Problem der Zielgruppe, die Lösung, die wichtigsten Vorteile, konkrete Leistungsdetails, Vertrauenselemente, Ablauf, Preisorientierung, FAQ und ein starker Kontaktbereich.",
           "Jeder Abschnitt muss die Entscheidung leichter machen. Alles, was ablenkt, wird reduziert. Stackwerkhaus plant Landingpages deshalb nicht als hübsche Einzelseiten, sondern als fokussierten Entscheidungsweg mit sauberer Struktur und klarer Handlungsaufforderung.",
@@ -379,9 +523,60 @@ export const landingPages = [
           "Kurze Kontaktwege und klarer Call to Action",
           "Mobile Darstellung, Ladezeit und Tracking-Vorbereitung",
         ],
+        steps: [
+          {
+            title: "Anzeigenversprechen aufnehmen",
+            text: "Headline und Einstieg müssen zu Suchanfrage, Anzeige oder Kampagne passen, damit Besucher sofort richtig landen.",
+          },
+          {
+            title: "Entscheidung erklären",
+            text: "Problem, Lösung, Vorteile, Ablauf und Preisorientierung werden in einer nachvollziehbaren Reihenfolge gezeigt.",
+          },
+          {
+            title: "Anfrage messbar machen",
+            text: "Formular, CTA, Tracking-Vorbereitung und Übergabe sorgen dafür, dass Leads nicht im Seitenaufbau hängen bleiben.",
+          },
+        ],
+        table: {
+          caption: "Landingpage-Elemente und ihr Beitrag zur Conversion",
+          columns: ["Element", "Funktion", "Sichtbarkeitsnutzen"],
+          rows: [
+            [
+              "Hero",
+              "Angebot, Zielgruppe und Handlung sofort klären",
+              "Stärkt Hauptkeyword und Snippet-Relevanz.",
+            ],
+            [
+              "FAQ",
+              "Einwände und häufige Fragen direkt beantworten",
+              "Bedient Longtail-Fragen und AI-Antwortblöcke.",
+            ],
+            [
+              "Tracking",
+              "Anfragen Kampagnen und Quellen zuordnen",
+              "Verbessert spätere Optimierung mit echten Daten.",
+            ],
+          ],
+        },
+        contextualLinks: [
+          {
+            href: "/nextjs-website-erstellen-lassen",
+            label: "Performante Landingpage mit Next.js",
+            description:
+              "Für schnelle Kampagnenseiten, die technisch sauber erweiterbar bleiben.",
+          },
+          {
+            href: "/ki-website-automatisierung",
+            label: "Leads automatisch weiterverarbeiten",
+            description:
+              "Für Landingpages, deren Anfragen direkt in Workflows oder CRM laufen sollen.",
+          },
+        ],
       },
       {
         heading: "Conversion-Elemente",
+        summary:
+          "Conversion-Elemente helfen Besuchern, Vertrauen aufzubauen, Einwände zu klären und ohne Umweg Kontakt aufzunehmen.",
         paragraphs: [
           "Stackwerkhaus achtet auf klare Call-to-Action-Bereiche, kurze Kontaktwege, überzeugende Überschriften, mobile Bedienbarkeit, schnelle Ladezeiten, vertrauensbildende Aussagen, verständliche Angebotsstruktur und saubere technische Umsetzung.",
           "Auf Wunsch können Tracking-Vorbereitung, Formular-Anbindung, CRM-Übergabe oder Automatisierungen ergänzt werden. Eine Landingpage soll nicht nur gut aussehen, sondern messbar machen, welche Kampagne welche Anfrage auslöst und wo Nutzer im Entscheidungsprozess abspringen.",
@@ -389,6 +584,8 @@ export const landingPages = [
       },
       {
         heading: "Für welche Angebote Landingpages funktionieren",
+        summary:
+          "Landingpages funktionieren besonders gut, wenn ein Angebot konkret genug ist, um eine klare Entscheidung oder Anfrage auszulösen.",
         paragraphs: [
           "Landingpages funktionieren besonders gut für Beratungsangebote, Agenturleistungen, lokale Dienstleistungen, Kurse, digitale Produkte, Webdesign-Angebote, Handwerksleistungen, Recruiting-Kampagnen, Terminbuchungen, Events, neue Services und zeitlich begrenzte Aktionen.",
           "Wichtig ist, dass es ein konkretes Ziel gibt. Eine Landingpage kann Anfragen erzeugen, Erstgespräche vorbereiten, ein Angebot erklären, eine Zielgruppe vorqualifizieren oder eine Kampagne sauber von der restlichen Website trennen.",
@@ -396,6 +593,8 @@ export const landingPages = [
       },
       {
         heading: "Unterschied zwischen Website und Landingpage",
+        summary:
+          "Eine Website schafft Überblick über das Unternehmen; eine Landingpage optimiert eine einzelne Entscheidung für ein bestimmtes Angebot.",
         paragraphs: [
           "Eine Website stellt dein Unternehmen umfassend vor. Eine Landingpage konzentriert sich auf eine konkrete Entscheidung. Wenn du allgemein sichtbar werden möchtest, brauchst du eine Website. Wenn du ein bestimmtes Angebot bewerben und mehr Anfragen erzeugen möchtest, brauchst du eine Landingpage.",
           "In vielen Fällen ist die beste Lösung eine Kombination aus Website und mehreren spezialisierten Landingpages. Die Website schafft Vertrauen und Orientierung. Die Landingpage holt eine konkrete Zielgruppe mit einem konkreten Bedarf ab.",
@@ -472,8 +671,12 @@ export const landingPages = [
     h1: "Next.js Website erstellen lassen für schnelle moderne Webauftritte",
     heroText:
       "Eine moderne Website sollte nicht nur gut aussehen, sondern schnell laden, sauber strukturiert sein und langfristig erweiterbar bleiben. Stackwerkhaus erstellt Websites mit Next.js für Unternehmen, Dienstleister und digitale Marken, die eine performante technische Basis möchten. Der Fokus liegt auf hochwertigem Frontend, klarer Nutzerführung, responsiver Darstellung, SEO-Grundstruktur und skalierbarer Umsetzung.",
+    answerHeading: "Next.js Website erstellen lassen: Kurz gesagt",
     directAnswer:
       "Stackwerkhaus erstellt Next.js Websites für Unternehmen, die eine schnelle, moderne und technisch saubere Website wollen. Next.js eignet sich besonders für professionelle Websites, Landingpages, digitale Marken, skalierbare Frontends und Projekte, die später um CMS, Blog, Automatisierungen oder individuelle Funktionen erweitert werden sollen. Der Vorteil liegt in Performance, sauberer Komponentenstruktur und hoher Flexibilität.",
+    guideHeading: "Next.js als Website-Basis verstehen",
+    finalHeading: "Web App sauber planen.",
+    updatedAt: landingPageUpdatedAt,
     keywords: [
       "Next.js Website erstellen lassen",
       "Next.js Agentur Deutschland",
@@ -482,12 +685,14 @@ export const landingPages = [
       "performante Website erstellen lassen",
       "React Website erstellen lassen",
     ],
-    homeTitle: "Next.js Website erstellen lassen",
+    homeTitle: "Web Apps",
     homeDescription:
       "Für Unternehmen, die eine performante, moderne und skalierbare technische Grundlage möchten.",
     sections: [
       {
         heading: "Warum Next.js für professionelle Websites sinnvoll ist",
+        summary:
+          "Next.js ist sinnvoll, wenn eine Website schnell, modular, SEO-fähig und später um Inhalte, Landingpages oder Funktionen erweiterbar sein soll.",
         paragraphs: [
           "Next.js ist besonders geeignet, wenn eine Website schnell, modular und zukunftsfähig aufgebaut werden soll. Für Unternehmen bedeutet das: bessere technische Kontrolle, saubere Komponenten, flexible Erweiterbarkeit und eine gute Grundlage für SEO, Performance und spätere Funktionen.",
           "Stackwerkhaus nutzt diese technische Basis, um moderne Websites zu bauen, die nicht wie Baukasten-Seiten wirken. Die Technologie ist dabei kein Selbstzweck. Sie ist sinnvoll, wenn Designqualität, Ladezeit, strukturierte Inhalte und spätere Erweiterungen wichtig sind.",
@@ -495,6 +700,8 @@ export const landingPages = [
       },
       {
         heading: "Für wen eine Next.js Website passt",
+        summary:
+          "Eine Next.js Website passt zu Unternehmen, die mehr technische Kontrolle, bessere Performance und eine langfristig erweiterbare Frontend-Basis brauchen.",
         paragraphs: [
           "Eine Next.js Website passt für Unternehmen, die mehr wollen als eine Standardseite. Dazu gehören digitale Dienstleister, Agenturen, SaaS-Projekte, Beratungen, Tech-Unternehmen, neue Marken, skalierende Startups und kleine Unternehmen mit technischem Anspruch.",
           "Auch für Landingpages, Portfolio-Seiten, Angebotsseiten und mehrsprachige Webauftritte kann Next.js sinnvoll sein. Entscheidend ist, dass die Website nicht nur einmal online gehen soll, sondern als erweiterbare Grundlage für Inhalte, Kampagnen und digitale Prozesse gedacht ist.",
@@ -502,6 +709,8 @@ export const landingPages = [
       },
       {
         heading: "Was Stackwerkhaus technisch umsetzt",
+        summary:
+          "Stackwerkhaus setzt Next.js Websites als saubere Frontends mit responsiver UI, strukturierten Inhalten, Formularen, Integrationen und SEO-Grundlagen um.",
         paragraphs: [
           "Stackwerkhaus kann Layouts, Komponenten, responsives Design, Animationen, Kontaktformulare, CMS-Anbindungen, API-Integrationen, SEO-Meta-Daten, strukturierte Inhalte, Sitemap, Performance-Optimierung und Hosting-Setup umsetzen.",
           "Je nach Projekt können auch Automatisierungen, KI-Funktionen, CRM-Übergaben oder individuelle Backend-Funktionen ergänzt werden. Wichtig ist, dass die technische Architektur zum tatsächlichen Projekt passt und nicht unnötig kompliziert wird.",
@@ -513,16 +722,69 @@ export const landingPages = [
           "SEO-Grundstruktur mit Metadaten, Sitemap und interner Verlinkung",
           "Erweiterbare Basis für Landingpages, Blog und Automatisierungen",
         ],
+        steps: [
+          {
+            title: "Frontend strukturieren",
+            text: "Layout, Komponenten, Navigation und Seitenlogik werden so aufgebaut, dass Inhalte klar ausspielbar bleiben.",
+          },
+          {
+            title: "SEO und Performance absichern",
+            text: "Meta-Daten, Sitemap, semantische Überschriften, interne Links und schnelle Auslieferung werden von Beginn an mitgedacht.",
+          },
+          {
+            title: "Erweiterungen vorbereiten",
+            text: "CMS, Blog, Landingpages, Formulare oder Automatisierungen können später auf derselben Basis ergänzt werden.",
+          },
+        ],
+        contextualLinks: [
+          {
+            href: "/landingpage-erstellen-lassen",
+            label: "Landingpages auf Next.js-Basis",
+            description:
+              "Für Kampagnen, Angebote und Seiten, die schnell laden und messbar bleiben sollen.",
+          },
+          {
+            href: "/ki-website-automatisierung",
+            label: "Next.js mit Automatisierung verbinden",
+            description:
+              "Für Websites, bei denen Formulare, Tools und Workflows zusammenspielen müssen.",
+          },
+        ],
       },
       {
         heading: "Next.js vs. WordPress",
+        summary:
+          "Next.js bietet mehr Kontrolle über Frontend, Performance und Erweiterbarkeit; WordPress ist oft stärker, wenn reine Redaktion im Vordergrund steht.",
         paragraphs: [
           "WordPress ist weit verbreitet und für viele Content-Projekte sinnvoll. Next.js ist stärker, wenn Performance, individuelle Frontend-Qualität, Skalierbarkeit und technische Kontrolle wichtig sind.",
           "Stackwerkhaus setzt Next.js besonders dann ein, wenn eine Website modern, schnell und individuell aufgebaut werden soll. Für sehr redaktionelle Projekte kann ein CMS angebunden werden, ohne dass das Frontend nach Standard-Theme aussehen muss.",
         ],
+        table: {
+          caption: "Vergleich zwischen Next.js und WordPress für Unternehmenswebsites",
+          columns: ["Kriterium", "Next.js", "WordPress"],
+          rows: [
+            [
+              "Frontend",
+              "Sehr individuell, komponentenbasiert und performant",
+              "Häufig theme- oder plugin-geprägt",
+            ],
+            [
+              "Redaktion",
+              "Mit angebundenem CMS flexibel lösbar",
+              "Direkt im System stark und vertraut",
+            ],
+            [
+              "Erweiterung",
+              "Gut für APIs, Apps, Landingpages und Workflows",
+              "Gut für klassische Content- und Plugin-Szenarien",
+            ],
+          ],
+        },
       },
       {
         heading: "SEO mit Next.js",
+        summary:
+          "Next.js kann SEO unterstützen, wenn Inhalte indexierbar, strukturiert, schnell und mit klaren Meta-Daten ausgeliefert werden.",
         paragraphs: [
           "Eine Next.js Website kann eine starke Grundlage für SEO sein, wenn sie richtig umgesetzt wird. Wichtig sind saubere HTML-Struktur, indexierbare Inhalte, korrekte Meta-Daten, semantische Überschriften, interne Verlinkung, strukturierte Daten, schnelle Ladezeiten und crawlbare Seiten.",
           "Die Technologie allein erzeugt kein Ranking. Entscheidend ist, dass Technik und Inhalt zusammenpassen. Eine schnelle Seite ohne hilfreiche Inhalte wird nicht automatisch sichtbar, und guter Content braucht trotzdem eine saubere technische Auslieferung.",
@@ -593,14 +855,18 @@ export const landingPages = [
   {
     slug: "ki-website-automatisierung",
     path: "/ki-website-automatisierung",
-    title: "Website mit KI-Automatisierung erstellen lassen | Stackwerkhaus",
+    title: "KI-Website automatisieren lassen | Stackwerkhaus",
     metaDescription:
-      "Website mit KI-Automatisierung erstellen lassen: Stackwerkhaus verbindet Webdesign, Kontaktformulare, Lead-Prozesse, Chatbot-Konzepte, CRM und Workflows.",
+      "KI-Website automatisieren lassen: Stackwerkhaus verbindet Webdesign, Kontaktformulare, Lead-Prozesse, Chatbot-Konzepte, CRM und Workflows.",
     h1: "Website mit KI-Automatisierung erstellen lassen",
     heroText:
       "Eine moderne Website kann mehr leisten als nur gut aussehen. Sie kann Anfragen strukturieren, Leads weiterleiten, Prozesse starten und KI-Funktionen integrieren. Stackwerkhaus erstellt Websites mit KI-Automatisierung für kleine Unternehmen, Dienstleister und digitale Marken. Der Fokus liegt auf professionellem Webdesign, sauberer technischer Umsetzung und Automatisierungen, die echte Arbeit im Unternehmen reduzieren.",
+    answerHeading: "KI-Website automatisieren: Kurz gesagt",
     directAnswer:
       "Stackwerkhaus erstellt Websites mit KI-Automatisierung für Unternehmen, die ihre Website mit digitalen Prozessen verbinden möchten. Möglich sind intelligente Kontaktformulare, Lead-Qualifizierung, CRM-Übergaben, automatische E-Mail-Abläufe, Chatbot-Konzepte, interne Benachrichtigungen, n8n- oder Zapier-Workflows und individuelle KI-Funktionen. Das Angebot eignet sich für Dienstleister, kleine Unternehmen und neue Marken, die online sichtbar werden und gleichzeitig Prozesse automatisieren möchten.",
+    guideHeading: "KI-Automatisierung sinnvoll einsetzen",
+    finalHeading: "Workflow sauber verbinden.",
+    updatedAt: landingPageUpdatedAt,
     keywords: [
       "Website mit KI erstellen lassen",
       "Website mit KI-Automatisierung",
@@ -609,12 +875,14 @@ export const landingPages = [
       "Website mit CRM-Automatisierung",
       "KI-Agentur Website-Automatisierung Deutschland",
     ],
-    homeTitle: "Website mit KI-Automatisierung",
+    homeTitle: "KI & Automatisierung",
     homeDescription:
       "Für Unternehmen, die Website, Kontaktformulare, Lead-Prozesse und digitale Workflows verbinden möchten.",
     sections: [
       {
         heading: "Was eine Website mit KI-Automatisierung kann",
+        summary:
+          "Eine Website mit KI-Automatisierung kann Anfragen qualifizieren, Daten weiterleiten, Follow-ups vorbereiten und interne Prozesse starten.",
         paragraphs: [
           "Eine normale Website zeigt Informationen. Eine Website mit Automatisierung kann zusätzlich Aufgaben auslösen. Zum Beispiel kann eine Anfrage automatisch kategorisiert, an ein CRM übergeben, per E-Mail bestätigt, intern verteilt oder mit weiteren Daten angereichert werden.",
           "KI kann dabei helfen, Anfragen zusammenzufassen, Inhalte vorzubereiten, Nutzerfragen zu beantworten oder interne Prozesse zu beschleunigen. Wichtig ist, dass die Automatisierung an einem echten Engpass ansetzt und nicht nur als technischer Effekt eingebaut wird.",
@@ -622,6 +890,8 @@ export const landingPages = [
       },
       {
         heading: "Beispiele für Automatisierungen",
+        summary:
+          "Sinnvolle Automatisierungen verbinden Formulare, CRM, E-Mail, Chatbot, n8n oder Zapier so, dass wiederkehrende Arbeit zuverlässig verschwindet.",
         paragraphs: [
           "Ein Kontaktformular kann automatisch prüfen, welche Leistung angefragt wird. Eine Anfrage kann direkt an ein CRM, Google Sheet, Notion, Slack, E-Mail-System oder ein anderes Tool weitergeleitet werden.",
           "Ein Chatbot kann häufige Fragen beantworten oder Besucher zum passenden Angebot führen. Ein KI-Workflow kann Leads zusammenfassen, Follow-up-Texte vorbereiten oder interne Aufgaben erstellen. Stackwerkhaus plant solche Abläufe so, dass sie zum Team, zur Datenlage und zum tatsächlichen Arbeitsprozess passen.",
@@ -633,9 +903,46 @@ export const landingPages = [
           "Chatbot-Konzepte für häufige Fragen und Angebotsführung",
           "KI-gestützte Zusammenfassungen, Benachrichtigungen und Follow-ups",
         ],
+        table: {
+          caption: "Beispiele für Website-Automatisierungen und passende Tools",
+          columns: ["Use Case", "Mögliche Anbindung", "Ergebnis"],
+          rows: [
+            [
+              "Lead-Qualifizierung",
+              "Kontaktformular, CRM, n8n oder Zapier",
+              "Anfragen werden sortiert und schneller bearbeitet.",
+            ],
+            [
+              "Chatbot-Konzept",
+              "FAQ, Angebotslogik oder Wissensbasis",
+              "Besucher finden schneller die passende Richtung.",
+            ],
+            [
+              "Follow-up",
+              "E-Mail-System, Slack, Notion oder Google Sheets",
+              "Nachrichten, Aufgaben und Daten landen am richtigen Ort.",
+            ],
+          ],
+        },
+        contextualLinks: [
+          {
+            href: "/landingpage-erstellen-lassen",
+            label: "Landingpage mit Lead-Prozess",
+            description:
+              "Für Kampagnen, deren Anfragen automatisch sortiert und weiterverarbeitet werden sollen.",
+          },
+          {
+            href: "/nextjs-website-erstellen-lassen",
+            label: "Technische Grundlage mit Next.js",
+            description:
+              "Für Websites, die Formulare, APIs und Workflows langfristig tragen müssen.",
+          },
+        ],
       },
       {
         heading: "Für wen das sinnvoll ist",
+        summary:
+          "KI-Automatisierung lohnt sich, wenn wiederkehrende Anfragen, manuelle Übergaben oder interne Aufgaben regelmäßig Zeit kosten.",
         paragraphs: [
           "Eine Website mit KI-Automatisierung eignet sich für Dienstleister, Agenturen, Coaches, Beratungen, Handwerker, Immobilienanbieter, Studios, lokale Unternehmen und kleine B2B-Firmen.",
           "Besonders sinnvoll ist sie, wenn regelmäßig ähnliche Anfragen eingehen, manuelle Prozesse Zeit kosten oder neue Leads schneller bearbeitet werden sollen. Nicht jeder Prozess braucht KI. Häufig reicht bereits eine saubere Automatisierung, die Informationen zuverlässig weiterleitet.",
@@ -643,13 +950,31 @@ export const landingPages = [
       },
       {
         heading: "Website zuerst, Automatisierung danach",
+        summary:
+          "Automatisierung funktioniert besser, wenn die Website vorher klare Angebote, verständliche Formulare und saubere Kontaktwege hat.",
         paragraphs: [
           "Stackwerkhaus denkt Automatisierung nicht isoliert. Zuerst muss die Website verständlich, schnell und vertrauenswürdig sein. Erst danach wird automatisiert. Eine schlechte Website wird durch KI nicht automatisch besser.",
           "Eine gute Website mit klaren Formularen, sauberer Struktur und passenden Workflows kann dagegen messbar Zeit sparen und Anfragen besser nutzbar machen. Deshalb beginnt die Planung nicht mit einem Tool, sondern mit der Frage, welche Information wirklich gebraucht wird.",
         ],
+        steps: [
+          {
+            title: "Kontaktweg klären",
+            text: "Zuerst wird festgelegt, welche Information eine Anfrage enthalten muss und wer intern damit arbeitet.",
+          },
+          {
+            title: "Workflow entwerfen",
+            text: "Danach werden Übergaben, Benachrichtigungen, Zusammenfassungen und Tool-Anbindungen geplant.",
+          },
+          {
+            title: "Kontrolle einbauen",
+            text: "Automatisierungen brauchen klare Grenzen, Tests und nachvollziehbare Fehlerwege, damit sensible Daten nicht blind laufen.",
+          },
+        ],
       },
       {
         heading: "Datenschutz und Kontrolle",
+        summary:
+          "Bei KI-Automatisierung müssen Datenschutz, Einwilligung, Tool-Auswahl, Datenweitergabe und interne Zuständigkeiten gemeinsam geplant werden.",
         paragraphs: [
           "KI-Automatisierung muss kontrolliert eingesetzt werden. Je nach Prozess müssen Datenschutz, Datenweitergabe, Einwilligung, Speicherdauer, Tool-Auswahl und interne Zuständigkeiten berücksichtigt werden.",
           "Stackwerkhaus plant Automatisierungen so, dass sie praktisch nutzbar und verständlich bleiben. Sensible Prozesse sollten nicht blind automatisiert werden. Gerade in Deutschland ist wichtig, dass Website, Formular, Einwilligung und angeschlossene Tools zusammen betrachtet werden.",
@@ -746,11 +1071,20 @@ export function getLandingPageMetadata(page: LandingPage): Metadata {
       siteName: siteConfig.name,
       title: page.title,
       description: page.metaDescription,
+      images: [
+        {
+          url: landingPageOgImage.url,
+          width: landingPageOgImage.width,
+          height: landingPageOgImage.height,
+          alt: landingPageOgImage.alt,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: page.title,
       description: page.metaDescription,
+      images: [landingPageOgImage.url],
     },
     robots: {
       index: true,
@@ -770,6 +1104,16 @@ export function getLandingPageStructuredData(page: LandingPage) {
     serviceType: page.schema.serviceType,
     description: page.schema.description,
     url: pageUrl,
+    mainEntityOfPage: {
+      "@id": `${pageUrl}#webpage`,
+    },
+    image: {
+      "@type": "ImageObject",
+      url: `${siteConfig.url}${landingPageOgImage.url}`,
+      width: landingPageOgImage.width,
+      height: landingPageOgImage.height,
+      caption: landingPageOgImage.alt,
+    },
     provider: {
       "@id": `${siteConfig.url}#professional-service`,
     },
@@ -802,11 +1146,22 @@ export function getLandingPageStructuredData(page: LandingPage) {
         headline: page.h1,
         description: page.metaDescription,
         inLanguage: "de-DE",
+        dateModified: page.updatedAt,
         isPartOf: {
           "@id": `${siteConfig.url}#website`,
         },
         about: {
           "@id": serviceId,
+        },
+        mainEntity: {
+          "@id": serviceId,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${siteConfig.url}${landingPageOgImage.url}`,
+          width: landingPageOgImage.width,
+          height: landingPageOgImage.height,
+          caption: landingPageOgImage.alt,
         },
       },
       commonProvider,

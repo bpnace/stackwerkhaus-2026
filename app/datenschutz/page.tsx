@@ -110,8 +110,9 @@ export default function DatenschutzPage() {
             </p>
             <p className="mt-2">
               <strong className="text-foreground">Rechtsgrundlage:</strong> Art.
-              6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) oder Art. 6 Abs.
-              1 lit. f DSGVO (allgemeine Anfragen)
+              6 Abs. 1 lit. b DSGVO, wenn deine Anfrage auf ein Angebot oder
+              eine Zusammenarbeit gerichtet ist, sonst Art. 6 Abs. 1 lit. f
+              DSGVO bei allgemeinen Anfragen
               <br />
               <strong className="text-foreground">Zweck:</strong> Bearbeitung
               deiner Anfrage
@@ -168,8 +169,10 @@ export default function DatenschutzPage() {
             </p>
             <p className="mt-2">
               <strong className="text-foreground">Rechtsgrundlage:</strong> Art.
-              6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) sowie Art. 6
-              Abs. 1 lit. f DSGVO (Missbrauchs- und Spam-Abwehr)
+              6 Abs. 1 lit. b DSGVO, wenn der Webseitecheck auf ein Angebot,
+              eine Zusammenarbeit oder vorvertragliche Schritte gerichtet ist,
+              sowie Art. 6 Abs. 1 lit. f DSGVO bei allgemeinen Anfragen,
+              Missbrauchs- und Spam-Abwehr
               <br />
               <strong className="text-foreground">Zweck:</strong> Bearbeitung
               des Webseitechecks, Einordnung deiner Website und Rückmeldung
