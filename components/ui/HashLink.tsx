@@ -46,6 +46,20 @@ export function HashLink({ href, onClick, scroll, children, ...props }: HashLink
     const isSamePath = targetUrl.pathname === pathname;
     const hash = targetUrl.hash.replace(/^#/, "");
 
+    if (isSamePath && !hash) {
+      event.preventDefault();
+      window.history.replaceState(
+        null,
+        "",
+        `${targetUrl.pathname}${targetUrl.search}`,
+      );
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return;
+    }
+
     if (!hash || !isSamePath) {
       return;
     }

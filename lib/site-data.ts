@@ -175,34 +175,34 @@ const pricingFeaturesUntil = (includedCount: number) =>
 
 export const pricingTiers = [
   {
-    name: "Starter",
+    name: "Rohbau",
     price: "799",
     originalPrice: "899",
     discountLabel: "11 % Rabatt für Neukunden",
     decision: "schnell online",
     description:
-      "Für Dienstleister, die schnell online gehen wollen, mit fokussiertem Einstieg, SEO Basis und professioneller Begleitung.",
+      "Für neue Websites oder sehr schwache bestehende Seiten.",
     timeline: "3 Wochen",
     pages: "5 Seiten",
     features: pricingFeaturesUntil(4),
   },
   {
-    name: "Business",
+    name: "Sanierung",
     price: "1.499",
     decision: "Relaunch mit Ausbau",
     description:
-      "Alles aus Starter, plus CMS, Blog, SEO-Grundlagen und Analytics für Marken mit mehr Inhalt und mehr Bewegung.",
+      "Für Relaunches, bei denen Struktur, Design und Technik neu sortiert werden.",
     timeline: "4 Wochen",
     pages: "bis 8 Seiten",
     highlight: true,
     features: pricingFeaturesUntil(7),
   },
   {
-    name: "Premium",
+    name: "Bauwerk",
     price: "2.499",
     decision: "Website + Automatisierungen",
     description:
-      "Maximale digitale Präsenz mit Custom Features, Integrationen und vollständigerem System für Wachstum und Leadgenerierung.",
+      "Für Websites, Web Apps und komplexere Full Stack Projekte.",
     timeline: "5–6 Wochen",
     pages: "10+ Seiten",
     features: pricingFeaturesUntil(pricingFeatureLabels.length),

@@ -3,6 +3,16 @@ import { siteConfig } from "@/lib/site-config";
 
 const siteUrl = new URL(siteConfig.url);
 
+const AI_USER_AGENTS = [
+  "OAI-SearchBot",
+  "GPTBot",
+  "PerplexityBot",
+  "ClaudeBot",
+  "Claude-User",
+  "Claude-SearchBot",
+  "Google-Extended",
+] as const;
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
@@ -10,10 +20,10 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
       },
-      {
-        userAgent: "OAI-SearchBot",
+      ...AI_USER_AGENTS.map((userAgent) => ({
+        userAgent,
         allow: "/",
-      },
+      })),
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,
     host: siteUrl.host,
