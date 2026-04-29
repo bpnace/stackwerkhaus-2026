@@ -31,7 +31,7 @@ export const services = [
 export const serviceProcessSteps = [
   {
     number: "01",
-    title: "Bauaufnahme",
+    title: "Bestandsaufnahme",
     description:
       "Wir prüfen, was schon steht, was wackelt und was dein digitaler Auftritt leisten soll.",
     tags: ["Analyse", "Ziele", "Website Zustand", "Projektumfang"],

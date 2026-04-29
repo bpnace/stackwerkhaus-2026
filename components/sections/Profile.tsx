@@ -89,14 +89,17 @@ export function Profile() {
 
   return (
     <section className="section-space">
-      <div ref={scope} className="section-shell grid gap-12 lg:grid-cols-[1fr_1.05fr]">
-        <div>
+      <div
+        ref={scope}
+        className="section-shell grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
+      >
+        <div className="min-w-0">
           <SectionHeader label="Profil" marker="(SKWKHS® — 04)" />
-          <div className="space-y-6 max-w-2xl">
+          <div className="profile-copy space-y-6">
             <div className="profile-name display-md">
               {renderProfileName(siteConfig.founder)}
             </div>
-            <p className="text-lg leading-8 text-muted">
+            <p className="text-base leading-7 text-muted md:text-lg md:leading-8">
               Webdesigner und Frontend-Entwickler aus Berlin. Stackwerkhaus
               verbindet Positionierung, Inhaltsführung, Design und technische
               Umsetzung, damit Websites nicht nur präsent sind, sondern präziser
@@ -107,7 +110,7 @@ export function Profile() {
                 href={githubProfileUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-4 block w-full max-w-2xl text-left"
+                className="profile-github-link mt-4 block w-full text-left"
                 aria-label="GitHub-Commit-Aktivität"
                 title="GitHub Contributions"
               >
@@ -142,7 +145,7 @@ export function Profile() {
           </div>
         </div>
 
-        <div className="grid gap-x-8 sm:grid-cols-2">
+        <div className="grid min-w-0 gap-x-8 sm:grid-cols-2">
           {skills.map((skill) => (
             <div key={skill} className="border-t border-border py-3 text-sm text-foreground/90">
               {skill}

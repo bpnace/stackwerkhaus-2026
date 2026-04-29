@@ -636,6 +636,7 @@
 
   .profile-name {
     color: transparent;
+    max-inline-size: 100%;
   }
 
   .profile-name-word {
@@ -662,6 +663,14 @@
     color: var(--text);
     clip-path: inset(100% 0 0 0);
     will-change: clip-path;
+  }
+
+  .profile-copy {
+    inline-size: min(100%, 42rem);
+  }
+
+  .profile-github-link {
+    inline-size: 100%;
   }
 
   .experience-scramble {
@@ -695,6 +704,19 @@
     color: inherit;
     opacity: 0;
     will-change: opacity;
+  }
+
+  .experience-row .experience-scramble-stack {
+    vertical-align: baseline;
+  }
+
+  .experience-row .experience-scramble-reserve,
+  .experience-row .experience-scramble-visual {
+    white-space: nowrap;
+  }
+
+  .experience-meta-field {
+    max-inline-size: 100%;
   }
 
   .mdx-body {
@@ -755,7 +777,7 @@
 
   .github-contrib-shell {
     position: relative;
-    min-height: 120px;
+    width: 100%;
     border-radius: 4px;
     overflow: hidden;
     background: #020202;
@@ -764,12 +786,8 @@
   .github-contrib-grid {
     position: relative;
     width: 100%;
-    min-height: 120px;
-    height: 100%;
     overflow: hidden;
     isolation: isolate;
-    transform: scaleY(1.12);
-    transform-origin: top;
   }
 
   .github-contrib-grid--placeholder {

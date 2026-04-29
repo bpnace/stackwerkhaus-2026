@@ -54,6 +54,9 @@ export function Services() {
         "[data-process-step='true']",
         root,
       );
+      const isMobileTimeline = () =>
+        window.matchMedia("(max-width: 767px)").matches;
+      const getInactiveProcessAlpha = () => (isMobileTimeline() ? 0.86 : 0.52);
       const activeFrames = new Map<HTMLElement, number>();
       let playedRows = new WeakSet<HTMLElement>();
       let activeProcessIndex = -1;
@@ -180,7 +183,7 @@ export function Services() {
           const isActive = index <= activeIndex;
           step.dataset.active = isActive ? "true" : "false";
           gsap.to(step, {
-            autoAlpha: isActive ? 1 : 0.52,
+            autoAlpha: isActive ? 1 : getInactiveProcessAlpha(),
             duration: 0.35,
             ease: "power2.out",
             overwrite: "auto",
@@ -209,12 +212,19 @@ export function Services() {
 
           return lineBottom >= markerTrigger ? index : latest;
         }, -1);
+        const hasEnteredMobileViewport =
+          isMobileTimeline() &&
+          trackRect.top <= window.innerHeight * 0.92 &&
+          trackRect.bottom >= 0;
+        const nextActiveIndex = hasEnteredMobileViewport
+          ? Math.max(activeIndex, 0)
+          : activeIndex;
 
-        setActiveStep(activeIndex);
+        setActiveStep(nextActiveIndex);
       });
 
       if (processSteps.length) {
-        gsap.set(processSteps, { autoAlpha: 0.52 });
+        gsap.set(processSteps, { autoAlpha: getInactiveProcessAlpha() });
         processSteps.forEach((step) => {
           step.dataset.active = "false";
         });
@@ -418,9 +428,12 @@ export function Services() {
             </div>
           </div>
 
-          <div data-process-track="true" className="relative border-y border-white/14">
+          <div
+            data-process-track="true"
+            className="relative border-y border-white/14"
+          >
             <div
-              className="pointer-events-none absolute inset-y-0 left-[2.25rem] hidden w-[2px] -translate-x-1/2 bg-white/12 md:block"
+              className="pointer-events-none absolute inset-y-0 left-5 w-[2px] -translate-x-1/2 bg-white/12 md:left-[2.25rem]"
               aria-hidden="true"
             >
               <span
@@ -434,9 +447,9 @@ export function Services() {
                 key={step.number}
                 data-process-step="true"
                 data-active="false"
-                className="group/process relative grid gap-5 border-white/14 py-7 transition-colors first:border-t-0 not-first:border-t data-[active=true]:border-foreground/36 md:grid-cols-[5rem_1fr] md:gap-8 md:py-8"
+                className="group/process relative grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-5 border-white/14 py-7 transition-colors first:border-t-0 not-first:border-t data-[active=true]:border-foreground/36 md:grid-cols-[5rem_1fr] md:gap-8 md:py-8"
               >
-                <div className="flex items-center gap-4 md:block">
+                <div className="relative flex justify-center md:block">
                   <span
                     data-process-marker="true"
                     className="relative z-10 grid h-10 w-10 origin-right place-items-center overflow-hidden bg-background text-[11px] font-semibold tracking-[0.22em] text-foreground/70 transition-transform duration-300 ease-out md:-translate-x-[5px] group-data-[active=true]/process:scale-[1.03]"
@@ -454,19 +467,18 @@ export function Services() {
                       {step.number}
                     </span>
                   </span>
-                  <span className="h-px flex-1 bg-white/14 md:hidden" />
                 </div>
 
                 <div className="grid gap-5 lg:grid-cols-[minmax(220px,0.42fr)_1fr] lg:gap-10">
                   <div>
-                    <h4 className="text-2xl font-semibold tracking-tight text-foreground/72 transition-colors group-data-[active=true]/process:text-foreground md:text-3xl">
+                    <h4 className="text-2xl font-semibold tracking-tight text-foreground/82 transition-colors group-data-[active=true]/process:text-foreground md:text-3xl md:text-foreground/72">
                       {step.title}
                     </h4>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {step.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="border border-white/12 px-3 py-1.5 text-[11px] uppercase tracking-[0.24em] text-foreground/48 transition-colors group-data-[active=true]/process:border-white/24 group-data-[active=true]/process:text-foreground/72"
+                          className="border border-white/16 px-3 py-1.5 text-[11px] uppercase tracking-[0.24em] text-foreground/58 transition-colors group-data-[active=true]/process:border-white/28 group-data-[active=true]/process:text-foreground/78 md:border-white/12 md:text-foreground/48 md:group-data-[active=true]/process:border-white/24 md:group-data-[active=true]/process:text-foreground/72"
                         >
                           {tag}
                         </span>
@@ -474,7 +486,7 @@ export function Services() {
                     </div>
                   </div>
 
-                  <p className="max-w-2xl text-base leading-7 text-muted/72 transition-colors group-data-[active=true]/process:text-muted lg:pt-1">
+                  <p className="max-w-2xl text-base leading-7 text-muted/86 transition-colors group-data-[active=true]/process:text-muted md:text-muted/72 lg:pt-1">
                     {step.description}
                   </p>
                 </div>

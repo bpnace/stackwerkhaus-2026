@@ -181,19 +181,27 @@ export function Experience() {
           {experience.map((entry) => (
             <article
               key={entry.title}
-              className="experience-row grid gap-4 border-b border-border py-6 md:grid-cols-[1.1fr_180px_220px_120px] md:items-center"
+              className="experience-row grid gap-3 border-b border-border py-6 md:grid-cols-[minmax(0,0.92fr)_minmax(280px,0.58fr)] md:items-start md:gap-8 md:py-7"
             >
-              <h3 className="text-2xl font-semibold tracking-tight">
+              <h3 className="min-w-0 text-2xl font-semibold tracking-tight">
                 <ScrambleField text={entry.title} />
               </h3>
-              <div className="text-sm text-muted">
-                <ScrambleField text={entry.years} />
-              </div>
-              <div className="text-sm text-muted">
-                <ScrambleField text={entry.role} />
-              </div>
-              <div className="text-sm text-muted">
-                <ScrambleField text={entry.place} />
+
+              <div className="experience-meta grid min-w-0 gap-2 text-sm text-muted md:justify-items-end md:text-right">
+                <div className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1 md:justify-end">
+                  <span className="experience-meta-field">
+                    <ScrambleField text={entry.years} />
+                  </span>
+                  <span className="text-foreground/26" aria-hidden="true">
+                    /
+                  </span>
+                  <span className="experience-meta-field">
+                    <ScrambleField text={entry.role} />
+                  </span>
+                </div>
+                <div className="experience-meta-field text-foreground/72">
+                  <ScrambleField text={entry.place} />
+                </div>
               </div>
             </article>
           ))}
