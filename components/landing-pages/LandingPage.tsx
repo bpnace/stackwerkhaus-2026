@@ -72,20 +72,35 @@ export function LandingPage({ page }: LandingPageProps) {
       </section>
 
       <section className="border-y border-black/10 bg-[#f4eee5] py-12 text-[#111111] md:py-16">
-        <div className="section-shell grid gap-8 lg:grid-cols-[minmax(220px,0.35fr)_1fr] lg:gap-14">
-          <div>
-            <div className="text-[length:var(--label)] uppercase tracking-[0.35em] text-black/48">
-              Auf den Punkt
-            </div>
+        <div className="section-shell">
+          <div className="mx-auto grid max-w-5xl justify-items-center gap-5 text-center">
             <h2 className="mt-4 text-3xl font-black tracking-[-0.045em] text-[#111111] md:text-5xl">
               {page.answerHeading}
             </h2>
+            <p className="max-w-4xl text-lg leading-8 text-black/72 md:text-xl md:leading-9">
+              {page.directAnswer}
+            </p>
           </div>
-          <p className="max-w-4xl text-lg leading-8 text-black/72 md:text-xl md:leading-9">
-            {page.directAnswer}
-          </p>
         </div>
       </section>
+
+      {page.schema.review ? (
+        <section className="border-b border-border py-10 md:py-12">
+          <div className="section-shell grid gap-6 md:grid-cols-[minmax(180px,0.28fr)_1fr] md:gap-12">
+            <div className="eyebrow text-foreground/60">
+              Wir wissen wovon wir sprechen.
+            </div>
+            <figure className="max-w-4xl">
+              <blockquote className="text-xl leading-8 text-foreground md:text-2xl md:leading-9">
+                “{page.schema.review.body}”
+              </blockquote>
+              <figcaption className="mt-5 text-sm uppercase tracking-[0.24em] text-muted">
+                {page.schema.review.author}
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section-space">
         <div className="section-shell">
@@ -255,9 +270,6 @@ export function LandingPage({ page }: LandingPageProps) {
               Wenn die Richtung passt, klären wir Umfang, Inhalt, technische
               Anforderungen und den saubersten Weg zum Launch. Kurz, konkret
               und ohne unnötigen Agentur-Nebel.
-            </p>
-            <p className="text-sm uppercase tracking-[0.24em] text-muted">
-              Stand: {page.updatedAt}
             </p>
             <HashLink
               href="/#kontakt"

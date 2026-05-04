@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
+import { verticalLandingPages } from "@/lib/vertical-landing-pages";
 
 type LandingPageSection = {
   heading: string;
@@ -33,10 +34,16 @@ type LandingPageSchema = {
   serviceName: string;
   serviceType: string;
   description: string;
+  areaServed?: string;
   offer?: {
     name: string;
     price: string;
     description: string;
+  };
+  review?: {
+    name: string;
+    author: string;
+    body: string;
   };
 };
 
@@ -71,11 +78,16 @@ const landingPageOgImage = {
 } as const;
 
 const commonProvider = {
-  "@type": "ProfessionalService",
+  "@type": ["ProfessionalService", "LocalBusiness"],
   "@id": `${siteConfig.url}#professional-service`,
   name: siteConfig.name,
   url: siteConfig.url,
   email: siteConfig.email,
+  priceRange: "ab 799 EUR",
+  founder: {
+    "@type": "Person",
+    name: siteConfig.founder,
+  },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Berlin",
@@ -99,7 +111,7 @@ const commonWebsite = {
   },
 };
 
-export const landingPages = [
+const coreLandingPages = [
   {
     slug: "website-erstellen-lassen-deutschland",
     path: "/website-erstellen-lassen-deutschland",
@@ -109,7 +121,7 @@ export const landingPages = [
     h1: "Schnelle professionelle Website erstellen lassen, deutschlandweit",
     heroText:
       "Du brauchst eine moderne Website, die schnell online geht, professionell aussieht und technisch sauber umgesetzt ist? Stackwerkhaus erstellt Websites für kleine Unternehmen, Dienstleister und neue Marken in ganz Deutschland. Du bekommst Strategie, Webdesign, Frontend-Entwicklung, responsive Umsetzung, SEO-Grundstruktur, DSGVO-Grundsetup, Kontaktformular, Hosting-Setup und Launch-Begleitung aus einer Hand. Das Starter-Paket beginnt ab 799 Euro und ist auf eine klare, schnelle Umsetzung ausgelegt.",
-    answerHeading: "Website erstellen lassen: Kurz gesagt",
+    answerHeading: "Wann eine neue Website passt?",
     directAnswer:
       "Stackwerkhaus erstellt komplette Websites für kleine Unternehmen, Dienstleister und neue Marken in Deutschland. Diese Seite passt, wenn eine neue Website mit Struktur, Design, Frontend, SEO-Grundlage, Kontaktformular und Launch-Begleitung gebraucht wird; das Starter-Paket beginnt ab 799 Euro.",
     guideHeading: "Website-Projekt richtig einordnen",
@@ -190,7 +202,7 @@ export const landingPages = [
             ],
             [
               "SEO-Basis",
-              "Meta-Daten, Sitemap, Indexieren und interne Verlinkung",
+              "Metadaten, Sitemap, Indexierung und interne Verlinkung",
               "Suchmaschinen können die Inhalte besser erfassen.",
             ],
           ],
@@ -328,7 +340,7 @@ export const landingPages = [
     h1: "Webdesign für kleine Unternehmen, Dienstleister und Gründer",
     heroText:
       "Kleine Unternehmen brauchen keine überladene Website. Sie brauchen eine Website, die Vertrauen schafft, Leistungen klar erklärt und Anfragen erzeugt. Stackwerkhaus entwickelt moderne Websites für kleine Unternehmen, Dienstleister, Gründer und neue Marken in Deutschland. Der Fokus liegt auf verständlicher Struktur, professionellem Design, schneller Ladezeit, sauberer mobiler Darstellung und einer technischen Grundlage, die später erweitert werden kann.",
-    answerHeading: "Webdesign für kleine Unternehmen: Kurz gesagt",
+    answerHeading: "Webdesign auch für kleine Unternehmen?",
     directAnswer:
       "Stackwerkhaus entwickelt Webdesign für kleine Unternehmen, die online vertrauenswürdiger wirken und mehr passende Anfragen bekommen möchten. Diese Seite passt, wenn Angebotsklarheit, Nutzerführung, visuelle Qualität und Kontaktwege wichtiger sind als eine rein technische Next.js-Entscheidung.",
     guideHeading: "Webdesign für kleinere Firmen einordnen",
@@ -527,7 +539,7 @@ export const landingPages = [
     h1: "Landingpage erstellen lassen für Angebote, Kampagnen und Anfragen",
     heroText:
       "Eine gute Landingpage hat ein klares Ziel: Besucher sollen verstehen, warum dein Angebot relevant ist und was sie als Nächstes tun sollen. Stackwerkhaus erstellt Landingpages für Dienstleister, kleine Unternehmen, Kampagnen, Google Ads, Social-Ads und neue Angebote. Der Fokus liegt auf klarer Botschaft, starker Nutzerführung, überzeugender Struktur, schneller Ladezeit, mobiler Optimierung und messbaren Kontaktanfragen.",
-    answerHeading: "Landingpage erstellen lassen: Kurz gesagt",
+    answerHeading: "Eine eigene Landingpage erstellen lassen?",
     directAnswer:
       "Stackwerkhaus erstellt Landingpages für Angebote, Kampagnen und Leadgenerierung. Diese Seite passt, wenn eine einzelne Zielgruppe zu einer klaren Handlung geführt werden soll, zum Beispiel Anfrage senden, Termin buchen oder Angebot anfordern.",
     guideHeading: "Landingpage sinnvoll planen",
@@ -560,7 +572,7 @@ export const landingPages = [
           "Eine Landingpage optimiert eine einzelne Entscheidung; eine Website erklärt das ganze Unternehmen.",
         paragraphs: [
           "Diese Seite ist der richtige Einstieg, wenn ein bestimmtes Angebot, eine Anzeige oder eine Kampagne mehr Anfragen erzeugen soll. Wenn noch gar keine belastbare Website existiert, ist zuerst die Website-Erstellen-Seite sinnvoller.",
-          "Für Suchmaschinen und AI-Antworten ist diese Trennung wichtig, weil Landingpage-Intent meist näher an Kampagne, Conversion und Leadgenerierung liegt als an allgemeiner Unternehmensdarstellung.",
+          "Für Suchmaschinen und KI-Antworten ist diese Trennung wichtig, weil Landingpage-Intent meist näher an Kampagne, Conversion und Leadgenerierung liegt als an allgemeiner Unternehmensdarstellung.",
         ],
         contextualLinks: [
           {
@@ -618,7 +630,7 @@ export const landingPages = [
             [
               "FAQ",
               "Einwände und häufige Fragen direkt beantworten",
-              "Bedient Longtail-Fragen und AI-Antwortblöcke.",
+              "Bedient Longtail-Fragen und KI-Antwortblöcke.",
             ],
             [
               "Tracking",
@@ -740,7 +752,7 @@ export const landingPages = [
     h1: "Next.js Website erstellen lassen für schnelle moderne Webauftritte",
     heroText:
       "Eine moderne Website sollte nicht nur gut aussehen, sondern schnell laden, sauber strukturiert sein und langfristig erweiterbar bleiben. Stackwerkhaus erstellt Websites mit Next.js für Unternehmen, Dienstleister und digitale Marken, die eine performante technische Basis möchten. Der Fokus liegt auf hochwertigem Frontend, klarer Nutzerführung, responsiver Darstellung, SEO-Grundstruktur und skalierbarer Umsetzung.",
-    answerHeading: "Next.js Website erstellen lassen: Kurz gesagt",
+    answerHeading: "Mit Next.js eine Website erstellen lassen?",
     directAnswer:
       "Stackwerkhaus erstellt Next.js Websites für Unternehmen, die Performance, saubere Frontend-Architektur und langfristige Erweiterbarkeit brauchen. Diese Seite passt, wenn technische Qualität, CMS-Anbindung, Blog, Landingpages, APIs oder Automatisierungen wichtiger sind als eine einfache Standard-Website.",
     guideHeading: "Next.js als Website-Basis verstehen",
@@ -953,7 +965,7 @@ export const landingPages = [
     h1: "Website mit KI-Automatisierung erstellen lassen",
     heroText:
       "Eine moderne Website kann mehr leisten als nur gut aussehen. Sie kann Anfragen strukturieren, Leads weiterleiten, Prozesse starten und KI-Funktionen integrieren. Stackwerkhaus erstellt Websites mit KI-Automatisierung für kleine Unternehmen, Dienstleister und digitale Marken. Der Fokus liegt auf professionellem Webdesign, sauberer technischer Umsetzung und Automatisierungen, die echte Arbeit im Unternehmen reduzieren.",
-    answerHeading: "KI-Website automatisieren: Kurz gesagt",
+    answerHeading: "KI und Automatisierung sinnvoll einsetzen?",
     directAnswer:
       "Stackwerkhaus verbindet Websites mit KI-Automatisierung, Formularlogik, Lead-Qualifizierung, CRM-Übergaben und n8n- oder Zapier-Workflows. Diese Seite passt, wenn eine Website nicht nur informieren, sondern Anfragen strukturieren und interne Arbeit reduzieren soll.",
     guideHeading: "KI-Automatisierung sinnvoll einsetzen",
@@ -1006,7 +1018,7 @@ export const landingPages = [
       {
         heading: "Beispiele für Automatisierungen",
         summary:
-          "Sinnvolle Automatisierungen verbinden Formulare, CRM, E-Mail, Chatbot, n8n oder Zapier so, dass wiederkehrende Arbeit zuverlässig verschwindet.",
+          "Sinnvolle Automatisierungen verbinden Formulare, CRM, E-Mail, Chatbot, n8n oder Zapier so, dass wiederkehrende Arbeit zuverlässig reduziert wird.",
         paragraphs: [
           "Ein Kontaktformular kann automatisch prüfen, welche Leistung angefragt wird. Eine Anfrage kann direkt an ein CRM, Google Sheet, Notion, Slack, E-Mail-System oder ein anderes Tool weitergeleitet werden.",
           "Ein Chatbot kann häufige Fragen beantworten oder Besucher zum passenden Angebot führen. Ein KI-Workflow kann Leads zusammenfassen, Follow-up-Texte vorbereiten oder interne Aufgaben erstellen. Stackwerkhaus plant solche Abläufe so, dass sie zum Team, zur Datenlage und zum tatsächlichen Arbeitsprozess passen.",
@@ -1082,7 +1094,7 @@ export const landingPages = [
           },
           {
             title: "Kontrolle einbauen",
-            text: "Automatisierungen brauchen klare Grenzen, Tests und nachvollziehbare Fehlerwege, damit sensible Daten nicht blind laufen.",
+            text: "Automatisierungen brauchen klare Grenzen, Tests und nachvollziehbare Fehlerwege, damit sensible Daten nicht unkontrolliert verarbeitet werden.",
           },
         ],
       },
@@ -1159,6 +1171,175 @@ export const landingPages = [
   },
 ] as const satisfies readonly LandingPage[];
 
+type CoreLandingPageSlug = (typeof coreLandingPages)[number]["slug"];
+
+const coreLandingPageHubLinks = {
+  "website-erstellen-lassen-deutschland": [
+    {
+      href: "/webdesign-therapeuten-berlin",
+      label: "Website für Therapeuten in Berlin",
+      description:
+        "Für sensible Praxis-Websites mit Vertrauen, Terminweg und Datenschutz-Basis.",
+    },
+    {
+      href: "/webdesign-handwerk-berlin",
+      label: "Webdesign für Handwerk in Berlin",
+      description:
+        "Für Handwerksbetriebe mit lokalen Leistungen, Referenzen und Anfrageweg.",
+    },
+    {
+      href: "/webdesign-immobilienmarkler",
+      label: "Website für Immobilienmakler",
+      description:
+        "Für Makler-Websites mit Objektlogik, Bewertungsnähe und Lead-Strecke.",
+    },
+    {
+      href: "/website-foerderung-digitalisierung",
+      label: "Website-Förderung und Digitalisierung",
+      description:
+        "Für Projekte, bei denen Website, Digitalisierung und Förderung zusammen geplant werden.",
+    },
+  ],
+  "webdesign-kleine-unternehmen": [
+    {
+      href: "/webdesign-coaching-praxis",
+      label: "Webdesign für Coaching-Praxen",
+      description:
+        "Für Coaches und Berater mit Angebotslogik, Erstgespräch und Positionierung.",
+    },
+    {
+      href: "/webdesign-zahnarztpraxis-berlin",
+      label: "Webdesign für Zahnarztpraxen in Berlin",
+      description:
+        "Für Praxen mit Team, Leistungen, Terminweg und BFSG-Prüfung nach Bedarf.",
+    },
+    {
+      href: "/webdesign-handwerk-berlin",
+      label: "Webdesign für Handwerk in Berlin",
+      description:
+        "Für lokale Betriebe, die Leistungen, Referenzen und Anfragequalität verbessern möchten.",
+    },
+    {
+      href: "/webdesign-immobilienmarkler",
+      label: "Webdesign für Immobilienmakler",
+      description:
+        "Für Makler, die Vertrauen, lokale Sichtbarkeit und Lead-Formulare sauber verbinden wollen.",
+    },
+  ],
+  "landingpage-erstellen-lassen": [
+    {
+      href: "/landingpage-pre-seed",
+      label: "Landingpage für Pre-Seed-Startups",
+      description:
+        "Für Pitch, Waitlist, Pilotkunden und erste belastbare Produktnachfrage.",
+    },
+    {
+      href: "/webdesign-saas-startup",
+      label: "Webdesign für SaaS-Startups",
+      description:
+        "Für Produktstory, Demo-CTA, Pricing-Struktur und technische Glaubwürdigkeit.",
+    },
+    {
+      href: "/website-foerderung-digitalisierung",
+      label: "Förderlogik für Website-Projekte",
+      description:
+        "Für Landingpages und Websites, die in ein Digitalisierungsprojekt passen sollen.",
+    },
+    {
+      href: "/website-foerderung-berlin",
+      label: "Website-Förderung in Berlin",
+      description:
+        "Für Berliner Projekte, bei denen Förderfähigkeit und Projektumfang früh sortiert werden.",
+    },
+  ],
+  "nextjs-website-erstellen-lassen": [
+    {
+      href: "/webdesign-saas-startup",
+      label: "Next.js für SaaS-Websites",
+      description:
+        "Für Produktseiten, die schnell laden, modular wachsen und technisch glaubwürdig wirken müssen.",
+    },
+    {
+      href: "/landingpage-pre-seed",
+      label: "Pre-Seed-Landingpage auf Next.js-Basis",
+      description:
+        "Für schlanke Validierungsseiten mit sauberer Performance und messbarer Nachfrage.",
+    },
+    {
+      href: "/webdesign-immobilienmarkler",
+      label: "Makler-Website mit Lead-Strecke",
+      description:
+        "Für Websites mit Objektlogik, Formularen und späteren Erweiterungen.",
+    },
+    {
+      href: "/website-foerderung-digitalisierung",
+      label: "Technische Website für Digitalisierungsprojekte",
+      description:
+        "Für Projekte, bei denen Website, CMS, Formulare oder Workflows zusammen geplant werden.",
+    },
+  ],
+  "ki-website-automatisierung": [
+    {
+      href: "/webdesign-saas-startup",
+      label: "SaaS-Website mit Demo- und Lead-Fokus",
+      description:
+        "Für Produktseiten, deren Anfragen, Demos oder Waitlists messbar weiterlaufen sollen.",
+    },
+    {
+      href: "/landingpage-pre-seed",
+      label: "Pre-Seed-Landingpage mit Tracking",
+      description:
+        "Für frühe Nachfrage, die nicht nur sichtbar, sondern auswertbar werden soll.",
+    },
+    {
+      href: "/webdesign-immobilienmarkler",
+      label: "Immobilienmakler-Website mit Lead-Strecke",
+      description:
+        "Für Anfrageformulare, Objektinteresse und saubere Weitergabe an den Arbeitsprozess.",
+    },
+    {
+      href: "/website-foerderung-digitalisierung",
+      label: "Automatisierung als Digitalisierungsbaustein",
+      description:
+        "Für Projekte, bei denen Website und interne Abläufe gemeinsam verbessert werden.",
+    },
+  ],
+} satisfies Record<CoreLandingPageSlug, readonly LandingPageLink[]>;
+
+function createCoreHubSection(links: readonly LandingPageLink[]): LandingPageSection {
+  return {
+    heading: "Passende Spezialisierungen",
+    summary:
+      "Diese Hub-Seite ist der breite Einstieg. Wenn Branche, Stadt oder Projekttyp schon klar sind, führen die engeren Seiten schneller zur passenden Antwort.",
+    paragraphs: [
+      "Die folgenden Spezialisierungen sind bewusst enger gefasst. Sie beantworten konkrete Suchanfragen mit eigenem Preisrahmen, FAQ, Caseteaser und interner Verlinkung, statt dieselbe Hauptseite nur umzubenennen.",
+      "Wenn eine Spezialisierung genau passt, ist sie der bessere Einstieg. Wenn das Projekt noch breiter ist, bleibt diese Seite der zentrale Überblick.",
+    ],
+    contextualLinks: links,
+  };
+}
+
+const hubLandingPages = coreLandingPages.map((page) => {
+  const hubLinks = coreLandingPageHubLinks[page.slug];
+
+  return {
+    ...page,
+    sections: [
+      ...page.sections,
+      createCoreHubSection(hubLinks),
+    ],
+    internalLinks: [
+      ...page.internalLinks,
+      ...hubLinks.slice(0, 2),
+    ],
+  };
+}) satisfies readonly LandingPage[];
+
+export const landingPages = [
+  ...hubLandingPages,
+  ...verticalLandingPages,
+] satisfies readonly LandingPage[];
+
 export const landingPagePaths = landingPages.map((page) => page.path);
 
 export function getLandingPage(slug: string): LandingPage {
@@ -1233,9 +1414,25 @@ export function getLandingPageStructuredData(page: LandingPage) {
       "@id": `${siteConfig.url}#professional-service`,
     },
     areaServed: {
-      "@type": "Country",
-      name: "Deutschland",
+      "@type": page.schema.areaServed === "Berlin" ? "City" : "Country",
+      name: page.schema.areaServed ?? "Deutschland",
     },
+    ...(page.schema.review
+      ? {
+          review: {
+            "@type": "Review",
+            name: page.schema.review.name,
+            reviewBody: page.schema.review.body,
+            author: {
+              "@type": "Person",
+              name: page.schema.review.author,
+            },
+            itemReviewed: {
+              "@id": serviceId,
+            },
+          },
+        }
+      : {}),
     ...(page.schema.offer
       ? {
           offers: {

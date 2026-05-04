@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import Script from "next/script";
 
 const measurementId = "G-9WPXK6PNZ7";
@@ -33,6 +34,8 @@ function hasAnalyticsConsent() {
 
 export function Analytics() {
   const [analyticsAllowed, setAnalyticsAllowed] = useState(false);
+  const pathname = usePathname();
+  const trackedInitialPath = useRef<string | null>(null);
 
   useEffect(() => {
     const syncConsent = () => {
@@ -67,6 +70,34 @@ export function Analytics() {
       );
     };
   }, []);
+
+  useEffect(() => {
+    if (!analyticsAllowed) {
+      trackedInitialPath.current = null;
+      return;
+    }
+
+    if (trackedInitialPath.current === null) {
+      trackedInitialPath.current = pathname;
+      return;
+    }
+
+    if (trackedInitialPath.current === pathname) {
+      return;
+    }
+
+    trackedInitialPath.current = pathname;
+
+    if (typeof window.gtag !== "function") {
+      return;
+    }
+
+    window.gtag("config", measurementId, {
+      page_path: pathname,
+      page_location: window.location.href,
+      page_title: document.title,
+    });
+  }, [analyticsAllowed, pathname]);
 
   if (!analyticsAllowed) {
     return null;
