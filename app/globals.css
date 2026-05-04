@@ -781,6 +781,23 @@
     @apply overflow-x-auto rounded-[1.5rem] border border-border bg-surface-elevated p-5;
   }
 
+  .mdx-body table {
+    @apply block w-full max-w-4xl overflow-x-auto border-y border-border text-left text-sm leading-6;
+    border-collapse: collapse;
+  }
+
+  .mdx-body caption {
+    @apply py-3 text-left text-[11px] uppercase tracking-[0.24em] text-muted;
+  }
+
+  .mdx-body th {
+    @apply border-b border-border py-3 pr-5 font-semibold text-foreground;
+  }
+
+  .mdx-body td {
+    @apply border-t border-border/70 py-3 pr-5 align-top text-foreground/78;
+  }
+
   .mdx-body hr {
     @apply my-10 border-border;
   }

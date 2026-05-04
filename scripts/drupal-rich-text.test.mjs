@@ -43,6 +43,7 @@ test("Drupal sanitizer preserves supported rich elements", () => {
     "<ul><li>One</li><li>Two</li></ul>",
     "<blockquote>Quoted</blockquote>",
     "<pre><code>const x = 1;</code></pre>",
+    "<table><caption>Vergleich</caption><thead><tr><th scope=\"col\">Kriterium</th></tr></thead><tbody><tr><td>Wert</td></tr></tbody></table>",
     "<hr>",
   ].join("");
   const rendered = renderDrupalHtml(html);
@@ -53,6 +54,7 @@ test("Drupal sanitizer preserves supported rich elements", () => {
   assert.match(rendered, /<ul><li>One<\/li><li>Two<\/li><\/ul>/);
   assert.match(rendered, /<blockquote>Quoted<\/blockquote>/);
   assert.match(rendered, /<pre><code>const x = 1;<\/code><\/pre>/);
+  assert.match(rendered, /<table><caption>Vergleich<\/caption><thead><tr><th scope="col">Kriterium<\/th><\/tr><\/thead><tbody><tr><td>Wert<\/td><\/tr><\/tbody><\/table>/);
   assert.match(rendered, /<hr class="border-border"\/>/);
 });
 
@@ -73,7 +75,6 @@ test("Drupal sanitizer strips unsafe tags, attrs, and protocols", () => {
   assert.doesNotMatch(rendered, /target=/);
   assert.doesNotMatch(rendered, /<img/);
   assert.doesNotMatch(rendered, /<script/);
-  assert.doesNotMatch(rendered, /<table/);
   assert.doesNotMatch(rendered, /<a[^>]*>Bad Link<\/a>/);
   assert.match(rendered, /Bad Link/);
 });

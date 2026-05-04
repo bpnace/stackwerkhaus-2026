@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "STACKWERKHAUS",
-  title: "STACKWERKHAUS | Webdesign und Full Stack Development mit Stil.",
+  title: "STACKWERKHAUS | Webdesign und Frontend-Entwicklung aus Berlin",
   description:
     "Stackwerkhaus baut Websites, Web Apps und digitale Auftritte mit klarem Design, sauberer Technik und starker Nutzerführung für kleine Unternehmen.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://stackwerkhaus.de",

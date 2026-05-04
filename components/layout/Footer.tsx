@@ -10,6 +10,11 @@ const legalLinks = [
   { label: "Datenschutz", href: "/datenschutz" },
 ] as const;
 
+const archiveLinks = [
+  { label: "Projektarchiv", href: "/projekte" },
+  { label: "Blog", href: "/blog" },
+] as const;
+
 export function Footer() {
   const githubUsername = process.env.NEXT_PUBLIC_GITHUB_USERNAME?.trim();
   const githubProfileUrl = githubUsername
@@ -70,6 +75,19 @@ export function Footer() {
                       activeWeight={820}
                     />
                   </TrackedHashLink>
+                  {archiveLinks.map((item) => (
+                    <HashLink
+                      key={item.href}
+                      href={item.href}
+                      className="hover-weight-link block w-fit hover:text-black"
+                    >
+                      <LinkRippleText
+                        text={item.label}
+                        baseWeight={500}
+                        activeWeight={820}
+                      />
+                    </HashLink>
+                  ))}
                 </div>
 
                 <div className="space-y-3 pt-3 sm:space-y-4 sm:pt-4">

@@ -8,6 +8,8 @@ import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 import { getProjectMedia } from "@/lib/project-media";
 import { toMetaDescription } from "@/lib/meta-description";
+import { stringifyJsonLd, toAbsoluteUrl } from "@/lib/json-ld";
+import { siteConfig } from "@/lib/site-config";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -34,6 +36,8 @@ export async function generateMetadata({
     project.metaDescription ||
       [project.summary, project.teaser].filter(Boolean).join(" "),
   );
+  const media = getProjectMedia(project);
+  const imageUrl = toAbsoluteUrl(media.src);
 
   return {
     title: `${project.title} – ${project.category} Projekt`,
@@ -45,6 +49,18 @@ export async function generateMetadata({
       url: `/projekte/${project.slug}`,
       title: `${project.title} – ${project.category} | STACKWERKHAUS`,
       description: metaDescription,
+      images: [
+        {
+          url: imageUrl,
+          alt: media.alt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} – ${project.category} Projekt`,
+      description: metaDescription,
+      images: [imageUrl],
     },
   };
 }
@@ -58,9 +74,93 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const heroMedia = getProjectMedia(project);
+  const heroImageUrl = toAbsoluteUrl(heroMedia.src);
+  const pageUrl = `${siteConfig.url}/projekte/${project.slug}`;
+  const metaDescription = toMetaDescription(
+    project.metaDescription ||
+      [project.summary, project.teaser].filter(Boolean).join(" "),
+  );
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: `${project.title} – ${project.category} Projekt`,
+        description: metaDescription,
+        inLanguage: "de-DE",
+        isPartOf: {
+          "@id": `${siteConfig.url}#website`,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: heroImageUrl,
+          caption: heroMedia.alt,
+        },
+      },
+      {
+        "@type": "CreativeWork",
+        "@id": `${pageUrl}#case-study`,
+        name: project.title,
+        headline: `${project.title} – ${project.category}`,
+        description: metaDescription,
+        image: heroImageUrl,
+        about: project.services,
+        genre: project.category,
+        locationCreated: project.location,
+        creator: {
+          "@type": "ProfessionalService",
+          "@id": `${siteConfig.url}#professional-service`,
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+        mainEntityOfPage: {
+          "@id": `${pageUrl}#webpage`,
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteConfig.url}#website`,
+        name: siteConfig.name,
+        url: siteConfig.url,
+        inLanguage: "de-DE",
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Startseite",
+            item: siteConfig.url,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projekte",
+            item: `${siteConfig.url}/projekte`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: project.title,
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  };
 
   return (
     <main className="">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: stringifyJsonLd(structuredData),
+        }}
+      />
       <ViewTransition
         enter={{
           "nav-forward": "nav-forward",

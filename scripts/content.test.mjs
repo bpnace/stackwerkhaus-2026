@@ -8,6 +8,8 @@ const root = process.cwd();
 
 const requiredLlmsUrls = [
   "https://stackwerkhaus.de",
+  "https://stackwerkhaus.de/blog",
+  "https://stackwerkhaus.de/projekte",
   "https://stackwerkhaus.de/website-erstellen-lassen-deutschland",
   "https://stackwerkhaus.de/webdesign-kleine-unternehmen",
   "https://stackwerkhaus.de/landingpage-erstellen-lassen",
@@ -88,4 +90,16 @@ test("llms.txt provides canonical AI-facing Stackwerkhaus context", async () => 
     !source.includes("https://stackwerkhaus.de/blog/website-relaunch-kmu-leitfaden"),
     "llms.txt still contains removed local test blog article",
   );
+});
+
+test("SEO route inventory exposes crawlable hubs and hides APIs", async () => {
+  const sitemapSource = await fs.readFile(path.join(root, "app", "sitemap.ts"), "utf8");
+  const robotsSource = await fs.readFile(path.join(root, "app", "robots.ts"), "utf8");
+
+  assert.ok(sitemapSource.includes('"/blog"'), "sitemap missing /blog hub");
+  assert.ok(sitemapSource.includes('"/projekte"'), "sitemap missing /projekte hub");
+  assert.ok(robotsSource.includes('"/api/"'), "robots policy should disallow API routes");
+
+  await fs.access(path.join(root, "app", "blog", "page.tsx"));
+  await fs.access(path.join(root, "app", "projekte", "page.tsx"));
 });

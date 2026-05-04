@@ -10,6 +10,9 @@ export type BlogFrontmatter = {
   category: string;
   excerpt: string;
   metaDescription?: string;
+  answerBox?: string;
+  hasProjectExperience?: boolean;
+  sources?: BlogSource[];
   publishedAt: string;
   updatedAt?: string;
   readingTime: string;
@@ -17,6 +20,11 @@ export type BlogFrontmatter = {
   imageUrl?: string | null;
   imageAlt?: string;
   tags?: string[];
+};
+
+export type BlogSource = {
+  label: string;
+  href: string;
 };
 
 type BlogPostBase = BlogFrontmatter & {
@@ -61,10 +69,13 @@ type DrupalArticleResource = {
     body?: {
       processed?: string | null;
     } | null;
+    field_answer_box?: DrupalRichTextField | string | null;
     field_summary?: {
       processed?: string | null;
     } | null;
+    field_experience_note?: boolean | null;
     field_category?: string | null;
+    field_sources?: DrupalLinkField[] | DrupalLinkField | null;
   } | null;
   relationships?: {
     field_image?: {
@@ -81,6 +92,16 @@ type DrupalArticleResource = {
       }> | null;
     } | null;
   } | null;
+};
+
+type DrupalRichTextField = {
+  processed?: string | null;
+  value?: string | null;
+};
+
+type DrupalLinkField = {
+  uri?: string | null;
+  title?: string | null;
 };
 
 type DrupalIncludedResource =
@@ -121,6 +142,52 @@ function getSlugFromAlias(alias: string | null | undefined, title: string, id: s
   }
 
   return slugify(title) || id;
+}
+
+function normalizeDrupalTextField(value: DrupalRichTextField | string | null | undefined) {
+  if (!value) {
+    return "";
+  }
+
+  if (typeof value === "string") {
+    return normalizeDrupalHtmlToText(value);
+  }
+
+  return normalizeDrupalHtmlToText(value.processed ?? value.value ?? "");
+}
+
+function normalizeDrupalLinkUri(uri: string | null | undefined) {
+  if (!uri) {
+    return "";
+  }
+
+  if (uri.startsWith("internal:/")) {
+    return uri.replace(/^internal:/, "");
+  }
+
+  if (uri.startsWith("https://") || uri.startsWith("http://")) {
+    return uri;
+  }
+
+  return "";
+}
+
+function normalizeDrupalSources(value: DrupalLinkField[] | DrupalLinkField | null | undefined) {
+  const entries = Array.isArray(value) ? value : value ? [value] : [];
+
+  return entries
+    .map((entry) => {
+      const href = normalizeDrupalLinkUri(entry.uri);
+      if (!href) {
+        return null;
+      }
+
+      return {
+        href,
+        label: entry.title?.trim() || href,
+      };
+    })
+    .filter((entry): entry is BlogSource => Boolean(entry));
 }
 
 async function getDrupalPosts(): Promise<DrupalBlogPost[]> {
@@ -168,6 +235,8 @@ async function getDrupalPosts(): Promise<DrupalBlogPost[]> {
       const updatedAt = item.attributes?.changed ?? publishedAt;
       const slug = getSlugFromAlias(item.attributes?.path?.alias, title, item.id);
       const excerpt = getExcerptFromText(summary, drupalPlainText);
+      const answerBox = normalizeDrupalTextField(item.attributes?.field_answer_box);
+      const sources = normalizeDrupalSources(item.attributes?.field_sources);
       const imageId = item.relationships?.field_image?.data?.id;
       const imageFile = imageId ? filesById.get(imageId) : undefined;
       const imageUrl = imageFile?.attributes?.uri?.url
@@ -184,6 +253,9 @@ async function getDrupalPosts(): Promise<DrupalBlogPost[]> {
         title,
         category,
         excerpt,
+        answerBox: answerBox || undefined,
+        hasProjectExperience: Boolean(item.attributes?.field_experience_note),
+        sources: sources.length ? sources : undefined,
         publishedAt,
         updatedAt,
         readingTime: getReadingTimeFromText(drupalPlainText),

@@ -8,7 +8,9 @@ import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { getDrupalPlainTextParagraphs } from "@/lib/drupal-rich-text.mjs";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import { stringifyJsonLd, toAbsoluteUrl } from "@/lib/json-ld";
 import { toMetaDescription } from "@/lib/meta-description";
+import { siteConfig } from "@/lib/site-config";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -35,6 +37,7 @@ export async function generateMetadata({
     post.metaDescription ?? post.excerpt,
     post.drupalPlainText,
   );
+  const imageUrl = toAbsoluteUrl(post.imageUrl || "/blog/blog-section-hero.jpg");
 
   return {
     title: post.title,
@@ -46,6 +49,18 @@ export async function generateMetadata({
       url: `/blog/${post.slug}`,
       title: `${post.title} | STACKWERKHAUS`,
       description: metaDescription,
+      images: [
+        {
+          url: imageUrl,
+          alt: post.imageAlt || post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: metaDescription,
+      images: [imageUrl],
     },
   };
 }
@@ -64,6 +79,99 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     year: "numeric",
   }).format(new Date(post.publishedAt));
   const heroImage = post.imageUrl || "/blog/blog-section-hero.jpg";
+  const heroImageUrl = toAbsoluteUrl(heroImage);
+  const pageUrl = `${siteConfig.url}/blog/${post.slug}`;
+  const metaDescription = toMetaDescription(
+    post.metaDescription ?? post.excerpt,
+    post.drupalPlainText,
+  );
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: post.title,
+        description: metaDescription,
+        inLanguage: "de-DE",
+        isPartOf: {
+          "@id": `${siteConfig.url}#website`,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: heroImageUrl,
+          caption: post.imageAlt || post.title,
+        },
+      },
+      {
+        "@type": "BlogPosting",
+        "@id": `${pageUrl}#article`,
+        headline: post.title,
+        description: metaDescription,
+        abstract: post.answerBox,
+        citation: post.sources?.map((source) => toAbsoluteUrl(source.href)),
+        image: [heroImageUrl],
+        datePublished: post.publishedAt,
+        dateModified: post.updatedAt ?? post.publishedAt,
+        articleSection: post.category,
+        keywords: post.tags,
+        author: {
+          "@type": "Person",
+          name: siteConfig.founder,
+        },
+        publisher: {
+          "@id": `${siteConfig.url}#professional-service`,
+        },
+        mainEntityOfPage: {
+          "@id": `${pageUrl}#webpage`,
+        },
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": `${siteConfig.url}#professional-service`,
+        name: siteConfig.name,
+        url: siteConfig.url,
+        email: siteConfig.email,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Berlin",
+          addressCountry: "DE",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteConfig.url}#website`,
+        name: siteConfig.name,
+        url: siteConfig.url,
+        inLanguage: "de-DE",
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Startseite",
+            item: siteConfig.url,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: `${siteConfig.url}/blog`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: post.title,
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  };
   let drupalContent: ReactNode = null;
 
   try {
@@ -78,6 +186,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <main className="">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: stringifyJsonLd(structuredData),
+        }}
+      />
       <ViewTransition
         enter={{
           "nav-forward": "nav-forward",
@@ -105,6 +219,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="min-w-0 space-y-6 lg:pr-4">
               <div className="flex flex-wrap items-center gap-4 text-[length:var(--label)] uppercase tracking-[0.3em] text-muted">
                 <span>{post.category}</span>
+                <span>Arthur Marshall</span>
                 <span>{published}</span>
                 <span>{post.readingTime}</span>
               </div>
@@ -133,10 +248,53 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
           <div className="mt-10 max-w-3xl">
             <p className="text-lg leading-8 text-muted">{post.excerpt}</p>
+            {post.tags?.length ? (
+              <div className="mt-6 flex flex-wrap gap-2">
+                {post.hasProjectExperience ? (
+                  <span className="chip">Aus Projektpraxis</span>
+                ) : null}
+                {post.tags.map((tag) => (
+                  <span key={tag} className="chip">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            ) : post.hasProjectExperience ? (
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="chip">Aus Projektpraxis</span>
+              </div>
+            ) : null}
           </div>
+          {post.answerBox ? (
+            <section className="mt-12 max-w-3xl border-y border-border py-6">
+              <div className="eyebrow text-foreground/60">Kurzantwort</div>
+              <p className="mt-4 text-xl leading-8 text-foreground md:text-2xl md:leading-9">
+                {post.answerBox}
+              </p>
+            </section>
+          ) : null}
           <div className="mt-14 pb-10">
             <div className="mdx-body">{drupalContent}</div>
           </div>
+          {post.sources?.length ? (
+            <section className="max-w-3xl border-t border-border pt-8 pb-10">
+              <h2 className="text-2xl font-black tracking-[-0.025em] text-foreground">
+                Quellen und Belege
+              </h2>
+              <ul className="mt-5 space-y-3 text-sm leading-6 text-muted">
+                {post.sources.map((source) => (
+                  <li key={source.href}>
+                    <a
+                      href={source.href}
+                      className="underline decoration-border underline-offset-4 hover:text-foreground"
+                    >
+                      {source.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </article>
       </ViewTransition>
     </main>

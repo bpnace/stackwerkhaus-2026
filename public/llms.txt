@@ -55,6 +55,8 @@ Stand der kuratierten Service-Landingpages: 2026-04-28. Last updated: 2026-05-04
 ## Core pages
 
 - [Startseite](https://stackwerkhaus.de): Überblick zu Stackwerkhaus, Leistungen, Projekten, Paketen, Arbeitsweise und Kontakt.
+- [Projektarchiv](https://stackwerkhaus.de/projekte): Crawlbarer Hub für Projektbeispiele, Cases, Branchenkontext und Nachweise zu Webdesign, Frontend-Entwicklung, Relaunches und digitalen Produktstrukturen.
+- [Blog](https://stackwerkhaus.de/blog): Crawlbarer Hub für Artikel zu Webdesign, Relaunch, technischer Website-Struktur, AEO, SEO und digitalen Projektentscheidungen.
 - [Baustellencheck](https://stackwerkhaus.de/webseitecheck): Website-Check für Fundament, Grundriss, Fassade und Kontaktwege; geeignet zur ersten Einschätzung einer bestehenden Website.
 - [Kontaktbereich](https://stackwerkhaus.de/#kontakt): Direkter Anfrageweg für Website-Projekte, Relaunches, Landingpages, technische Umsetzung und Automatisierung.
 
