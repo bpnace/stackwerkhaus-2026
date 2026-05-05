@@ -309,10 +309,16 @@ test("SEO route inventory exposes crawlable hubs and hides APIs", async () => {
   const sitemapSource = await fs.readFile(path.join(root, "app", "sitemap.ts"), "utf8");
   const robotsSource = await fs.readFile(path.join(root, "app", "robots.ts"), "utf8");
   const analyticsSource = await fs.readFile(path.join(root, "components", "layout", "Analytics.tsx"), "utf8");
+  const indexNowKeyPath = path.join(root, "public", "76db8d4465364afabab5ebf1d9e89aaa.txt");
 
   assert.ok(sitemapSource.includes('"/blog"'), "sitemap missing /blog hub");
   assert.ok(sitemapSource.includes('"/projekte"'), "sitemap missing /projekte hub");
   assert.ok(robotsSource.includes('"/api/"'), "robots policy should disallow API routes");
+  assert.equal(
+    (await fs.readFile(indexNowKeyPath, "utf8")).trim(),
+    "76db8d4465364afabab5ebf1d9e89aaa",
+    "IndexNow key file should be hosted from the public root",
+  );
 
   await fs.access(path.join(root, "app", "blog", "page.tsx"));
   await fs.access(path.join(root, "app", "projekte", "page.tsx"));
