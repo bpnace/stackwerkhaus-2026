@@ -4,9 +4,9 @@ import { FAQItem } from "@/components/ui/FAQItem";
 
 export function FAQ() {
   return (
-    <section id="faq" className="section-space">
+    <section className="section-space">
       <div className="section-shell">
-        <SectionHeader label="FAQ" marker="(SKWKHS® — 09)" />
+        <SectionHeader id="faq" label="FAQ" marker="(SKWKHS® — 09)" />
         <div className="mb-10 max-w-4xl space-y-4 md:mb-16">
           <h2 className="display-lg">FAQ, aber in sinnvoll.</h2>
           <p className="text-lg leading-8 text-muted">

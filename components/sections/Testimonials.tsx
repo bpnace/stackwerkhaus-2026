@@ -105,9 +105,9 @@ export function Testimonials() {
   );
 
   return (
-    <section id="stimmen" className="section-space overflow-clip">
+    <section className="section-space overflow-clip">
       <div ref={scope} className="section-shell">
-        <SectionHeader label="Stimmen aus Projekten" marker="(SKWKHS® — 06)" />
+        <SectionHeader id="stimmen" label="Stimmen aus Projekten" marker="(SKWKHS® — 06)" />
 
         <div className="mb-10 max-w-4xl space-y-4 md:mb-16">
           <h2 className="display-lg">

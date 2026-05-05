@@ -1,30 +1,54 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { tickerItems } from "@/lib/site-data";
-import { ensureGsap, gsap, shouldReduceMotion, useGSAP } from "@/lib/gsap";
+
+type KillableTween = {
+  kill: () => void;
+};
+
+function shouldUseStaticTicker() {
+  return (
+    window.matchMedia("(max-width: 767px)").matches ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
 
 export function Ticker() {
   const scope = useRef<HTMLDivElement | null>(null);
 
-  useGSAP(
-    () => {
-      ensureGsap();
-
-      const track = gsap.utils.toArray<HTMLElement>(".ticker-track")[0];
-      if (!track || shouldReduceMotion()) {
+  useEffect(() => {
+      if (shouldUseStaticTicker()) {
         return;
       }
 
-      gsap.to(track, {
-        xPercent: -50,
-        duration: 24,
-        ease: "none",
-        repeat: -1,
+      const track = scope.current?.querySelector<HTMLElement>(".ticker-track");
+      if (!track) {
+        return;
+      }
+
+      let tween: KillableTween | null = null;
+      let cancelled = false;
+
+      void import("@/lib/gsap").then(({ ensureGsap, gsap }) => {
+        if (cancelled) {
+          return;
+        }
+
+        ensureGsap();
+        tween = gsap.to(track, {
+          xPercent: -50,
+          duration: 24,
+          ease: "none",
+          repeat: -1,
+        });
       });
-    },
-    { scope },
-  );
+
+      return () => {
+        cancelled = true;
+        tween?.kill();
+      };
+  }, []);
 
   const items = [...tickerItems, ...tickerItems];
 

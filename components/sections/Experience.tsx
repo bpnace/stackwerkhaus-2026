@@ -176,7 +176,7 @@ export function Experience() {
   return (
     <section className="section-space">
       <div ref={scope} className="section-shell">
-        <SectionHeader label="Erfahrung" marker="(SKWKHS® — 05)" />
+        <SectionHeader id="erfahrung" label="Erfahrung" marker="(SKWKHS® — 05)" />
         <div className="space-y-4">
           {experience.map((entry) => (
             <article

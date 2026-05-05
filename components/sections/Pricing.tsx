@@ -7,9 +7,9 @@ import { LinkRippleText } from "@/components/ui/LinkRippleText";
 
 export function Pricing() {
   return (
-    <section id="pricing" className="section-space">
+    <section className="section-space">
       <div className="section-shell">
-        <SectionHeader label="Pakete" marker="(SKWKHS® — 07)" />
+        <SectionHeader id="pricing" label="Pakete" marker="(SKWKHS® — 07)" />
         <div className="mb-8 max-w-5xl space-y-5 md:mb-10">
           <h2 className="display-lg max-w-[9ch]">Wähle deinen Bauauftrag</h2>
           <p className="max-w-2xl text-base leading-7 text-muted md:text-lg md:leading-8">

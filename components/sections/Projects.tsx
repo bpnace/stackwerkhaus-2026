@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { LoopingScrambleText } from "@/components/ui/LoopingScrambleText";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import type { Project } from "@/lib/projects";
 import {
@@ -13,11 +15,11 @@ const projectsIntro = "Sieht gut aus. Funktioniert noch besser.";
 
 const projectPillars = [
   {
-    title: "Fundament",
+    title: "Planung",
     text: "Full Stack Development, Performance, saubere technische Struktur und eine Basis, die nicht beim ersten Umbau bröckelt.",
   },
   {
-    title: "Grundriss",
+    title: "Konstruktion",
     text: "Klare Seitenstruktur, verständliche Nutzerführung und Inhalte, die Besucher nicht durch verwinkelte Flure schicken.",
   },
   {
@@ -36,9 +38,9 @@ export function Projects({ projects }: ProjectsProps) {
   useWordMaskHeadingReveal(scope, [projects.length]);
 
   return (
-    <section id="projekte" className="section-space">
+    <section className="section-space">
       <div className="section-shell">
-        <SectionHeader label="Projekte" marker="(SKWKHS® — 02)" />
+        <SectionHeader id="projekte" label="Projekte" marker="(SKWKHS® — 02)" />
         <div className="mb-10 grid gap-8 md:mb-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.55fr)] lg:items-center lg:gap-14">
           <div ref={scope} className="max-w-3xl space-y-4">
             <h2 className="display-lg">{renderWordMaskText(projectsIntro)}</h2>
@@ -76,6 +78,39 @@ export function Projects({ projects }: ProjectsProps) {
           {projects.map((project, index) => (
             <ProjectCard key={project.slug} index={index} project={project} />
           ))}
+          <Link
+            href="/projekte"
+            transitionTypes={["nav-forward"]}
+            className="group grid gap-4 border-b border-border py-6 transition-colors hover:border-foreground/40 md:grid-cols-[72px_1.2fr_110px_1fr_40px] md:items-center"
+          >
+            <span className="eyebrow text-foreground/80">
+              <LoopingScrambleText
+                className="tabular-nums"
+                delayMs={180}
+                text={String(projects.length + 1).padStart(2, "0")}
+                updateMs={96}
+              />
+            </span>
+            <div>
+              <div className="text-2xl font-semibold tracking-tight">
+                Weitere Projekte ansehen
+              </div>
+              <p className="mt-2 max-w-xl text-sm text-muted md:hidden">
+                Alle Cases im Projektarchiv
+              </p>
+            </div>
+            <span className="text-sm text-muted">Archiv</span>
+            <div className="text-sm text-muted">
+              <LoopingScrambleText
+                delayMs={420}
+                text="Projektarchiv"
+                updateMs={84}
+              />
+            </div>
+            <span className="text-right text-xl text-muted transition-transform group-hover:translate-x-1 group-hover:text-foreground">
+              →
+            </span>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,15 +1,18 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
 import { pricingTiers } from "@/lib/site-data";
 import { siteConfig } from "@/lib/site-config";
 import { TrackedHashLink } from "@/components/analytics/TrackedHashLink";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import type { PricingTier } from "@/lib/site-data";
+import {
+  renderWordMaskText,
+  useWordMaskHeadingReveal,
+} from "@/lib/word-mask-heading";
 
 type Status = {
   type: "idle" | "success" | "error";
@@ -345,13 +348,22 @@ function ContactFormWithSearchParams() {
 }
 
 export function Contact() {
+  const titleScope = useRef<HTMLDivElement | null>(null);
+
+  useWordMaskHeadingReveal(titleScope, [], {
+    start: "top 82%",
+    trigger: "scroll",
+  });
+
   return (
-    <section id="kontakt" className="section-space">
+    <section className="section-space">
       <div className="section-shell grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:gap-20">
         <div>
-          <SectionHeader label="Kontakt" marker="(SKWKHS® — 10)" />
-          <div className="space-y-6">
-            <h2 className="display-lg">Lass uns was einzigartiges bauen.</h2>
+          <SectionHeader id="kontakt" label="Kontakt" marker="(SKWKHS® — 10)" />
+          <div ref={titleScope} className="space-y-6">
+            <h2 className="hero-line display-lg">
+              {renderWordMaskText("Lass uns was einzigartiges bauen.")}
+            </h2>
             <p className="max-w-4xl text-lg leading-8 text-muted">
               Wir klären gemeinsam, worum’s geht, was gerade bremst und was als Nächstes
               Priorität hat. Angebot schärfen, Zielgruppe sauber einordnen und Projektumfang

@@ -21,9 +21,9 @@ export function BlogSection({ posts }: BlogSectionProps) {
   useWordMaskHeadingReveal(scope, [posts.length]);
 
   return (
-    <section id="blog" className="section-space">
+    <section className="section-space">
       <div ref={scope} className="section-shell">
-        <SectionHeader label="Publikationen" marker="(SKWKHS® — 08)" />
+        <SectionHeader id="blog" label="Publikationen" marker="(SKWKHS® — 08)" />
         <div className="mb-10 max-w-4xl space-y-4 md:mb-16">
           <h2 className="hero-line display-lg">
             {renderWordMaskText(BLOG_HEADING)}

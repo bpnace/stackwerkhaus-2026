@@ -350,9 +350,9 @@ export function Services() {
   );
 
   return (
-    <section id="leistungen" className="section-space">
+    <section className="section-space">
       <div ref={scope} className="section-shell">
-        <SectionHeader label="Leistungen" marker="(SKWKHS® — 03)" />
+        <SectionHeader id="leistungen" label="Leistungen" marker="(SKWKHS® — 03)" />
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.42fr)] lg:items-end lg:gap-16">
           <div className="max-w-5xl space-y-5">
             <h2 className="display-lg">Der Bauplan</h2>

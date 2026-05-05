@@ -1,8 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useMemo, useRef } from "react";
-import { ensureGsap, gsap, shouldReduceMotion, useGSAP } from "@/lib/gsap";
+import { useEffect, useMemo, useRef } from "react";
 
 type LinkRippleTextProps = {
   text: string;
@@ -15,6 +14,10 @@ type Glyph =
   | { type: "char"; value: string; index: number }
   | { type: "space"; value: string };
 
+type KillableTimeline = {
+  kill: () => void;
+};
+
 export function LinkRippleText({
   text,
   baseWeight = 520,
@@ -23,7 +26,7 @@ export function LinkRippleText({
 }: LinkRippleTextProps) {
   const scope = useRef<HTMLSpanElement | null>(null);
   const lastOriginIndex = useRef(0);
-  const activeTimeline = useRef<gsap.core.Timeline | null>(null);
+  const activeTimeline = useRef<KillableTimeline | null>(null);
 
   const glyphs = useMemo(() => {
     const items: Glyph[] = [];
@@ -42,13 +45,7 @@ export function LinkRippleText({
     return items;
   }, [text]);
 
-  useGSAP(
-    (_, contextSafe) => {
-      ensureGsap();
-      const safe =
-        contextSafe ??
-        (<T extends (...args: never[]) => unknown>(fn: T) => fn);
-
+  useEffect(() => {
       const node = scope.current;
       if (!node) {
         return;
@@ -58,115 +55,136 @@ export function LinkRippleText({
         return;
       }
 
-      const chars = Array.from(
-        node.querySelectorAll<HTMLElement>("[data-ripple-char='true']"),
-      );
-      const inks = chars
-        .map((char) => char.querySelector<HTMLElement>("[data-ripple-ink='true']"))
-        .filter((ink): ink is HTMLElement => ink !== null);
+      let cancelled = false;
+      let cleanupListeners: (() => void) | null = null;
 
-      if (!chars.length || inks.length !== chars.length) {
-        return;
-      }
-
-      const setInk = (value: number) => {
-        gsap.set(inks, { autoAlpha: value });
-      };
-
-      const getClosestCharIndex = (clientX: number) => {
-        let closestIndex = 0;
-        let closestDistance = Number.POSITIVE_INFINITY;
-
-        chars.forEach((char, index) => {
-          const rect = char.getBoundingClientRect();
-          const center = rect.left + rect.width / 2;
-          const distance = Math.abs(clientX - center);
-
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestIndex = index;
+      void import("@/lib/gsap").then(
+        ({ ensureGsap, gsap, shouldReduceMotion }) => {
+          if (cancelled) {
+            return;
           }
-        });
 
-        lastOriginIndex.current = closestIndex;
-        return closestIndex;
-      };
+          ensureGsap();
 
-      const getStagger = (origin: number) => (index: number) =>
-        Math.abs(index - origin) * (persistentActive ? 0.065 : 0.018);
+          const chars = Array.from(
+            node.querySelectorAll<HTMLElement>("[data-ripple-char='true']"),
+          );
+          const inks = chars
+            .map((char) =>
+              char.querySelector<HTMLElement>("[data-ripple-ink='true']"),
+            )
+            .filter((ink): ink is HTMLElement => ink !== null);
 
-      const animateTo = (opacity: number, origin: number) => {
-        activeTimeline.current?.kill();
-        activeTimeline.current = gsap.timeline({
-          defaults: {
-            duration: shouldReduceMotion() ? 0 : persistentActive ? 0.5 : 0.22,
-            ease: "power2.out",
-          },
-        });
+          if (!chars.length || inks.length !== chars.length) {
+            return;
+          }
 
-        activeTimeline.current.to(inks, {
-          autoAlpha: opacity,
-          stagger: getStagger(origin),
-          overwrite: true,
-        });
-      };
+          const setInk = (value: number) => {
+            gsap.set(inks, { autoAlpha: value });
+          };
 
-      setInk(0);
+          const getClosestCharIndex = (clientX: number) => {
+            let closestIndex = 0;
+            let closestDistance = Number.POSITIVE_INFINITY;
 
-      if (persistentActive) {
-        const origin = Math.floor(chars.length / 2);
-        lastOriginIndex.current = origin;
+            chars.forEach((char, index) => {
+              const rect = char.getBoundingClientRect();
+              const center = rect.left + rect.width / 2;
+              const distance = Math.abs(clientX - center);
 
-        if (shouldReduceMotion()) {
-          gsap.set(inks, { autoAlpha: 1 });
-          return;
-        }
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
+              }
+            });
 
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
+            lastOriginIndex.current = closestIndex;
+            return closestIndex;
+          };
+
+          const getStagger = (origin: number) => (index: number) =>
+            Math.abs(index - origin) * (persistentActive ? 0.065 : 0.018);
+
+          const animateTo = (opacity: number, origin: number) => {
+            activeTimeline.current?.kill();
+            const timeline = gsap.timeline({
+              defaults: {
+                duration: shouldReduceMotion()
+                  ? 0
+                  : persistentActive
+                    ? 0.5
+                    : 0.22,
+                ease: "power2.out",
+              },
+            });
+            activeTimeline.current = timeline;
+
+            timeline.to(inks, {
+              autoAlpha: opacity,
+              stagger: getStagger(origin),
+              overwrite: true,
+            });
+          };
+
+          setInk(0);
+
+          if (persistentActive) {
+            const origin = Math.floor(chars.length / 2);
+            lastOriginIndex.current = origin;
+
+            if (shouldReduceMotion()) {
+              gsap.set(inks, { autoAlpha: 1 });
+              return;
+            }
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                animateTo(1, origin);
+              });
+            });
+            return;
+          }
+
+          const onPointerEnter = (event: PointerEvent) => {
+            animateTo(1, getClosestCharIndex(event.clientX));
+          };
+
+          const onPointerLeave = () => {
+            animateTo(0, lastOriginIndex.current);
+          };
+
+          const onFocus = () => {
+            const origin = Math.floor(chars.length / 2);
+            lastOriginIndex.current = origin;
             animateTo(1, origin);
-          });
-        });
-        return () => {
-          activeTimeline.current?.kill();
-        };
-      }
+          };
 
-      const onPointerEnter = safe((event: PointerEvent) => {
-        animateTo(1, getClosestCharIndex(event.clientX));
-      });
+          const onBlur = () => {
+            animateTo(0, lastOriginIndex.current);
+          };
 
-      const onPointerLeave = safe(() => {
-        animateTo(0, lastOriginIndex.current);
-      });
+          const host = node.closest<HTMLElement>("a, button") ?? node;
 
-      const onFocus = safe(() => {
-        const origin = Math.floor(chars.length / 2);
-        lastOriginIndex.current = origin;
-        animateTo(1, origin);
-      });
+          host.addEventListener("pointerenter", onPointerEnter);
+          host.addEventListener("pointerleave", onPointerLeave);
+          host.addEventListener("focus", onFocus);
+          host.addEventListener("blur", onBlur);
 
-      const onBlur = safe(() => {
-        animateTo(0, lastOriginIndex.current);
-      });
-
-      const host = node?.closest<HTMLElement>("a, button") ?? node;
-
-      host?.addEventListener("pointerenter", onPointerEnter);
-      host?.addEventListener("pointerleave", onPointerLeave);
-      host?.addEventListener("focus", onFocus);
-      host?.addEventListener("blur", onBlur);
+          cleanupListeners = () => {
+            host.removeEventListener("pointerenter", onPointerEnter);
+            host.removeEventListener("pointerleave", onPointerLeave);
+            host.removeEventListener("focus", onFocus);
+            host.removeEventListener("blur", onBlur);
+          };
+        },
+      );
 
       return () => {
+        cancelled = true;
         activeTimeline.current?.kill();
-        host?.removeEventListener("pointerenter", onPointerEnter);
-        host?.removeEventListener("pointerleave", onPointerLeave);
-        host?.removeEventListener("focus", onFocus);
-        host?.removeEventListener("blur", onBlur);
+        cleanupListeners?.();
       };
-    },
-    { scope, dependencies: [persistentActive], revertOnUpdate: true },
-  );
+  }, [persistentActive]);
 
   return (
     <span

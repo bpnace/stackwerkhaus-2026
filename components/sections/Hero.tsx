@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { ensureGsap, gsap, shouldReduceMotion, useGSAP } from "@/lib/gsap";
+import { useEffect, useRef } from "react";
 import { siteConfig } from "@/lib/site-config";
 import { TrackedHashLink } from "@/components/analytics/TrackedHashLink";
 import { HashLink } from "@/components/ui/HashLink";
@@ -12,6 +11,44 @@ const heroTitleLines = ["Deine digitalen", "Architekten"] as const;
 const heroServiceTags = [
   "Manche Websites sind Penthouse. Manche Plattenbau. Viele leider Rohbau.",
 ] as const;
+
+type KillableTimeline = {
+  kill: () => void;
+  from: (...args: unknown[]) => KillableTimeline;
+  to: (...args: unknown[]) => KillableTimeline;
+};
+
+function shouldUseStaticHero() {
+  return (
+    window.matchMedia("(max-width: 767px)").matches ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
+
+function markHeroIntroReady() {
+  document.documentElement.dataset.homeHeroIntroReady = "true";
+  window.dispatchEvent(new CustomEvent("home-hero-intro-ready"));
+}
+
+function revealStaticHero(root: HTMLElement) {
+  const visibleTargets = root.querySelectorAll<HTMLElement>(
+    ".hero-word-text, .hero-char, .hero-copy, .hero-action",
+  );
+  const masks = root.querySelectorAll<HTMLElement>(".hero-word-mask");
+
+  visibleTargets.forEach((target) => {
+    target.style.opacity = "1";
+    target.style.visibility = "visible";
+    target.style.transform = "";
+    target.style.filter = "";
+  });
+
+  masks.forEach((mask) => {
+    mask.style.opacity = "0";
+    mask.style.visibility = "hidden";
+    mask.style.transform = "scaleX(0)";
+  });
+}
 
 function renderTitleLine(line: string) {
   const words = line.split(" ");
@@ -43,24 +80,37 @@ function renderTitleLine(line: string) {
 export function Hero() {
   const scope = useRef<HTMLDivElement | null>(null);
 
-  useGSAP(
-    () => {
-      ensureGsap();
-      if (scope.current) {
-        scope.current.dataset.heroIntro = "ready";
+  useEffect(() => {
+    const root = scope.current;
+    if (!root) {
+      return;
+    }
+
+    root.dataset.heroIntro = "ready";
+
+    if (shouldUseStaticHero()) {
+      revealStaticHero(root);
+      markHeroIntroReady();
+      return;
+    }
+
+    let timeline: KillableTimeline | null = null;
+    let cancelled = false;
+    document.documentElement.dataset.homeHeroIntroReady = "false";
+
+    void import("@/lib/gsap").then(({ ensureGsap, gsap }) => {
+      if (cancelled) {
+        return;
       }
 
-      const markHeroIntroReady = () => {
-        document.documentElement.dataset.homeHeroIntroReady = "true";
-        window.dispatchEvent(new CustomEvent("home-hero-intro-ready"));
-      };
+      ensureGsap();
 
-      const wordTexts = gsap.utils.toArray<HTMLElement>(".hero-word-text");
-      const chars = gsap.utils.toArray<HTMLElement>(".hero-char");
-      const masks = gsap.utils.toArray<HTMLElement>(".hero-word-mask");
-      const lines = gsap.utils.toArray<HTMLElement>(".hero-line");
-      const copy = gsap.utils.toArray<HTMLElement>(".hero-copy");
-      const actions = gsap.utils.toArray<HTMLElement>(".hero-action");
+      const wordTexts = gsap.utils.toArray<HTMLElement>(".hero-word-text", root);
+      const chars = gsap.utils.toArray<HTMLElement>(".hero-char", root);
+      const masks = gsap.utils.toArray<HTMLElement>(".hero-word-mask", root);
+      const lines = gsap.utils.toArray<HTMLElement>(".hero-line", root);
+      const copy = gsap.utils.toArray<HTMLElement>(".hero-copy", root);
+      const actions = gsap.utils.toArray<HTMLElement>(".hero-action", root);
 
       const wordTimelineEntries: Array<{
         mask: HTMLElement;
@@ -92,18 +142,6 @@ export function Hero() {
         });
       });
 
-      if (shouldReduceMotion()) {
-        gsap.set([...wordTexts, ...chars, ...copy, ...actions], {
-          autoAlpha: 1,
-          y: 0,
-          yPercent: 0,
-          filter: "blur(0px)",
-        });
-        gsap.set(masks, { autoAlpha: 0, scaleX: 0, xPercent: 0 });
-        markHeroIntroReady();
-        return;
-      }
-
       gsap.set(wordTexts, { autoAlpha: 1 });
       gsap.set(chars, { autoAlpha: 0, yPercent: 0, filter: "blur(8px)" });
       gsap.set(masks, {
@@ -113,16 +151,14 @@ export function Hero() {
         transformOrigin: "left center",
       });
 
-      document.documentElement.dataset.homeHeroIntroReady = "false";
-
-      const timeline = gsap.timeline({
+      timeline = gsap.timeline({
         defaults: { ease: "power4.out" },
         onComplete: markHeroIntroReady,
-      });
+      }) as unknown as KillableTimeline;
 
       wordTimelineEntries.forEach(({ mask, chars: wordChars, startAt }) => {
         timeline
-          .to(
+          ?.to(
             mask,
             {
               scaleX: 1,
@@ -157,7 +193,7 @@ export function Hero() {
       });
 
       timeline
-        .from(
+        ?.from(
           copy,
           {
             autoAlpha: 0,
@@ -177,9 +213,13 @@ export function Hero() {
           },
           "-=0.2",
         );
-    },
-    { scope },
-  );
+    });
+
+    return () => {
+      cancelled = true;
+      timeline?.kill();
+    };
+  }, []);
 
   return (
     <section

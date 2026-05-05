@@ -1,19 +1,25 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useRef } from "react";
-import {
-  ensureGsap,
-  gsap,
-  refreshScrollTriggers,
-  shouldReduceMotion,
-  useGSAP,
-} from "@/lib/gsap";
+import { useEffect, useRef } from "react";
 
 type PinnedIntroShellProps = {
   hero: ReactNode;
   children: ReactNode;
 };
+
+type KillableTimeline = {
+  scrollTrigger?: { kill: () => void };
+  kill: () => void;
+  fromTo: (...args: unknown[]) => KillableTimeline;
+};
+
+function canUsePinnedIntro() {
+  return (
+    window.matchMedia("(min-width: 768px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
 
 export function PinnedIntroShell({
   hero,
@@ -21,10 +27,7 @@ export function PinnedIntroShell({
 }: PinnedIntroShellProps) {
   const scope = useRef<HTMLDivElement | null>(null);
 
-  useGSAP(
-    () => {
-      ensureGsap();
-
+  useEffect(() => {
       const shell = scope.current;
       const heroPanel = shell?.querySelector<HTMLElement>(
         "[data-pinned-hero-panel='true']",
@@ -54,66 +57,79 @@ export function PinnedIntroShell({
       };
 
       const cleanupInlineStyles = () => {
-        gsap.set([heroPanel, heroScrim, bodySheet], { clearProps: "all" });
+        heroPanel.removeAttribute("style");
+        heroScrim.removeAttribute("style");
+        bodySheet.removeAttribute("style");
       };
 
-      if (shouldReduceMotion()) {
+      if (!canUsePinnedIntro()) {
         setIntroCovered(true);
         cleanupInlineStyles();
         return;
       }
 
-      const takeoverTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: shell,
-          start: () => `top top+=${navOffset}`,
-          end: () => `+=${heroPanel.offsetHeight}`,
-          scrub: true,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            setIntroCovered(self.progress >= 0.98);
-          },
-          onLeave: () => {
-            setIntroCovered(true);
-          },
-          onEnterBack: () => {
-            setIntroCovered(false);
-          },
-        },
-      });
-
+      let takeoverTimeline: KillableTimeline | null = null;
+      let cancelled = false;
       setIntroCovered(false);
 
-      takeoverTimeline
-        .fromTo(
-          heroScrim,
-          { autoAlpha: 0 },
-          { autoAlpha: 0.7, ease: "none" },
-          0,
-        )
-        .fromTo(
-          bodySheet,
-          {
-            boxShadow: "0 -32px 80px rgba(0, 0, 0, 0.18)",
-          },
-          {
-            boxShadow: "0 -72px 180px rgba(0, 0, 0, 0.46)",
-            ease: "none",
-          },
-          0,
-        );
+      void import("@/lib/gsap").then(
+        ({ ensureGsap, gsap, refreshScrollTriggers }) => {
+          if (cancelled) {
+            return;
+          }
 
-      refreshScrollTriggers();
+          ensureGsap();
+
+          takeoverTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: shell,
+              start: () => `top top+=${navOffset}`,
+              end: () => `+=${heroPanel.offsetHeight}`,
+              scrub: true,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                setIntroCovered(self.progress >= 0.98);
+              },
+              onLeave: () => {
+                setIntroCovered(true);
+              },
+              onEnterBack: () => {
+                setIntroCovered(false);
+              },
+            },
+          }) as unknown as KillableTimeline;
+
+          takeoverTimeline
+            .fromTo(
+              heroScrim,
+              { autoAlpha: 0 },
+              { autoAlpha: 0.7, ease: "none" },
+              0,
+            )
+            .fromTo(
+              bodySheet,
+              {
+                boxShadow: "0 -32px 80px rgba(0, 0, 0, 0.18)",
+              },
+              {
+                boxShadow: "0 -72px 180px rgba(0, 0, 0, 0.46)",
+                ease: "none",
+              },
+              0,
+            );
+
+          refreshScrollTriggers();
+        },
+      );
 
       return () => {
+        cancelled = true;
         setIntroCovered(true);
-        takeoverTimeline.scrollTrigger?.kill();
-        takeoverTimeline.kill();
+        takeoverTimeline?.scrollTrigger?.kill();
+        takeoverTimeline?.kill();
         cleanupInlineStyles();
       };
-    },
-    { scope, revertOnUpdate: true },
-  );
+  }, []);
 
   return (
     <div ref={scope} className="relative">

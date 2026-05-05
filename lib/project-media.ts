@@ -7,61 +7,182 @@ type ProjectMedia = {
   objectPosition?: CSSProperties["objectPosition"];
 };
 
-const FALLBACK_MEDIA: ProjectMedia = {
+type ProjectMediaEntry = {
+  alt: string;
+  preview: Omit<ProjectMedia, "alt">;
+  detail: Omit<ProjectMedia, "alt">;
+};
+
+const FALLBACK_PREVIEW_MEDIA: ProjectMedia = {
   src: "/blog/blog-section-hero.jpg",
   alt: "Stackwerkhaus Projektvorschau",
   objectPosition: "center 50%",
 };
 
-const PROJECT_MEDIA: Record<string, ProjectMedia> = {
+const FALLBACK_DETAIL_MEDIA: ProjectMedia = {
+  src: "/blog/blog-section-hero.jpg",
+  alt: "Stackwerkhaus Projektdetail",
+  objectPosition: "center 50%",
+};
+
+const PROJECT_MEDIA: Record<string, ProjectMediaEntry> = {
   "atelier-heimat": {
-    src: "/projekte/heimat.webp",
     alt: "Projektvorschau der Atelier Heimat Markenwebsite",
-    objectPosition: "center 50%",
+    preview: {
+      src: "/projekte/small/heimatSmall.webp",
+      objectPosition: "center 50%",
+    },
+    detail: {
+      src: "/projekte/heimat.webp",
+      objectPosition: "center 50%",
+    },
   },
   bloom: {
-    src: "/projekte/small/bloomSmall.webp",
     alt: "Projektvorschau der Bloom Health-Software-Website",
-    objectPosition: "center 42%",
+    preview: {
+      src: "/projekte/small/bloomSmall.webp",
+      objectPosition: "center 42%",
+    },
+    detail: {
+      src: "/projekte/bloom.webp",
+      objectPosition: "center 42%",
+    },
   },
   codariq: {
-    src: "/projekte/small/codariqSmall.webp",
     alt: "Projektvorschau des Codariq Relaunchs",
-    objectPosition: "center 52%",
+    preview: {
+      src: "/projekte/small/codariqSmall.webp",
+      objectPosition: "center 52%",
+    },
+    detail: {
+      src: "/projekte/codariq.webp",
+      objectPosition: "center 52%",
+    },
+  },
+  foerderraum: {
+    alt: "Projektvorschau der Förderraum Digitalisierungswebsite",
+    preview: {
+      src: "/projekte/small/foerderraumSmall.webp",
+      objectPosition: "center 50%",
+    },
+    detail: {
+      src: "/projekte/foerderraum.webp",
+      objectPosition: "center 50%",
+    },
   },
   "immo-pal": {
-    src: "/projekte/small/immopalSmall.webp",
     alt: "Projektvorschau der Immo Pal Immobilienplattform",
-    objectPosition: "center 50%",
+    preview: {
+      src: "/projekte/small/immopalSmall.webp",
+      objectPosition: "center 50%",
+    },
+    detail: {
+      src: "/projekte/immopal.webp",
+      objectPosition: "center 50%",
+    },
   },
   "praxis-fuer-mentale-gesundheit": {
-    src: "/projekte/small/nordlichtSmall.webp",
-    alt: "Projektvorschau der Praxis für mentale Gesundheit Praxiswebsite",
-    objectPosition: "center 50%",
+    alt: "Projektvorschau der Praxis für mentale Gesundheit",
+    preview: {
+      src: "/projekte/small/metalHealth.webp",
+      objectPosition: "center 50%",
+    },
+    detail: {
+      src: "/projekte/metalHealth.webp",
+      objectPosition: "center 50%",
+    },
+  },
+  signalnest: {
+    alt: "Projektvorschau der Signalnest SaaS-Landingpage",
+    preview: {
+      src: "/projekte/small/signalnestSmall.webp",
+      objectPosition: "center 50%",
+    },
+    detail: {
+      src: "/projekte/signalnest.webp",
+      objectPosition: "center 50%",
+    },
   },
   uncloud: {
-    src: "/projekte/small/uncloudSmall.webp",
     alt: "Projektvorschau des uncloud App-Konzepts",
-    objectPosition: "center 46%",
+    preview: {
+      src: "/projekte/small/uncloudSmall.webp",
+      objectPosition: "center 46%",
+    },
+    detail: {
+      src: "/projekte/uncloud.webp",
+      objectPosition: "center 46%",
+    },
   },
   zynapse: {
-    src: "/projekte/small/zynapseSmall.webp",
     alt: "Projektvorschau der Zynapse Kampagnenplattform",
-    objectPosition: "center 48%",
+    preview: {
+      src: "/projekte/small/zynapseSmall.webp",
+      objectPosition: "center 48%",
+    },
+    detail: {
+      src: "/projekte/zynapse.webp",
+      objectPosition: "center 48%",
+    },
+  },
+  "zahnraum-berlin": {
+    alt: "Projektvorschau der Zahnraum Berlin Praxiswebsite",
+    preview: {
+      src: "/projekte/small/zahnarzt.webp",
+      objectPosition: "center 50%",
+    },
+    detail: {
+      src: "/projekte/zahnarzt.webp",
+      objectPosition: "center 50%",
+    },
   },
 };
 
-export function getProjectMedia(
+function getProjectAlt(
+  project: Pick<Project, "slug" | "title"> & Partial<Pick<Project, "category">>,
+  entry?: ProjectMediaEntry,
+) {
+  return (
+    entry?.alt ??
+    `Projektvorschau von ${project.title}${
+      project.category ? ` aus dem Bereich ${project.category}` : ""
+    }`
+  );
+}
+
+export function getProjectPreviewMedia(
   project: Pick<Project, "slug" | "title"> & Partial<Pick<Project, "category">>,
 ): ProjectMedia {
+  const entry = PROJECT_MEDIA[project.slug];
+
+  if (!entry) {
+    return {
+      ...FALLBACK_PREVIEW_MEDIA,
+      alt: getProjectAlt(project),
+    };
+  }
+
   return {
-    ...FALLBACK_MEDIA,
-    ...PROJECT_MEDIA[project.slug],
-    alt:
-      PROJECT_MEDIA[project.slug]?.alt ??
-      `Projektvorschau von ${project.title}${
-        project.category ? ` aus dem Bereich ${project.category}` : ""
-      }`,
+    ...entry.preview,
+    alt: getProjectAlt(project, entry),
+  };
+}
+
+export function getProjectDetailMedia(
+  project: Pick<Project, "slug" | "title"> & Partial<Pick<Project, "category">>,
+): ProjectMedia {
+  const entry = PROJECT_MEDIA[project.slug];
+
+  if (!entry) {
+    return {
+      ...FALLBACK_DETAIL_MEDIA,
+      alt: getProjectAlt(project),
+    };
+  }
+
+  return {
+    ...entry.detail,
+    alt: getProjectAlt(project, entry),
   };
 }
 

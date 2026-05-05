@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Ccm19Loader } from "@/components/layout/Ccm19Loader";
+import Script from "next/script";
 import { Footer } from "@/components/layout/Footer";
 import { HashScrollRestorer } from "@/components/layout/HashScrollRestorer";
 import { Nav } from "@/components/layout/Nav";
 import { Analytics } from "@/components/layout/Analytics";
+import { ResourceHints } from "@/components/layout/ResourceHints";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -19,6 +20,10 @@ const interDisplay = Inter({
   display: "swap",
   variable: "--font-display",
 });
+
+const ccm19ScriptId = "ccm19";
+const ccm19ScriptSrc =
+  "https://cloud.ccm19.de/app.js?apiKey=eefc8fecf37d0d4d42423ebb8d2ff0c38ee07663469480b8&domain=69c4664129605f52500e0082";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -91,7 +96,13 @@ export default function RootLayout({
       className={`${interSans.variable} ${interDisplay.variable} scroll-smooth`}
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
-        <Ccm19Loader />
+        <ResourceHints />
+        <Script
+          id={ccm19ScriptId}
+          src={ccm19ScriptSrc}
+          strategy="beforeInteractive"
+          referrerPolicy="origin"
+        />
         <Analytics />
         <HashScrollRestorer />
         <div className="relative flex min-h-screen flex-col">

@@ -141,16 +141,51 @@ export default async function Home() {
         default="none"
       >
         <PinnedIntroShell hero={<Hero />}>
-          <Ticker />
-          <Projects projects={projects} />
-          <Services />
-          <Profile />
-          <Experience />
-          <Testimonials />
-          <Contact />
-          <Pricing />
-          <BlogSection posts={posts} />
-          <FAQ />
+          <div
+            className="mobile-deferred-section"
+            data-mobile-deferred-size="compact"
+          >
+            <Ticker />
+          </div>
+          <div
+            className="mobile-deferred-section"
+            data-mobile-deferred-size="large"
+          >
+            <Projects projects={projects} />
+          </div>
+          <div
+            className="mobile-deferred-section"
+            data-mobile-deferred-size="large"
+          >
+            <Services />
+          </div>
+          <div
+            className="mobile-deferred-section"
+            data-mobile-deferred-size="large"
+          >
+            <Profile />
+          </div>
+          <div className="mobile-deferred-section">
+            <Experience />
+          </div>
+          <div
+            className="mobile-deferred-section"
+            data-mobile-deferred-size="large"
+          >
+            <Testimonials />
+          </div>
+          <div className="mobile-deferred-section">
+            <Contact />
+          </div>
+          <div className="mobile-deferred-section">
+            <Pricing />
+          </div>
+          <div className="mobile-deferred-section">
+            <BlogSection posts={posts} />
+          </div>
+          <div className="mobile-deferred-section">
+            <FAQ />
+          </div>
         </PinnedIntroShell>
       </ViewTransition>
     </main>

@@ -1,9 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/lib/site-config";
-import { ensureGsap, gsap, shouldReduceMotion, useGSAP } from "@/lib/gsap";
 import {
   useBodyScrollLock,
   useHomeIntroCovered,
@@ -11,6 +10,26 @@ import {
 } from "@/components/layout/nav-hooks";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { HashLink } from "@/components/ui/HashLink";
+
+type KillableTween = {
+  kill: () => void;
+};
+
+function shouldReduceMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 767px)").matches;
+}
+
+function revealNavTargets(targets: HTMLElement[]) {
+  targets.forEach((target) => {
+    target.style.opacity = "1";
+    target.style.visibility = "visible";
+    target.style.filter = "blur(0px)";
+  });
+}
 
 function renderAnimatedNavLabel(text: string) {
   return (
@@ -57,38 +76,7 @@ export function Nav() {
   const introCovered = pathname !== "/" || homeIntroCovered;
   const navReady = pathname !== "/" || homeNavReady;
 
-  useGSAP(
-    () => {
-      ensureGsap();
-
-      if (!panelRef.current) {
-        return;
-      }
-
-      if (shouldReduceMotion()) {
-        gsap.set(panelRef.current, {
-          autoAlpha: open ? 1 : 0,
-          y: open ? 0 : -24,
-          pointerEvents: open ? "auto" : "none",
-        });
-        return;
-      }
-
-      gsap.to(panelRef.current, {
-        autoAlpha: open ? 1 : 0,
-        y: open ? 0 : -24,
-        duration: 0.35,
-        ease: "power3.out",
-        pointerEvents: open ? "auto" : "none",
-      });
-    },
-    { dependencies: [open], scope, revertOnUpdate: true },
-  );
-
-  useGSAP(
-    () => {
-      ensureGsap();
-
+  useEffect(() => {
       if (!useIntroNavState || !navReady) {
         return;
       }
@@ -113,69 +101,77 @@ export function Nav() {
       }
 
       if (introNavAnimated.current) {
-        gsap.set(targets, {
-          autoAlpha: 1,
-          filter: "blur(0px)",
-          visibility: "visible",
-        });
+        revealNavTargets(targets);
         return;
       }
 
-      if (shouldReduceMotion()) {
-        gsap.set(targets, {
-          autoAlpha: 1,
-          filter: "blur(0px)",
-          visibility: "visible",
-        });
+      if (isMobileViewport() || shouldReduceMotion()) {
+        revealNavTargets(targets);
         introNavAnimated.current = true;
         return;
       }
 
-      gsap.set(targets, {
-        autoAlpha: 0,
-        filter: "blur(8px)",
-        visibility: "visible",
+      let tween: KillableTween | null = null;
+      let cancelled = false;
+      let cleanupLoadListener: (() => void) | null = null;
+
+      void import("@/lib/gsap").then(({ ensureGsap, gsap }) => {
+        if (cancelled) {
+          return;
+        }
+
+        ensureGsap();
+
+        gsap.set(targets, {
+          autoAlpha: 0,
+          filter: "blur(8px)",
+          visibility: "visible",
+        });
+
+        const startAnimation = () => {
+          tween = gsap.to(targets, {
+            autoAlpha: 1,
+            filter: "blur(0px)",
+            duration: 0.44,
+            ease: "power3.out",
+            stagger: {
+              each: 0.02,
+              from: "random",
+            },
+            overwrite: true,
+            onComplete: () => {
+              introNavAnimated.current = true;
+            },
+          });
+        };
+
+        const scheduleAnimation = () => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(startAnimation);
+          });
+        };
+
+        if (document.readyState === "complete") {
+          scheduleAnimation();
+          return;
+        }
+
+        const onLoad = () => {
+          scheduleAnimation();
+        };
+
+        window.addEventListener("load", onLoad, { once: true });
+        cleanupLoadListener = () => {
+          window.removeEventListener("load", onLoad);
+        };
       });
 
-      const startAnimation = () => {
-        gsap.to(targets, {
-          autoAlpha: 1,
-          filter: "blur(0px)",
-          duration: 0.44,
-          ease: "power3.out",
-          stagger: {
-            each: 0.02,
-            from: "random",
-          },
-          overwrite: true,
-          onComplete: () => {
-            introNavAnimated.current = true;
-          },
-        });
-      };
-
-      const scheduleAnimation = () => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(startAnimation);
-        });
-      };
-
-      if (document.readyState === "complete") {
-        scheduleAnimation();
-        return;
-      }
-
-      const onLoad = () => {
-        scheduleAnimation();
-      };
-
-      window.addEventListener("load", onLoad, { once: true });
       return () => {
-        window.removeEventListener("load", onLoad);
+        cancelled = true;
+        cleanupLoadListener?.();
+        tween?.kill();
       };
-    },
-    { dependencies: [useIntroNavState, navReady], scope, revertOnUpdate: true },
-  );
+  }, [useIntroNavState, navReady]);
 
   return (
     <div
@@ -237,7 +233,11 @@ export function Nav() {
       <div
         id="mobile-nav"
         ref={panelRef}
-        className="pointer-events-none absolute inset-x-0 top-full border-t border-border bg-black/96 px-6 py-8 opacity-0 md:hidden"
+        className={`absolute inset-x-0 top-full border-t border-border bg-black/96 px-6 py-8 transition duration-300 ease-out md:hidden ${
+          open
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-6 opacity-0"
+        }`}
       >
         <nav className="flex flex-col gap-5 text-xl font-bold tracking-[-0.04em] text-foreground">
           {siteConfig.navigation.map((item) => (

@@ -94,7 +94,7 @@ export function Profile() {
         className="section-shell grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
       >
         <div className="min-w-0">
-          <SectionHeader label="Profil" marker="(SKWKHS® — 04)" />
+          <SectionHeader id="profil" label="Profil" marker="(SKWKHS® — 04)" />
           <div className="profile-copy space-y-6">
             <div className="profile-name display-md">
               {renderProfileName(siteConfig.founder)}
