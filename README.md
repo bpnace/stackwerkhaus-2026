@@ -1,9 +1,11 @@
 # Stackwerkhaus Website
 
-[![CI](https://github.com/bpnace/Portfolio-Rebuild/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bpnace/Portfolio-Rebuild/actions/workflows/ci.yml)
-[![Deploy](https://github.com/bpnace/Portfolio-Rebuild/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/bpnace/Portfolio-Rebuild/actions/workflows/deploy.yml)
+[![CI](https://github.com/bpnace/stackwerkhaus-2026/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bpnace/stackwerkhaus-2026/actions/workflows/ci.yml)
+[![Deploy](https://github.com/bpnace/stackwerkhaus-2026/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/bpnace/stackwerkhaus-2026/actions/workflows/deploy.yml)
 ![Version](https://img.shields.io/badge/version-0.1.0-2563EB?style=flat-square)
 ![Status](https://img.shields.io/badge/status-current_showcase-1F2937?style=flat-square)
+![Security](https://img.shields.io/badge/security-Dependabot_%2B_CodeQL-2ea043?style=flat-square)
+![License](https://img.shields.io/badge/license-proprietary_portfolio_review-6B7280?style=flat-square)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.3-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2.4-149ECA?logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
