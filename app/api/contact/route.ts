@@ -201,18 +201,18 @@ export async function POST(request: Request) {
     cache: "no-store",
   });
 
-  let webhookResult: WebhookResult | null = null;
+  let upstreamPayload: WebhookResult | null = null;
   try {
-    webhookResult = (await webhookResponse.json()) as WebhookResult;
+    upstreamPayload = (await webhookResponse.json()) as WebhookResult;
   } catch {
-    webhookResult = null;
+    upstreamPayload = null;
   }
 
   const upstreamStatus =
-    typeof webhookResult?.httpStatus === "number"
-      ? webhookResult.httpStatus
+    typeof upstreamPayload?.httpStatus === "number"
+      ? upstreamPayload.httpStatus
       : webhookResponse.status;
-  const upstreamMessage = getWebhookMessage(webhookResult);
+  const upstreamMessage = getWebhookMessage(upstreamPayload);
 
   if (!webhookResponse.ok) {
     return NextResponse.json(

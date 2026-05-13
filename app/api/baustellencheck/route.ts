@@ -135,16 +135,16 @@ export async function POST(request: Request) {
     );
   }
 
-  let webhookResult: WebhookResult | null = null;
+  let upstreamPayload: WebhookResult | null = null;
   try {
-    webhookResult = (await webhookResponse.json()) as WebhookResult;
+    upstreamPayload = (await webhookResponse.json()) as WebhookResult;
   } catch {
-    webhookResult = null;
+    upstreamPayload = null;
   }
 
   const upstreamStatus =
-    typeof webhookResult?.httpStatus === "number"
-      ? webhookResult.httpStatus
+    typeof upstreamPayload?.httpStatus === "number"
+      ? upstreamPayload.httpStatus
       : webhookResponse.status;
 
   if (!webhookResponse.ok) {
