@@ -131,10 +131,9 @@ export default function DatenschutzPage() {
             </h2>
             <p className="mt-3">
               Anfragen aus dem Kontaktformular werden serverseitig an eine von
-              uns betriebene Automatisierungsinstanz auf
-              <strong className="text-foreground"> automation.codariq.de </strong>
-              weitergeleitet, um die Anfrage technisch zu prüfen,
-              Spam-Eingaben zu filtern und intern strukturiert zu verarbeiten.
+              uns betriebene Automatisierungsinstanz weitergeleitet, um die
+              Anfrage technisch zu prüfen, Spam-Eingaben zu filtern und intern
+              strukturiert zu verarbeiten.
               Dabei können zusätzlich technische Metadaten wie Seiten-URL,
               Seitentitel, Referrer, Browserkennung, Sprache und Zeitzone
               verarbeitet werden, soweit diese vom Formular bzw. Browser
