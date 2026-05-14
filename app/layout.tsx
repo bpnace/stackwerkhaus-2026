@@ -102,6 +102,7 @@ export default function RootLayout({
       lang="de"
       data-scroll-behavior="smooth"
       className={`${interSans.variable} ${interDisplay.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
       <head>
         <script

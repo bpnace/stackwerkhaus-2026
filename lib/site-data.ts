@@ -1,3 +1,5 @@
+import { retainerOffers, type Offer } from "@/lib/offers";
+
 export const tickerItems = [
   "Technisches SEO",
   "Informationsarchitektur",
@@ -134,106 +136,16 @@ export const testimonials = [
   },
 ] as const;
 
-export type PricingTier = {
-  name: string;
-  price: string;
-  originalPrice?: string;
-  discountLabel?: string;
-  description: string;
-  ctaLabel: string;
-  suitableFor: readonly string[];
-  includes: readonly string[];
-  visibleIncludes?: number;
-  highlight?: boolean;
-};
+export type PricingTier = Offer;
 
-export const pricingTiers = [
-  {
-    name: "Rohbau",
-    price: "799",
-    originalPrice: "899",
-    discountLabel: "11 % Rabatt für Neukunden",
-    description: "Für neue Websites, die schnell und stabil stehen sollen.",
-    ctaLabel: "Rohbau anfragen",
-    suitableFor: [
-      "Neue Unternehmen",
-      "Dienstleister",
-      "Portfolio-Seiten",
-      "einfache Landingpages",
-    ],
-    includes: [
-      "Seitenstruktur",
-      "Webdesign",
-      "Responsive Umsetzung",
-      "Kontaktformular",
-      "SEO-Basis",
-      "Launch-Unterstützung",
-    ],
-  },
-  {
-    name: "Sanierung",
-    price: "1.499",
-    description: "Für Websites, die noch stehen, aber nicht mehr richtig tragen.",
-    ctaLabel: "Sanierung planen",
-    suitableFor: [
-      "Website Relaunch",
-      "veraltete Seiten",
-      "unklare Angebote",
-      "schwache Kontaktwege",
-      "Unternehmen mit Wachstum",
-    ],
-    includes: [
-      "Website Analyse",
-      "neuer Grundriss",
-      "UI/UX Überarbeitung",
-      "Frontend Umsetzung",
-      "Performance & Optimierung",
-      "SEO Basis",
-      "Launch-Check",
-    ],
-    visibleIncludes: 6,
-    highlight: true,
-  },
-  {
-    name: "Bauwerk",
-    price: "2.499",
-    description:
-      "Für intelligente digitale Bauwerke, bei denen nicht nur die Fassade stimmen muss.",
-    ctaLabel: "Bauwerk besprechen",
-    suitableFor: [
-      "Web Apps",
-      "Plattformen",
-      "Dashboards",
-      "KI-Workflows",
-      "individuelle Funktionen",
-      "technische Produktideen",
-    ],
-    includes: [
-      "technische Planung",
-      "Full Stack Development",
-      "Frontend und Backend",
-      "API Anbindungen",
-      "KI- und Automatisierungslogik",
-      "Testing",
-      "Launch und Übergabe",
-    ],
-    visibleIncludes: 6,
-  },
-] satisfies readonly PricingTier[];
+const careOffer = retainerOffers.find((offer) => offer.slug === "care") ?? retainerOffers[0];
 
 export const maintenanceOffer = {
-  title: "Digitales Facility Management",
-  price: "ab 59 €/Monat",
-  description:
-    "Damit dein digitales Bauwerk nach dem Launch nicht wieder zur Baustelle wird.",
-  ctaLabel: "Facility Management einplanen",
-  features: [
-    "Monitoring",
-    "Kleine Änderungen",
-    "Search-Console-Sichtung",
-    "Backup/Updates",
-    "Monatlicher Mini-Report",
-  ],
+  title: careOffer.name,
+  price: careOffer.priceLabel,
+  description: careOffer.description,
+  ctaLabel: careOffer.ctaLabel,
+  features: careOffer.includes,
 } as const;
 
 export type FaqLink = {
@@ -250,7 +162,7 @@ export type Faq = {
 export const faqs: readonly Faq[] = [
   {
     q: "Was kostet eine professionelle Website für ein kleines Unternehmen?",
-    a: "Der Rohbau startet mit 11 % Neukundenrabatt ab 799 € statt 899 €. Der genaue Preis hängt vom Seitenumfang, den Inhalten und den Integrationen ab.",
+    a: "Projektangebote starten ab 799 €. Laufende Betreuung beginnt mit dem Care Retainer ab 149 €/Monat. Der genaue Preis hängt von Umfang, Seitenanzahl, Funktionen und Integrationen ab.",
     links: [
       {
         label: "Website erstellen lassen",

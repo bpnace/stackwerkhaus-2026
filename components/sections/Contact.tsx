@@ -3,12 +3,11 @@
 import { Suspense, useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { pricingTiers } from "@/lib/site-data";
+import { findOffer, type Offer } from "@/lib/offers";
 import { siteConfig } from "@/lib/site-config";
 import { TrackedHashLink } from "@/components/analytics/TrackedHashLink";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
-import type { PricingTier } from "@/lib/site-data";
 import {
   renderWordMaskText,
   useWordMaskHeadingReveal,
@@ -22,81 +21,44 @@ type Status = {
 const initialStatus: Status = { type: "idle", message: "" };
 const PRESET_LIMIT = 3;
 
-const facilityManagementPrefill = {
-  title: "Digitales Facility Management",
-  price: "ab 59 €/Monat",
-  bullets: [
-    "Monitoring",
-    "Kleine Änderungen",
-    "Search-Console-Sichtung",
-    "Backup/Updates",
-    "Monatlicher Mini-Report",
-  ],
-} as const;
-
-const offerPrefills = {
-  "website-audit": {
-    title: "Website Audit / Bauzustandsbericht",
-    price: "249 €",
-    bullets: [
-      "48h Lieferung",
-      "5–8 Seiten",
-      "Anrechnung bei Projektbuchung",
-    ],
-  },
-  "facility-management": facilityManagementPrefill,
-  "wartung-wachstum": facilityManagementPrefill,
-} as const;
-
-function buildTierPriceSummary(tier: PricingTier) {
-  const base = `ab ${tier.price} €`;
-  if (!tier.originalPrice && !tier.discountLabel) {
-    return base;
-  }
-
-  const discountParts = [
-    tier.originalPrice ? `statt ${tier.originalPrice} €` : "",
-    tier.discountLabel ?? "",
+function buildOfferPriceSummary(offer: Offer) {
+  const priceParts = [
+    offer.priceLabel,
+    offer.minimumTerm ? offer.minimumTerm : "",
   ].filter(Boolean);
 
-  return `${base} (${discountParts.join(", ")})`;
+  return priceParts.join(", ");
 }
 
-function buildPackageProjectMessage(selectedPackage: string | null): string {
-  const packageSlug = selectedPackage?.toLowerCase().trim();
-  if (!packageSlug) {
+function buildOfferProjectMessage(selectedValue: string | null): string {
+  const offer = findOffer(selectedValue);
+  if (!offer) {
     return "";
   }
 
-  const tier = pricingTiers.find(
-    (entry: PricingTier) => entry.name.toLowerCase() === packageSlug,
-  );
-  if (!tier) {
-    return "";
-  }
-
-  const topFeatures = tier.includes.slice(0, PRESET_LIMIT);
-
+  const isProjectLike = offer.category === "project" || offer.billingType === "one_time";
+  const topFeatures = offer.includes.slice(0, PRESET_LIMIT);
+  const scopeText =
+    offer.scopeLimits.length > 0
+      ? `\n\nRahmen:\n- ${offer.scopeLimits.join("\n- ")}`
+      : "";
   const featureText =
-    topFeatures.length > 0 ? `\n\nEnthalten:\n- ${topFeatures.join("\n- ")}` : "";
+    topFeatures.length > 0
+      ? `\n\nEnthalten:\n- ${topFeatures.join("\n- ")}`
+      : "";
+  const questions =
+    offer.nextQuestions.length > 0
+      ? `- ${offer.nextQuestions.join("\n- ")}`
+      : "- Website URL oder aktueller Stand\n- Gewünschter Umfang\n- Wann soll gestartet werden?";
 
-  return `Wir interessieren uns für das Paket "${tier.name}".\n\n`
-    + `Kurz: ${buildTierPriceSummary(tier)}.`
-    + featureText
-    + "\n\nErgänze bitte:\n- Dein Ziel\n- Gewünschter Umfang\n- Wann soll gestartet werden?\n\nWir freuen uns auf dein Update!";
-}
-
-function buildOfferProjectMessage(selectedOffer: string | null): string {
-  const offerSlug = selectedOffer?.toLowerCase().trim();
-  if (!offerSlug || !(offerSlug in offerPrefills)) {
-    return "";
-  }
-
-  const offer = offerPrefills[offerSlug as keyof typeof offerPrefills];
-
-  return `Ich interessiere mich für: ${offer.title} (${offer.price}).\n\n`
-    + `Eckpunkte:\n- ${offer.bullets.join("\n- ")}`
-    + "\n\nErgänze bitte:\n- Website URL\n- Aktuelle Frage oder Ziel\n- Gewünschter Start";
+  return (
+    `Ich interessiere mich für: ${offer.name}.\n\n` +
+    `Preisart: ${isProjectLike ? "Projekt" : "laufende Betreuung"}.\n` +
+    `Kurz: ${buildOfferPriceSummary(offer)}.` +
+    featureText +
+    scopeText +
+    `\n\nErgänze bitte:\n${questions}\n\nWir freuen uns auf dein Update!`
+  );
 }
 
 type ContactFormProps = {
@@ -115,7 +77,7 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
 
   useEffect(() => {
     const prefill =
-      buildPackageProjectMessage(selectedPackage) ||
+      buildOfferProjectMessage(selectedPackage) ||
       buildOfferProjectMessage(selectedOffer);
     if (prefill) {
       setMessage(prefill);
@@ -168,7 +130,9 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
       const result = (await response.json()) as { message?: string };
 
       if (!response.ok) {
-        throw new Error(result.message || "Die Anfrage konnte nicht gesendet werden.");
+        throw new Error(
+          result.message || "Die Anfrage konnte nicht gesendet werden.",
+        );
       }
 
       setStatus({
@@ -239,12 +203,7 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
       </div>
       <div className="sr-only" aria-hidden="true">
         <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          name="website"
-          tabIndex={-1}
-          autoComplete="off"
-        />
+        <input id="website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
       <div className="mt-6">
         <label htmlFor="message" className="eyebrow text-white">
@@ -365,9 +324,10 @@ export function Contact() {
               {renderWordMaskText("Lass uns was einzigartiges bauen.")}
             </h2>
             <p className="max-w-4xl text-lg leading-8 text-muted">
-              Wir klären gemeinsam, worum’s geht, was gerade bremst und was als Nächstes
-              Priorität hat. Angebot schärfen, Zielgruppe sauber einordnen und Projektumfang
-              realisieren damit der nächsten Schritt nicht aus dem Bauch heraus entscheiden wird.
+              Wir klären gemeinsam, worum’s geht, was gerade bremst und was als
+              Nächstes Priorität hat. Angebot schärfen, Zielgruppe sauber
+              einordnen und Projektumfang realisieren damit der nächsten Schritt
+              nicht aus dem Bauch heraus entscheiden wird.
             </p>
             <div className="space-y-3 text-sm text-muted">
               <a
