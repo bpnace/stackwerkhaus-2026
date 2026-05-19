@@ -10,7 +10,7 @@ export function Pricing() {
         <div className="mb-8 max-w-5xl space-y-5 md:mb-10">
           <h2 className="display-lg max-w-[9ch]">Wähle deinen Einstieg</h2>
           <p className="max-w-4xl text-base leading-7 text-muted md:text-lg md:leading-8">
-            Diese vier Wege decken die meisten Website-Projekte ab. Schlank starten,
+            Diese vier Pakete decken die meisten Website-Projekte ab. Schlank starten,
             individueller aufbauen, Inhalte selbst pflegen oder ein kleines System
             daraus machen. Was darüber hinausgeht, kommt als Zusatzleistung
             dazu und nicht als versteckte Kosten.

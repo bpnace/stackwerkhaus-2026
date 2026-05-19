@@ -110,7 +110,7 @@ export const experience = [
 
 export const testimonials = [
   {
-    highlight: "Klarer im Angebot",
+    highlight: "Einfach und Verständlich",
     quote:
       "Den gesamten Relaunch hat Arthur eigenständig durchgezogen – von Konzept bis Go-Live. Das Ergebnis ist deutlich ästhetischer, komplett responsive und klarer im Angebot.",
     name: "Leonie",
@@ -194,7 +194,7 @@ export const pricingTiers = [
     stripePaymentLinkEnvKey: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TEMPLATE_START",
     minimumTerm: "24 Monate",
     description:
-      "Für eine kleine Website, die sauber online gehen soll, ohne direkt ein großes Projekt aufzumachen.",
+      "Für eine kleine Website, die sauber online gehen soll, ohne direkt ein großes Projekt zu starten.",
     ctaLabel: "Start anfragen",
     suitableFor: [
       "lokale Dienstleister",
@@ -287,7 +287,7 @@ export const pricingTiers = [
     stripePaymentLink: stripePaymentLinks.systemWachstum,
     stripePaymentLinkEnvKey: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SYSTEM_WACHSTUM",
     description:
-      "Für Websites, die nicht beim Formular enden. Leads, Inhalte, CRM und kleine Workflows greifen hier zusammen.",
+      "Für Websites, die nicht beim Formular enden. Leads, Inhalte, CRM und Automationen greifen hier ineinander.",
     ctaLabel: "System anfragen",
     suitableFor: [
       "Relaunches",
@@ -314,7 +314,7 @@ export const pricingAddOns = [
     price: "+9 €/Monat",
     secondaryPrice: "19 €/Monat einzeln",
     description:
-      "Verzeichnisse, Profile und Basisdaten sauber eintragen. Vor allem für lokale Dienstleister sinnvoll.",
+      "Verzeichnisse, Profile und Basisdaten eintragen. Vor allem für lokale Dienstleister sinnvoll.",
   },
   {
     name: "SEO & Content-Ausbau",
@@ -326,19 +326,19 @@ export const pricingAddOns = [
     name: "Zusätzliche Sprache",
     price: "ab 19 €/Monat",
     description:
-      "Für übersetzte Seitenbereiche, wenn die zweite Sprache nicht halb mitlaufen soll.",
+      "Für übersetzte Seitenbereiche, wenn die zweite Sprache nicht nur halb mitlaufen soll.",
   },
   {
     name: "Zusätzliche Domain",
     price: "+3 €/Monat",
     description:
-      "Für weitere Domains, Kampagnenadressen oder saubere Weiterleitungen.",
+      "Für weitere Domains, Kampagnenadressen oder Weiterleitungen.",
   },
   {
     name: "Zusätzliches E-Mail-Postfach",
     price: "+2 €/Monat",
     description:
-      "Für weitere Postfächer im Setup, ohne später im DNS-Keller zu suchen.",
+      "Für weitere Postfächer im Setup. Vor allem für kleine Unternehmen mit mehreren Mitarbeitenden sinnvoll.",
   },
   {
     name: "Sonderwünsche",
