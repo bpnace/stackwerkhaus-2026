@@ -36,46 +36,46 @@ export function StaggeredCycle({
     size === "lg" ? "display-lg" : size === "md" ? "display-md" : "display-xl";
 
   useEffect(() => {
-      const root = scope.current;
-      if (!root) {
-        return;
-      }
+    const root = scope.current;
+    if (!root) {
+      return;
+    }
 
-      const wordElements = Array.from(
-        root.querySelectorAll<HTMLElement>(".cycle-word"),
-      );
-      if (!wordElements.length) {
-        return;
-      }
+    const wordElements = Array.from(
+      root.querySelectorAll<HTMLElement>(".cycle-word"),
+    );
+    if (!wordElements.length) {
+      return;
+    }
 
-      const charGroups = wordElements.map((wordElement) =>
-        Array.from(wordElement.querySelectorAll<HTMLElement>(".cycle-char")),
-      );
+    const charGroups = wordElements.map((wordElement) =>
+      Array.from(wordElement.querySelectorAll<HTMLElement>(".cycle-char")),
+    );
 
-      if (shouldUseStaticCycle()) {
-        wordElements.forEach((wordElement, index) => {
-          wordElement.style.opacity = index === 0 ? "1" : "0";
-          wordElement.style.visibility = index === 0 ? "visible" : "hidden";
+    if (shouldUseStaticCycle()) {
+      wordElements.forEach((wordElement, index) => {
+        wordElement.style.opacity = index === 0 ? "1" : "0";
+        wordElement.style.visibility = index === 0 ? "visible" : "hidden";
+      });
+      charGroups.forEach((chars, index) => {
+        chars.forEach((char) => {
+          char.style.opacity = index === 0 ? "1" : "0";
+          char.style.visibility = index === 0 ? "visible" : "hidden";
+          char.style.transform = "";
         });
-        charGroups.forEach((chars, index) => {
-          chars.forEach((char) => {
-            char.style.opacity = index === 0 ? "1" : "0";
-            char.style.visibility = index === 0 ? "visible" : "hidden";
-            char.style.transform = "";
-          });
-        });
+      });
+      return;
+    }
+
+    let activeTimeline: KillableTimeline | null = null;
+    let stopped = false;
+
+    void import("@/lib/gsap").then(({ ensureGsap, gsap }) => {
+      if (stopped) {
         return;
       }
 
-      let activeTimeline: KillableTimeline | null = null;
-      let stopped = false;
-
-      void import("@/lib/gsap").then(({ ensureGsap, gsap }) => {
-        if (stopped) {
-          return;
-        }
-
-        ensureGsap();
+      ensureGsap();
 
       gsap.set(wordElements, { autoAlpha: 0 });
       gsap.set(charGroups.flat(), { autoAlpha: 0, yPercent: 118 });
@@ -128,12 +128,12 @@ export function StaggeredCycle({
       };
 
       runTransition(0);
-      });
+    });
 
-      return () => {
-        stopped = true;
-        activeTimeline?.kill();
-      };
+    return () => {
+      stopped = true;
+      activeTimeline?.kill();
+    };
   }, []);
 
   return (
@@ -149,13 +149,13 @@ export function StaggeredCycle({
       >
         {longestWord}
       </span>
-      {words.map((word, wordIndex) => (
+      {words.map((word) => (
         <div
           key={word}
           className="cycle-word absolute left-[0.04em] top-0 whitespace-nowrap text-foreground"
           style={{
-            opacity: wordIndex === 0 ? 1 : 0,
-            visibility: wordIndex === 0 ? "visible" : "hidden",
+            opacity: 0,
+            visibility: "hidden",
           }}
           aria-hidden="true"
         >
@@ -163,6 +163,10 @@ export function StaggeredCycle({
             <span
               key={`${word}-${index}`}
               className="cycle-char inline-block"
+              style={{
+                opacity: 0,
+                visibility: "hidden",
+              }}
             >
               {character}
             </span>

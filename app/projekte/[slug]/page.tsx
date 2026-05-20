@@ -199,7 +199,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 style={{
                   objectPosition: heroMedia.objectPosition,
                 }}
-                priority
+                loading="eager"
+                fetchPriority="high"
               />
               <div className="project-preview-scrim" aria-hidden />
             </figure>

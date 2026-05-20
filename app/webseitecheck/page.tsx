@@ -196,7 +196,8 @@ export default function BaustellencheckPage() {
               src="/pagecheck1.png"
               alt="Stackwerkhaus Architekturkonzept als Bauplan-Grafik"
               fill
-              priority
+              loading="eager"
+              fetchPriority="high"
               sizes="(min-width: 1280px) 23rem, (min-width: 1024px) 21rem, (min-width: 768px) 26rem, 92vw"
               className="object-contain"
             />

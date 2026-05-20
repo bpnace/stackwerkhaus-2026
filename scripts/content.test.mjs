@@ -658,8 +658,15 @@ test("SEO route inventory exposes crawlable hubs and hides APIs", async () => {
 
   assert.ok(analyticsSource.includes("usePathname"), "analytics missing route-change tracking");
   assert.ok(analyticsSource.includes("page_path"), "analytics missing GA4 page_path tracking");
-  assert.ok(layoutSource.includes("microsoft-clarity"), "layout missing Microsoft Clarity script");
-  assert.ok(layoutSource.includes("wmex88aqgx"), "layout missing Microsoft Clarity project id");
+  const ccm19Index = layoutSource.indexOf("id={ccm19ScriptId}");
+  const analyticsIndex = layoutSource.indexOf("<Analytics />");
+
+  assert.notEqual(ccm19Index, -1, "layout missing CCM19 script");
+  assert.notEqual(analyticsIndex, -1, "layout missing consent-gated analytics component");
+  assert.ok(ccm19Index < analyticsIndex, "CCM19 must render before consent-gated analytics");
+  assert.ok(!layoutSource.includes("microsoft-clarity"), "layout must not load Clarity before CCM19");
+  assert.ok(analyticsSource.includes("microsoft-clarity"), "analytics missing consent-gated Microsoft Clarity script");
+  assert.ok(analyticsSource.includes("wmex88aqgx"), "analytics missing Microsoft Clarity project id");
 });
 
 test("vertical landing pages stay discoverable and schema-backed", async () => {
