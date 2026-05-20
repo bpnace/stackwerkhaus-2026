@@ -58,13 +58,6 @@ export function PricingCard({
             highlight ? "text-background" : "text-foreground"
           }`}
         >
-          <span
-            className={`mr-2 text-[0.18em] font-sans font-medium tracking-normal ${
-              highlight ? "text-background/56" : "text-muted"
-            }`}
-          >
-            ab
-          </span>
           {monthlyPrice}
           <span className="ml-1 text-[0.32em] tracking-normal">€</span>
           <span className="ml-2 align-baseline text-[0.2em] font-sans font-black uppercase tracking-normal">

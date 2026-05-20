@@ -55,7 +55,11 @@ function normalizeOfferSlug(value: string | null) {
 }
 
 function buildTierPriceSummary(tier: PricingTier) {
-  return `ab ${tier.monthlyPrice} ${tier.monthlySuffix} (${tier.monthlyNote}).`;
+  return `${tier.monthlyPrice} ${tier.monthlySuffix} (${tier.monthlyNote}).`;
+}
+
+function buildPricingInterestLine(tier: PricingTier) {
+  return `Ich interessiere mich für das Paket "${tier.name}".`;
 }
 
 function findPricingTier(selectedPackage: string | null, selectedOffer: string | null) {
@@ -93,8 +97,8 @@ function buildPricingProjectMessage(
       ? `\n\nGewähltes Template: ${selectedTemplate}`
       : "";
 
-  return `Ich interessiere mich für das Paket "${tier.name}".\n\n`
-    + `Preisrahmen: ${buildTierPriceSummary(tier)}`
+  return `${buildPricingInterestLine(tier)}\n\n`
+    + `Preis: ${buildTierPriceSummary(tier)}`
     + templateText
     + featureText
     + "\n\nErgänze bitte:\n- Dein Ziel\n- aktueller Website-Stand\n- gewünschter Start";

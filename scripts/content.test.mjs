@@ -368,6 +368,7 @@ test("public pricing is subscription-first with Stripe link configuration", asyn
     'ctaHref: "/templates"',
     "Template aus der Galerie wählen",
     "Eigene Farben, Logo und Schriften",
+    "Pflege und kleine Anpassungen",
     "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TEMPLATE_START",
     "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_WEBSITE_INDIVIDUELL",
     "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SHOP_BLOG",
@@ -490,6 +491,10 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
     "pricing cards should not duplicate suitable-for copy",
   );
   assert.ok(
+    !siteDataSource.includes("bis zu 6 Seiten"),
+    "pricing cards should not expose page-count limits in the visible includes",
+  );
+  assert.ok(
     !pricingCardSource.includes(["one", "TimePrice"].join("")),
     "pricing cards should not render website entry prices",
   );
@@ -516,12 +521,15 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
     pricingCardSource.includes('const href = ctaHref || `/?paket=${encodeURIComponent(slug)}#kontakt`;') &&
       !pricingCardSource.includes("isExternalPaymentLink") &&
       !pricingCardSource.includes("stripePaymentLink") &&
+      !pricingCardSource.includes("\n            ab\n") &&
       !pricingCardSource.includes('target="_blank"'),
-    "pricing cards should not send non-template packages directly to Stripe",
+    "pricing cards should use fixed prices and not send non-template packages directly to Stripe",
   );
   assert.ok(
     contactSource.includes('Ich interessiere mich für das Paket') &&
-      contactSource.includes("Preisrahmen:") &&
+      contactSource.includes("Gewähltes Template") &&
+      contactSource.includes("Preis:") &&
+      !contactSource.includes("Preisrahmen:") &&
       !contactSource.includes("ob Stripe-Abo"),
     "contact prefill should describe the selected package instead of asking about Stripe checkout",
   );
@@ -551,8 +559,7 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
     "Wähle dein Grundgerüst",
     "Template wählen",
     "Layout-Vorschau für Service Start",
-    "templateStartPaymentLink || getTemplateContactHref(template.title)",
-    "Template starten",
+    "getTemplateContactHref(template.title)",
     "Template anfragen",
   ]) {
     assert.ok(
@@ -611,6 +618,8 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
   assert.ok(
     templatesSource.includes('getSubscriptionPricingSchemaOffer("template-start", pageUrl)') &&
       !templatesSource.includes(["get", "FixedPriceSchemaOffer"].join("")) &&
+      !templatesSource.includes("templateStartPaymentLink") &&
+      !templatesSource.includes("Template starten") &&
       templatesSource.includes("Template Start von Stackwerkhaus ab 29 €/Monat"),
     "/templates metadata/schema should expose only the Template Start subscription price",
   );

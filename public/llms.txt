@@ -51,7 +51,7 @@ Paketlogik laut Website:
 - Website Individuell: 69 €/Monat, Standardempfehlung für individuelle Websites mit stärkerer Struktur, SEO-Basis, Search Console, Launch-Setup, Pflege und kleinen Änderungen.
 - Shop & Blog: 89 €/Monat, für WordPress mit eigenem Theme, Blog, Shop oder selbst pflegbare Inhalte. Komplexe Shop-Logik wird separat angeboten.
 - System & Wachstum: ab 199 €/Monat, für CRM, Formularlogik, Automatisierung, n8n/Zapier, SEO-/Content-Ausbau, neue Landingpages oder kleine Software-Flows.
-- Zusatzleistungen: Lokale SEO-Einträge +9 €/Monat für Homepagekunden oder 19 €/Monat standalone, SEO & Content Ausbau ab 149 €/Monat, zusätzliche Sprache ab 19 €/Monat, zusätzliche Domain +3 €/Monat, zusätzliches E-Mail-Postfach +2 €/Monat und Sonderwünsche nach Angebot.
+- Zusatzleistungen: Lokale SEO-Einträge +9 €/Monat für Homepagekunden oder 19 €/Monat standalone, SEO & Content Ausbau ab 149 €/Monat, zusätzliche Sprache ab 19 €/Monat, zusätzliche Domain +3 €/Monat, zusätzliches E-Mail-Postfach +2 €/Monat und Sonderwünsche nach Absprache.
 - Website Check: 99 € für Neukunden, wird bei anschließendem Abo angerechnet.
 - Stripe-Zahlung: standardisierte Abos können über Stripe Payment Links abgewickelt werden, wenn die Links konfiguriert sind. Ohne konfigurierten Link führt die Website auf den Kontaktpfad.
 

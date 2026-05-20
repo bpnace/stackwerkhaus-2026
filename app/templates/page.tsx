@@ -3,7 +3,6 @@ import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { stringifyJsonLd } from "@/lib/json-ld";
 import { getSubscriptionPricingSchemaOffer } from "@/lib/pricing-schema";
-import { pricingTiers } from "@/lib/site-data";
 import { siteConfig } from "@/lib/site-config";
 
 const pagePath = "/templates";
@@ -63,7 +62,7 @@ const templateSteps = [
   {
     step: "01",
     title: "Template wählen",
-    text: "Erst die passende Richtung aussuchen, dann startet der Zahlungsweg.",
+    text: "Erst die passende Richtung aussuchen, dann startet die Anfrage mit Template-Name.",
   },
   {
     step: "02",
@@ -76,10 +75,6 @@ const templateSteps = [
     text: "Responsive Umsetzung, Kontaktformular, Hosting und SEO-Grundsetup sind enthalten.",
   },
 ] as const;
-
-const templateStartPaymentLink =
-  pricingTiers.find((tier) => tier.slug === "template-start")?.stripePaymentLink ??
-  "";
 
 function getTemplateContactHref(templateTitle: string) {
   return `/?angebot=template-start&template=${encodeURIComponent(templateTitle)}#kontakt`;
@@ -299,15 +294,14 @@ export default function TemplatesPage() {
             </div>
             <p className="max-w-2xl text-base leading-7 text-muted md:text-lg md:leading-8">
               Die Vorschauen zeigen die Struktur, nicht fertige Deko. Nach der
-              Auswahl wird genau ein Template Start gebucht und auf dein Angebot
-              angepasst.
+              Auswahl wird genau ein Template Start angefragt. Danach klären wir
+              kurz, ob das Gerüst zu deinem Angebot passt.
             </p>
           </div>
 
           <div className="mt-10 grid gap-7 lg:grid-cols-3">
             {templateCards.map((template) => {
-              const templateHref =
-                templateStartPaymentLink || getTemplateContactHref(template.title);
+              const templateHref = getTemplateContactHref(template.title);
               const ctaClassName =
                 "link-arrow mt-auto w-full min-w-0 justify-between border border-border px-3 py-4 text-[10px] tracking-[0.22em] text-foreground hover:border-foreground/45 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]";
 
@@ -347,30 +341,14 @@ export default function TemplatesPage() {
                         </li>
                       ))}
                     </ul>
-                    {templateStartPaymentLink ? (
-                      <a
-                        href={templateHref}
-                        className={ctaClassName}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        <span className="min-w-0">
-                          <LinkRippleText text="Template starten" baseWeight={560} />
-                        </span>
-                        <span aria-hidden className="shrink-0">
-                          +
-                        </span>
-                      </a>
-                    ) : (
-                      <HashLink href={templateHref} className={ctaClassName}>
-                        <span className="min-w-0">
-                          <LinkRippleText text="Template anfragen" baseWeight={560} />
-                        </span>
-                        <span aria-hidden className="shrink-0">
-                          +
-                        </span>
-                      </HashLink>
-                    )}
+                    <HashLink href={templateHref} className={ctaClassName}>
+                      <span className="min-w-0">
+                        <LinkRippleText text="Template anfragen" baseWeight={560} />
+                      </span>
+                      <span aria-hidden className="shrink-0">
+                        +
+                      </span>
+                    </HashLink>
                   </div>
                 </article>
               );
