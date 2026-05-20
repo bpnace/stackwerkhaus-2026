@@ -52,6 +52,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "lighthouse": "13.1.0",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
     "remotion": "^4.0.461",
     "tailwindcss": "^4",
     "typescript": "^5"

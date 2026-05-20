@@ -74,6 +74,12 @@ importers:
       lighthouse:
         specifier: 13.1.0
         version: 13.1.0
+      pixelmatch:
+        specifier: ^7.2.0
+        version: 7.2.0
+      pngjs:
+        specifier: ^7.0.0
+        version: 7.0.0
       remotion:
         specifier: ^4.0.461
         version: 4.0.461(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -3171,6 +3177,14 @@ packages:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
 
+  pixelmatch@7.2.0:
+    resolution: {integrity: sha512-xhcb4yHu9sM/G7foGzoLtXYcC0zHEaOXXjRKhGup0fw78Nf2Tkiapv4EQyMzrbcmQPsllAI7DbFY2UT7PlI9Pg==}
+    hasBin: true
+
+  pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
+
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
     engines: {node: '>= 0.4'}
@@ -4800,7 +4814,7 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       react-refresh: 0.18.0
       remotion: 4.0.461(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      style-loader: 4.0.0(webpack@5.105.0(esbuild@0.25.0)(postcss@8.5.14))
+      style-loader: 4.0.0(webpack@5.105.0)
       webpack: 5.105.0(esbuild@0.25.0)(postcss@8.5.14)
     transitivePeerDependencies:
       - '@minify-html/node'
@@ -7641,6 +7655,12 @@ snapshots:
 
   picomatch@4.0.4: {}
 
+  pixelmatch@7.2.0:
+    dependencies:
+      pngjs: 7.0.0
+
+  pngjs@7.0.0: {}
+
   possible-typed-array-names@1.1.0: {}
 
   postal-mime@2.7.4: {}
@@ -8161,7 +8181,7 @@ snapshots:
 
   stubborn-utils@1.0.2: {}
 
-  style-loader@4.0.0(webpack@5.105.0(esbuild@0.25.0)(postcss@8.5.14)):
+  style-loader@4.0.0(webpack@5.105.0):
     dependencies:
       webpack: 5.105.0(esbuild@0.25.0)(postcss@8.5.14)
 

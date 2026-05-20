@@ -10,7 +10,6 @@ export function PricingCard({
   monthlyPrice,
   monthlySuffix,
   monthlyNote,
-  stripePaymentLink,
   description,
   ctaLabel,
   ctaHref,
@@ -18,9 +17,7 @@ export function PricingCard({
   visibleIncludes,
   highlight,
 }: PricingCardProps) {
-  const href =
-    ctaHref || stripePaymentLink || `/?angebot=${encodeURIComponent(slug)}#kontakt`;
-  const isExternalPaymentLink = Boolean(stripePaymentLink && !ctaHref);
+  const href = ctaHref || `/?paket=${encodeURIComponent(slug)}#kontakt`;
   const ctaText = ctaLabel;
   const ctaClassName = `link-arrow mt-6 w-full justify-between px-4 py-3 transition-opacity hover:opacity-80 ${
     highlight
@@ -84,22 +81,10 @@ export function PricingCard({
         <div className="tracking-[0.08em]">{monthlyNote}</div>
       </div>
 
-      {isExternalPaymentLink ? (
-        <a
-          href={href}
-          className={ctaClassName}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <LinkRippleText text={ctaText} baseWeight={560} />
-          <span aria-hidden>+</span>
-        </a>
-      ) : (
-        <HashLink href={href} className={ctaClassName}>
-          <LinkRippleText text={ctaText} baseWeight={560} />
-          <span aria-hidden>+</span>
-        </HashLink>
-      )}
+      <HashLink href={href} className={ctaClassName}>
+        <LinkRippleText text={ctaText} baseWeight={560} />
+        <span aria-hidden>+</span>
+      </HashLink>
 
       <div
         className={`mt-6 grid gap-5 border-t pt-5 text-sm leading-6 ${

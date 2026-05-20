@@ -11,7 +11,7 @@ export function getSubscriptionPricingSchemaOffers(baseUrl = siteConfig.url) {
     "@id": `${siteConfig.url}#offer-${tier.slug}`,
     name: tier.name,
     description: `${tier.description} Startet bei ${tier.monthlyPrice} ${tier.monthlySuffix}.`,
-    url: new URL(tier.ctaHref || `/?angebot=${tier.slug}#kontakt`, baseUrl).toString(),
+    url: new URL(tier.ctaHref || `/?paket=${tier.slug}#kontakt`, baseUrl).toString(),
     priceSpecification: {
       "@type": "UnitPriceSpecification",
       price: tier.monthlyPrice,

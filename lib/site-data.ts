@@ -207,12 +207,12 @@ export const pricingTiers = [
     monthlyPrice: "69",
     monthlySuffix: "€/Monat",
     monthlyNote: "12 Monate Mindestlaufzeit",
-    stripePaymentLink: stripePaymentLinks.websiteIndividuell,
     stripePaymentLinkEnvKey:
       "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_WEBSITE_INDIVIDUELL",
     description:
       "Für Selbstständige und kleine Unternehmen, die eine individuelle Website benötigen.",
     ctaLabel: "Individuell anfragen",
+    ctaHref: "/?paket=website-individuell#kontakt",
     includes: [
       "keine Erstellungskosten",
       "Domain und Hosting",
@@ -230,11 +230,11 @@ export const pricingTiers = [
     monthlyPrice: "89",
     monthlySuffix: "€/Monat",
     monthlyNote: "6 Monate Mindestlaufzeit",
-    stripePaymentLink: stripePaymentLinks.shopBlog,
     stripePaymentLinkEnvKey: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SHOP_BLOG",
     description:
       "Für Websites, die regelmäßig neue Inhalte brauchen oder einen kleinen Shop benötigen. Auf Basis von WordPress für eigene Inhalte.",
     ctaLabel: "Shop anfragen",
+    ctaHref: "/?paket=shop-blog#kontakt",
     includes: [
       "individuelles Design",
       "Website-Pflege",
@@ -251,11 +251,11 @@ export const pricingTiers = [
     monthlyPrice: "199",
     monthlySuffix: "€/Monat",
     monthlyNote: "3 Monate Mindestlaufzeit",
-    stripePaymentLink: stripePaymentLinks.systemWachstum,
     stripePaymentLinkEnvKey: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SYSTEM_WACHSTUM",
     description:
       "Für Websites, die mehr als eine Visitenkarte sein sollen. Mit CRM, Automatisierung und Ausbau für schnelleres Wachstum.",
     ctaLabel: "System anfragen",
+    ctaHref: "/?paket=system-wachstum#kontakt",
     includes: [
       "individuelles Design",
       "Website-Pflege",

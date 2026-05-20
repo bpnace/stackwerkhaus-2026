@@ -373,6 +373,10 @@ test("public pricing is subscription-first with Stripe link configuration", asyn
     "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SHOP_BLOG",
     "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SYSTEM_WACHSTUM",
     "const ctaText = ctaLabel",
+    'ctaHref: "/?paket=website-individuell#kontakt"',
+    'ctaHref: "/?paket=shop-blog#kontakt"',
+    'ctaHref: "/?paket=system-wachstum#kontakt"',
+    'Ich interessiere mich für das Paket',
     "ab 149 €/Monat",
     "priceSpecification",
     'unitText: "Monat"',
@@ -498,6 +502,29 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
       siteDataSource.includes('ctaHref: "/templates"'),
     "Template Start should link to the template gallery page",
   );
+  for (const [slug, href] of [
+    ["Website Individuell", '/?paket=website-individuell#kontakt'],
+    ["Shop & Blog", '/?paket=shop-blog#kontakt'],
+    ["System & Wachstum", '/?paket=system-wachstum#kontakt'],
+  ]) {
+    assert.ok(
+      siteDataSource.includes(`ctaHref: "${href}"`),
+      `${slug} should start as a contact request with a package prefill`,
+    );
+  }
+  assert.ok(
+    pricingCardSource.includes('const href = ctaHref || `/?paket=${encodeURIComponent(slug)}#kontakt`;') &&
+      !pricingCardSource.includes("isExternalPaymentLink") &&
+      !pricingCardSource.includes("stripePaymentLink") &&
+      !pricingCardSource.includes('target="_blank"'),
+    "pricing cards should not send non-template packages directly to Stripe",
+  );
+  assert.ok(
+    contactSource.includes('Ich interessiere mich für das Paket') &&
+      contactSource.includes("Preisrahmen:") &&
+      !contactSource.includes("ob Stripe-Abo"),
+    "contact prefill should describe the selected package instead of asking about Stripe checkout",
+  );
   assert.ok(
     !siteDataSource.includes('label: "Empfohlen"') &&
       !pricingCardSource.includes("Empfohlen"),
@@ -521,7 +548,9 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
     "Service Start",
     "Praxis & Termin",
     "Projekt & Profil",
-    "Vorschau folgt. Hier kommt ein Screenshot der Vorlage rein.",
+    "Wähle dein Grundgerüst",
+    "Template wählen",
+    "Layout-Vorschau für Service Start",
     "templateStartPaymentLink || getTemplateContactHref(template.title)",
     "Template starten",
     "Template anfragen",

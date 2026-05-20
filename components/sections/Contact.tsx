@@ -93,11 +93,11 @@ function buildPricingProjectMessage(
       ? `\n\nGewähltes Template: ${selectedTemplate}`
       : "";
 
-  return `Wir interessieren uns für das Abo "${tier.name}".\n\n`
-    + `Kurz: ${buildTierPriceSummary(tier)}`
+  return `Ich interessiere mich für das Paket "${tier.name}".\n\n`
+    + `Preisrahmen: ${buildTierPriceSummary(tier)}`
     + templateText
     + featureText
-    + "\n\nErgänze bitte:\n- Dein Ziel\n- aktueller Website-Stand\n- gewünschter Start\n- ob Stripe-Abo oder erst Beratung besser passt";
+    + "\n\nErgänze bitte:\n- Dein Ziel\n- aktueller Website-Stand\n- gewünschter Start";
 }
 
 function buildOfferProjectMessage(selectedOffer: string | null): string {

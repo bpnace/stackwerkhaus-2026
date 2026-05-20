@@ -20,7 +20,7 @@ export const siteConfig = {
   navigation: [
     { label: "Projekte", href: "/#projekte" },
     { label: "Leistungen", href: "/#leistungen" },
-    { label: "Abos", href: "/#pricing" },
+    { label: "Leistungen", href: "/#pricing" },
     { label: "Kontakt", href: "/#kontakt" },
   ],
 } as const;
