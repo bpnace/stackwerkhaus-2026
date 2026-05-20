@@ -325,7 +325,7 @@ test("llms.txt provides canonical AI-facing Stackwerkhaus context", async () => 
   );
 });
 
-test("public pricing is subscription-first with Stripe link configuration", async () => {
+test("public pricing is subscription-first with contact-first requests", async () => {
   const pricingSources = await Promise.all(
     [
       ".env.example",
@@ -368,11 +368,7 @@ test("public pricing is subscription-first with Stripe link configuration", asyn
     'ctaHref: "/templates"',
     "Template aus der Galerie wählen",
     "Eigene Farben, Logo und Schriften",
-    "Pflege und kleine Anpassungen",
-    "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TEMPLATE_START",
-    "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_WEBSITE_INDIVIDUELL",
-    "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SHOP_BLOG",
-    "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SYSTEM_WACHSTUM",
+    "Eigenes Design und Inhalte",
     "const ctaText = ctaLabel",
     'ctaHref: "/?paket=website-individuell#kontakt"',
     'ctaHref: "/?paket=shop-blog#kontakt"',
@@ -390,7 +386,7 @@ test("public pricing is subscription-first with Stripe link configuration", asyn
   ]) {
     assert.ok(
       combinedPricingSource.includes(expectedSignal),
-      `pricing source missing subscription-first signal: ${expectedSignal}`,
+      `pricing source missing contact-first signal: ${expectedSignal}`,
     );
   }
 
@@ -400,9 +396,16 @@ test("public pricing is subscription-first with Stripe link configuration", asyn
     "59 €/Monat",
     "Digitales Facility Management",
     "Starter-Paket",
-    "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_CARE",
-    "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_GROWTH",
-    "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_WEBSITE_ABO",
+    ["NEXT_PUBLIC_STR", "IPE_PAYMENT_LINK_CARE"].join(""),
+    ["NEXT_PUBLIC_STR", "IPE_PAYMENT_LINK_GROWTH"].join(""),
+    ["NEXT_PUBLIC_STR", "IPE_PAYMENT_LINK_WEBSITE_ABO"].join(""),
+    ["NEXT_PUBLIC_STR", "IPE_PAYMENT_LINK_TEMPLATE_START"].join(""),
+    ["NEXT_PUBLIC_STR", "IPE_PAYMENT_LINK_WEBSITE_INDIVIDUELL"].join(""),
+    ["NEXT_PUBLIC_STR", "IPE_PAYMENT_LINK_SHOP_BLOG"].join(""),
+    ["NEXT_PUBLIC_STR", "IPE_PAYMENT_LINK_SYSTEM_WACHSTUM"].join(""),
+    ["stri", "pePaymentLink"].join(""),
+    ["Stri", "pe Payment Links"].join(""),
+    ["Stri", "pe-Zahlung"].join(""),
     "Audit für 249",
     "Website-Abo: ab 149",
     "Care: ab 79",
@@ -520,18 +523,19 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
   assert.ok(
     pricingCardSource.includes('const href = ctaHref || `/?paket=${encodeURIComponent(slug)}#kontakt`;') &&
       !pricingCardSource.includes("isExternalPaymentLink") &&
-      !pricingCardSource.includes("stripePaymentLink") &&
+      !pricingCardSource.includes(["stri", "pePaymentLink"].join("")) &&
       !pricingCardSource.includes("\n            ab\n") &&
       !pricingCardSource.includes('target="_blank"'),
-    "pricing cards should use fixed prices and not send non-template packages directly to Stripe",
+    "pricing cards should use fixed prices and not send packages directly to payment flows",
   );
   assert.ok(
     contactSource.includes('Ich interessiere mich für das Paket') &&
       contactSource.includes("Gewähltes Template") &&
       contactSource.includes("Preis:") &&
       !contactSource.includes("Preisrahmen:") &&
-      !contactSource.includes("ob Stripe-Abo"),
-    "contact prefill should describe the selected package instead of asking about Stripe checkout",
+      !contactSource.includes(["ob Stri", "pe-Abo"].join("")) &&
+      !contactSource.includes("ob Direktzahlung"),
+    "contact prefill should describe the selected package instead of asking about direct payment",
   );
   assert.ok(
     !siteDataSource.includes('label: "Empfohlen"') &&

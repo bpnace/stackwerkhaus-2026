@@ -140,8 +140,6 @@ export type PricingTier = {
   monthlyPrice: string;
   monthlySuffix: string;
   monthlyNote: string;
-  stripePaymentLink?: string;
-  stripePaymentLinkEnvKey: string;
   minimumTerm?: string;
   description: string;
   ctaLabel: string;
@@ -165,18 +163,6 @@ export type WebsiteCheckOffer = {
   description: string;
 };
 
-const stripePaymentLinks = {
-  templateStart:
-    process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TEMPLATE_START?.trim() ?? "",
-  websiteIndividuell:
-    process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_WEBSITE_INDIVIDUELL?.trim() ??
-    "",
-  shopBlog:
-    process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SHOP_BLOG?.trim() ?? "",
-  systemWachstum:
-    process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SYSTEM_WACHSTUM?.trim() ?? "",
-} as const;
-
 export const pricingTiers = [
   {
     slug: "template-start",
@@ -184,8 +170,6 @@ export const pricingTiers = [
     monthlyPrice: "29",
     monthlySuffix: "€/Monat",
     monthlyNote: "24 Monate Mindestlaufzeit",
-    stripePaymentLink: stripePaymentLinks.templateStart,
-    stripePaymentLinkEnvKey: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TEMPLATE_START",
     minimumTerm: "24 Monate",
     description:
       "Für eine klassische, einseitige Webseite aus einem vorbereiteten Gerüst.",
@@ -195,6 +179,7 @@ export const pricingTiers = [
       "keine Erstellungskosten",
       "Template aus der Galerie wählen",
       "Google-Optimierung",
+      "Website-Pflege inklusive",
       "Domain und Hosting",
       "Eigene Farben, Logo und Schriften",
     ],
@@ -206,8 +191,6 @@ export const pricingTiers = [
     monthlyPrice: "69",
     monthlySuffix: "€/Monat",
     monthlyNote: "12 Monate Mindestlaufzeit",
-    stripePaymentLinkEnvKey:
-      "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_WEBSITE_INDIVIDUELL",
     description:
       "Für Selbstständige und kleine Unternehmen, die eine individuelle Website benötigen.",
     ctaLabel: "Individuell anfragen",
@@ -229,7 +212,6 @@ export const pricingTiers = [
     monthlyPrice: "89",
     monthlySuffix: "€/Monat",
     monthlyNote: "6 Monate Mindestlaufzeit",
-    stripePaymentLinkEnvKey: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SHOP_BLOG",
     description:
       "Für Websites, die regelmäßig neue Inhalte brauchen oder einen kleinen Shop benötigen. Auf Basis von WordPress für eigene Inhalte.",
     ctaLabel: "Shop anfragen",
@@ -250,7 +232,6 @@ export const pricingTiers = [
     monthlyPrice: "199",
     monthlySuffix: "€/Monat",
     monthlyNote: "3 Monate Mindestlaufzeit",
-    stripePaymentLinkEnvKey: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SYSTEM_WACHSTUM",
     description:
       "Für Websites, die mehr als eine Visitenkarte sein sollen. Mit CRM, Automatisierung und Ausbau für schnelleres Wachstum.",
     ctaLabel: "System anfragen",
