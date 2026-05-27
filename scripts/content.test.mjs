@@ -557,12 +557,33 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
   for (const expectedTemplatesPageSignal of [
     "Vorlagen für den schnellen Einstieg",
     "Was im Template Start enthalten ist",
-    "Service Start",
-    "Praxis & Termin",
-    "Projekt & Profil",
+    "Portfolio Profil",
+    "Creative Work",
+    "Makler Premium",
+    "Bio-App Start",
+    "Praxis Start",
+    "Für Freelancer",
+    "Für Studios",
+    "Für Immobilienmakler",
+    "Für Biohöfe",
+    "Für Arztpraxen",
+    "portfolio-template.webp",
+    "creative-work-template.webp",
+    "immobilienmakler-template.webp",
+    "biohof-laden-app-template.webp",
+    "praxis-template.webp",
+    "portfolio-template.mp4",
+    "creative-work-template.mp4",
+    "immobilienmakler-template.mp4",
+    "biohof-laden-app-template.mp4",
+    "praxis-template.mp4",
+    "16:9-Desktop-Screenshots",
+    "Scroll-Vorschau",
+    "TemplatePreviewMedia",
+    'imageLoading={index === 0 ? "eager" : "lazy"}',
+    "md:grid-cols-2 xl:grid-cols-3",
     "Wähle dein Grundgerüst",
     "Template wählen",
-    "Layout-Vorschau für Service Start",
     "getTemplateContactHref(template.title)",
     "Template anfragen",
   ]) {
@@ -571,6 +592,22 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
       `/templates missing signal: ${expectedTemplatesPageSignal}`,
     );
   }
+
+  for (const expectedTemplateAsset of [
+    "public/templates/portfolio-template.webp",
+    "public/templates/creative-work-template.webp",
+    "public/templates/immobilienmakler-template.webp",
+    "public/templates/biohof-laden-app-template.webp",
+    "public/templates/praxis-template.webp",
+    "public/templates/videos/portfolio-template.mp4",
+    "public/templates/videos/creative-work-template.mp4",
+    "public/templates/videos/immobilienmakler-template.mp4",
+    "public/templates/videos/biohof-laden-app-template.mp4",
+    "public/templates/videos/praxis-template.mp4",
+  ]) {
+    await fs.access(path.join(root, expectedTemplateAsset));
+  }
+
   assert.ok(sitemapSource.includes('"/templates"'), "sitemap missing /templates route");
   assert.doesNotMatch(
     `${pricingSource}\n${templatesSource}`,

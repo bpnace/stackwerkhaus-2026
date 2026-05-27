@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TemplatePreviewMedia } from "@/components/templates/TemplatePreviewMedia";
 import { HashLink } from "@/components/ui/HashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 import { stringifyJsonLd } from "@/lib/json-ld";
@@ -26,35 +27,61 @@ const templateHighlights = [
   { value: "0 €", label: "Website-Pflege", compactLabel: "Pflege" },
 ] as const;
 
-type TemplatePreviewVariant = "service" | "praxis" | "projekt";
-
 const templateCards = [
   {
     kicker: "Template 01",
-    title: "Service Start",
+    title: "Portfolio Profil",
     description:
-      "Für lokale Dienstleister, Beratungen und kleine Unternehmen, die schnell erklären müssen, was sie anbieten und wie man anfragt.",
-    fit: "Dienstleister, Beratung, Handwerk",
-    structure: ["Leistungen", "Ablauf", "Kontakt"],
-    preview: "service" satisfies TemplatePreviewVariant,
+      "Ein schlanker Onepager für Personen, die Arbeit, Haltung und Projekte direkt sichtbar machen wollen.",
+    fit: "Für Freelancer, Entwickler, Designer und kreative Solo-Profile.",
+    structure: ["Profil", "Projekte", "Kontakt"],
+    image: "/templates/portfolio-template.webp",
+    imageAlt: "16:9 Desktop-Screenshot des Portfolio Profil Templates",
+    video: "/templates/videos/portfolio-template.mp4",
   },
   {
     kicker: "Template 02",
-    title: "Praxis & Termin",
+    title: "Creative Work",
     description:
-      "Für Angebote mit Vertrauen, Öffnungszeiten, Leistungen und einem schnellen Kontaktweg.",
-    fit: "Praxis, Coaching, Studio",
-    structure: ["Vertrauen", "Termine", "FAQ"],
-    preview: "praxis" satisfies TemplatePreviewVariant,
+      "Ein markanter Editorial-Auftritt für kreative Angebote, Kampagnen, Studios und visuelle Projekte.",
+    fit: "Für Studios, Kreativteams, Kampagnen, Markenarbeit und Portfolio-Landingpages.",
+    structure: ["Manifest", "Arbeiten", "Kontakt"],
+    image: "/templates/creative-work-template.webp",
+    imageAlt: "16:9 Desktop-Screenshot des Creative Work Templates",
+    video: "/templates/videos/creative-work-template.mp4",
   },
   {
     kicker: "Template 03",
-    title: "Projekt & Profil",
+    title: "Makler Premium",
     description:
-      "Für Gründer, Solo-Studios und kleine Marken, die persönlicher auftreten und trotzdem schlank starten wollen.",
-    fit: "Gründung, Portfolio, Marke",
-    structure: ["Profil", "Projekte", "Story"],
-    preview: "projekt" satisfies TemplatePreviewVariant,
+      "Eine dunkle Premium-Landingpage für Immobilienverkauf, Bewertung und seriöse lokale Anfragen.",
+    fit: "Für Immobilienmakler, Bewertungsangebote und regionale Immobilienbüros.",
+    structure: ["Bewertung", "Leistungen", "Kontakt"],
+    image: "/templates/immobilienmakler-template.webp",
+    imageAlt: "16:9 Desktop-Screenshot des Makler Premium Templates",
+    video: "/templates/videos/immobilienmakler-template.mp4",
+  },
+  {
+    kicker: "Template 04",
+    title: "Bio-App Start",
+    description:
+      "Eine frische App-Landingpage für regionale Lebensmittel, Abo-Körbe, Bestellungen und Lieferfenster.",
+    fit: "Für Biohöfe, Hofläden, regionale Lieferdienste und Food-App-Konzepte.",
+    structure: ["Sortiment", "App", "Lieferung"],
+    image: "/templates/biohof-laden-app-template.webp",
+    imageAlt: "16:9 Desktop-Screenshot des Bio-App Start Templates",
+    video: "/templates/videos/biohof-laden-app-template.mp4",
+  },
+  {
+    kicker: "Template 05",
+    title: "Praxis Start",
+    description:
+      "Eine vertrauensvolle Praxiswebsite mit Sprechzeiten, Leistungen, Team, Patientenservice und klaren Terminwegen.",
+    fit: "Für Arztpraxen, MVZs, Therapie- und medizinische Einrichtungen.",
+    structure: ["Sprechzeiten", "Leistungen", "Termin"],
+    image: "/templates/praxis-template.webp",
+    imageAlt: "16:9 Desktop-Screenshot des Praxis Start Templates",
+    video: "/templates/videos/praxis-template.mp4",
   },
 ] as const;
 
@@ -78,77 +105,6 @@ const templateSteps = [
 
 function getTemplateContactHref(templateTitle: string) {
   return `/?angebot=template-start&template=${encodeURIComponent(templateTitle)}#kontakt`;
-}
-
-function TemplatePreview({ variant }: { variant: TemplatePreviewVariant }) {
-  if (variant === "praxis") {
-    return (
-      <div
-        aria-label="Layout-Vorschau für Praxis und Termin"
-        className="grid min-h-[17rem] grid-rows-[1fr_auto] gap-3 border border-border bg-surface p-4"
-      >
-        <div className="grid grid-cols-[1fr_0.48fr] gap-3">
-          <div className="flex flex-col justify-between border border-border/80 p-4">
-            <span className="h-2 w-16 bg-foreground/24" />
-            <span className="h-10 w-4/5 bg-foreground/12" />
-            <span className="h-2 w-24 bg-foreground/20" />
-          </div>
-          <div className="grid gap-2">
-            <span className="border border-border/70 bg-foreground/[0.07]" />
-            <span className="border border-border/70 bg-foreground/[0.12]" />
-            <span className="border border-border/70 bg-foreground/[0.07]" />
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-3">
-          <span className="h-8 border-t border-foreground/28 bg-foreground/[0.05]" />
-          <span className="h-8 border-t border-foreground/28 bg-foreground/[0.05]" />
-          <span className="h-8 border-t border-foreground/28 bg-foreground/[0.05]" />
-        </div>
-      </div>
-    );
-  }
-
-  if (variant === "projekt") {
-    return (
-      <div
-        aria-label="Layout-Vorschau für Projekt und Profil"
-        className="grid min-h-[17rem] grid-cols-[0.58fr_0.42fr] gap-3 border border-border bg-surface p-4"
-      >
-        <div className="flex flex-col justify-between border border-border/80 p-4">
-          <span className="h-2 w-20 bg-foreground/24" />
-          <span className="h-24 w-full bg-foreground/[0.09]" />
-          <div className="grid gap-2">
-            <span className="h-px bg-foreground/28" />
-            <span className="h-px w-4/5 bg-foreground/18" />
-          </div>
-        </div>
-        <div className="grid gap-3">
-          <span className="border border-border/70 bg-foreground/[0.12]" />
-          <span className="border border-border/70 bg-foreground/[0.07]" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      aria-label="Layout-Vorschau für Service Start"
-      className="grid min-h-[17rem] grid-cols-[0.42fr_0.58fr] gap-3 border border-border bg-surface p-4"
-    >
-      <div className="grid gap-3">
-        <span className="border border-border/70 bg-foreground/[0.07]" />
-        <span className="border border-border/70 bg-foreground/[0.14]" />
-      </div>
-      <div className="flex flex-col justify-between border border-border/80 p-4">
-        <span className="h-2 w-16 bg-foreground/24" />
-        <div className="space-y-2">
-          <span className="block h-8 w-full bg-foreground/12" />
-          <span className="block h-8 w-3/4 bg-foreground/12" />
-        </div>
-        <span className="h-2 w-28 bg-foreground/20" />
-      </div>
-    </div>
-  );
 }
 
 export const metadata: Metadata = {
@@ -195,6 +151,7 @@ export default function TemplatesPage() {
             position: index + 1,
             name: template.title,
             description: template.description,
+            image: `${siteConfig.url}${template.image}`,
           })),
         },
         offers: [getSubscriptionPricingSchemaOffer("template-start", pageUrl)],
@@ -293,14 +250,14 @@ export default function TemplatesPage() {
               </h2>
             </div>
             <p className="max-w-2xl text-base leading-7 text-muted md:text-lg md:leading-8">
-              Die Vorschauen zeigen die Struktur, nicht fertige Deko. Nach der
-              Auswahl wird genau ein Template Start angefragt. Danach klären wir
-              kurz, ob das Gerüst zu deinem Angebot passt.
+              Die Vorschauen zeigen echte 16:9-Desktop-Screenshots aus
+              aktuellen Template-Bases. Auf Desktop-Hover läuft eine kurze
+              Scroll-Vorschau mit den tatsächlichen Seitenanimationen.
             </p>
           </div>
 
-          <div className="mt-10 grid gap-7 lg:grid-cols-3">
-            {templateCards.map((template) => {
+          <div className="mt-10 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
+            {templateCards.map((template, index) => {
               const templateHref = getTemplateContactHref(template.title);
               const ctaClassName =
                 "link-arrow mt-auto w-full min-w-0 justify-between border border-border px-3 py-4 text-[10px] tracking-[0.22em] text-foreground hover:border-foreground/45 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]";
@@ -308,19 +265,23 @@ export default function TemplatesPage() {
               return (
                 <article
                   key={template.title}
-                  className="group flex min-h-[41rem] flex-col border-t border-border pt-6 transition-colors duration-200 hover:border-foreground/55"
+                  className="group flex h-full flex-col border-t border-border pt-6 transition-colors duration-200 hover:border-foreground/55"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="text-[10px] font-black uppercase tracking-[0.28em] text-muted">
                       {template.kicker}
                     </div>
                     <div className="text-right text-[10px] font-black uppercase tracking-[0.22em] text-muted">
-                      {template.fit}
+                      16:9 Preview
                     </div>
                   </div>
-                  <div className="mt-5">
-                    <TemplatePreview variant={template.preview} />
-                  </div>
+                  <TemplatePreviewMedia
+                    image={template.image}
+                    imageAlt={template.imageAlt}
+                    imageLoading={index === 0 ? "eager" : "lazy"}
+                    title={template.title}
+                    video={template.video}
+                  />
                   <div className="mt-6 flex flex-1 flex-col">
                     <h3 className="text-4xl font-black leading-[0.96] tracking-normal text-foreground">
                       {template.title}
@@ -328,6 +289,14 @@ export default function TemplatesPage() {
                     <p className="mt-4 text-sm leading-6 text-muted">
                       {template.description}
                     </p>
+                    <div className="mt-5 border-t border-border pt-4">
+                      <div className="text-[10px] font-black uppercase tracking-[0.22em] text-muted">
+                        Für wen
+                      </div>
+                      <p className="mt-2 text-sm leading-6 text-foreground/84">
+                        {template.fit}
+                      </p>
+                    </div>
                     <ul className="mt-6 grid gap-2 border-y border-border py-4">
                       {template.structure.map((item) => (
                         <li
