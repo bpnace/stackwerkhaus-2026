@@ -30,58 +30,69 @@ const templateHighlights = [
 const templateCards = [
   {
     kicker: "Template 01",
-    title: "Portfolio Profil",
+    title: "Portfolio Template",
     description:
       "Ein schlanker Onepager für Personen, die Arbeit, Haltung und Projekte direkt sichtbar machen wollen.",
     fit: "Für Freelancer, Entwickler, Designer und kreative Solo-Profile.",
     structure: ["Profil", "Projekte", "Kontakt"],
     image: "/templates/portfolio-template.webp",
-    imageAlt: "16:9 Desktop-Screenshot des Portfolio Profil Templates",
+    imageAlt: "16:9 Desktop-Screenshot des Portfolio Templates",
     video: "/templates/videos/portfolio-template.mp4",
   },
   {
     kicker: "Template 02",
-    title: "Creative Work",
+    title: "Creative Template",
     description:
       "Ein markanter Editorial-Auftritt für kreative Angebote, Kampagnen, Studios und visuelle Projekte.",
     fit: "Für Studios, Kreativteams, Kampagnen, Markenarbeit und Portfolio-Landingpages.",
     structure: ["Manifest", "Arbeiten", "Kontakt"],
     image: "/templates/creative-work-template.webp",
-    imageAlt: "16:9 Desktop-Screenshot des Creative Work Templates",
+    imageAlt: "16:9 Desktop-Screenshot des Creative Templates",
     video: "/templates/videos/creative-work-template.mp4",
   },
   {
     kicker: "Template 03",
-    title: "Makler Premium",
+    title: "Immobilien Template",
     description:
       "Eine dunkle Premium-Landingpage für Immobilienverkauf, Bewertung und seriöse lokale Anfragen.",
     fit: "Für Immobilienmakler, Bewertungsangebote und regionale Immobilienbüros.",
     structure: ["Bewertung", "Leistungen", "Kontakt"],
     image: "/templates/immobilienmakler-template.webp",
-    imageAlt: "16:9 Desktop-Screenshot des Makler Premium Templates",
+    imageAlt: "16:9 Desktop-Screenshot des Immobilien Templates",
     video: "/templates/videos/immobilienmakler-template.mp4",
   },
   {
     kicker: "Template 04",
-    title: "Bio-App Start",
+    title: "Hofladen Template",
     description:
       "Eine frische App-Landingpage für regionale Lebensmittel, Abo-Körbe, Bestellungen und Lieferfenster.",
     fit: "Für Biohöfe, Hofläden, regionale Lieferdienste und Food-App-Konzepte.",
     structure: ["Sortiment", "App", "Lieferung"],
     image: "/templates/biohof-laden-app-template.webp",
-    imageAlt: "16:9 Desktop-Screenshot des Bio-App Start Templates",
+    imageAlt: "16:9 Desktop-Screenshot des Hofladen Templates",
     video: "/templates/videos/biohof-laden-app-template.mp4",
   },
   {
     kicker: "Template 05",
-    title: "Praxis Start",
+    title: "Praxis Template",
     description:
       "Eine vertrauensvolle Praxiswebsite mit Sprechzeiten, Leistungen, Team, Patientenservice und klaren Terminwegen.",
     fit: "Für Arztpraxen, MVZs, Therapie- und medizinische Einrichtungen.",
     structure: ["Sprechzeiten", "Leistungen", "Termin"],
     image: "/templates/praxis-template.webp",
-    imageAlt: "16:9 Desktop-Screenshot des Praxis Start Templates",
+    imageAlt: "16:9 Desktop-Screenshot des Praxis Templates",
     video: "/templates/videos/praxis-template.mp4",
+  },
+  {
+    kicker: "Template 06",
+    title: "Immobilienberatung Template",
+    description:
+      "Eine ruhige Editorial-Website für Immobilienberatung mit Mandaten, Bewertung, Arbeitsweise und diskretem Kontaktweg.",
+    fit: "Für Immobilienberater, Private Offices, Bestandshalter-Beratung und kuratierte Maklerangebote.",
+    structure: ["Mandate", "Beratung", "Kontakt"],
+    image: "/templates/stilles-kollektiv-template.webp",
+    imageAlt: "16:9 Desktop-Screenshot des Immobilienberatung Templates",
+    video: "/templates/videos/stilles-kollektiv-template.mp4",
   },
 ] as const;
 
