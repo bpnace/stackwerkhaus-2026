@@ -279,7 +279,6 @@ export default function TemplatesPage() {
                     image={template.image}
                     imageAlt={template.imageAlt}
                     imageLoading={index === 0 ? "eager" : "lazy"}
-                    title={template.title}
                     video={template.video}
                   />
                   <div className="mt-6 flex flex-1 flex-col">

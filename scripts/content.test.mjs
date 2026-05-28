@@ -455,6 +455,10 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
   );
   const siteConfigSource = await fs.readFile(path.join(root, "lib", "site-config.ts"), "utf8");
   const templatesSource = await fs.readFile(path.join(root, "app", "templates", "page.tsx"), "utf8");
+  const templatePreviewSource = await fs.readFile(
+    path.join(root, "components", "templates", "TemplatePreviewMedia.tsx"),
+    "utf8",
+  );
   const sitemapSource = await fs.readFile(path.join(root, "app", "sitemap.ts"), "utf8");
 
   for (const [slug, name, price] of [
@@ -592,6 +596,11 @@ test("pricing data exposes exact public offer rows and monthly schema semantics"
       `/templates missing signal: ${expectedTemplatesPageSignal}`,
     );
   }
+  assert.ok(
+    templatePreviewSource.includes('aria-hidden="true"') &&
+      !templatePreviewSource.includes("aria-label={`Scroll-Vorschau"),
+    "template hover videos should stay decorative for assistive technology",
+  );
 
   for (const expectedTemplateAsset of [
     "public/templates/portfolio-template.webp",

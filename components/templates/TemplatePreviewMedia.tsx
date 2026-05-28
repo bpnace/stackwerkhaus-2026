@@ -7,7 +7,6 @@ type TemplatePreviewMediaProps = {
   image: string;
   imageAlt: string;
   imageLoading?: "eager" | "lazy";
-  title: string;
   video: string;
 };
 
@@ -22,7 +21,6 @@ export function TemplatePreviewMedia({
   image,
   imageAlt,
   imageLoading = "lazy",
-  title,
   video,
 }: TemplatePreviewMediaProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -82,7 +80,7 @@ export function TemplatePreviewMedia({
       />
       <video
         ref={videoRef}
-        aria-label={`Scroll-Vorschau ${title}`}
+        aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover object-top opacity-0 transition-opacity duration-200 group-hover/preview:opacity-100 group-focus-within/preview:opacity-100"
         loop
         muted
