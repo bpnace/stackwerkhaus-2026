@@ -44,19 +44,19 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@remotion/cli": "^4.0.461",
+    "@remotion/cli": "^4.0.469",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint": "^10",
     "eslint-config-next": "16.2.6",
-    "lighthouse": "13.1.0",
+    "lighthouse": "13.3.0",
     "pixelmatch": "^7.2.0",
     "pngjs": "^7.0.0",
-    "remotion": "^4.0.461",
+    "remotion": "^4.0.469",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^6"
   },
   "pnpm": {
     "overrides": {
