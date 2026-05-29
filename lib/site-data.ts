@@ -110,7 +110,7 @@ export const experience = [
 
 export const testimonials = [
   {
-    highlight: "Klarer im Angebot",
+    highlight: "Einfach und Verständlich",
     quote:
       "Den gesamten Relaunch hat Arthur eigenständig durchgezogen – von Konzept bis Go-Live. Das Ergebnis ist deutlich ästhetischer, komplett responsive und klarer im Angebot.",
     name: "Leonie",
@@ -135,106 +135,166 @@ export const testimonials = [
 ] as const;
 
 export type PricingTier = {
+  slug: string;
   name: string;
-  price: string;
-  originalPrice?: string;
-  discountLabel?: string;
+  monthlyPrice: string;
+  monthlySuffix: string;
+  monthlyNote: string;
+  minimumTerm?: string;
   description: string;
   ctaLabel: string;
-  suitableFor: readonly string[];
+  ctaHref?: string;
   includes: readonly string[];
   visibleIncludes?: number;
   highlight?: boolean;
 };
 
+export type PricingAddOn = {
+  name: string;
+  price: string;
+  secondaryPrice?: string;
+  description: string;
+};
+
+export type WebsiteCheckOffer = {
+  slug: string;
+  name: string;
+  price: string;
+  description: string;
+};
+
 export const pricingTiers = [
   {
-    name: "Rohbau",
-    price: "799",
-    originalPrice: "899",
-    discountLabel: "11 % Rabatt für Neukunden",
-    description: "Für neue Websites, die schnell und stabil stehen sollen.",
-    ctaLabel: "Rohbau anfragen",
-    suitableFor: [
-      "Neue Unternehmen",
-      "Dienstleister",
-      "Portfolio-Seiten",
-      "einfache Landingpages",
-    ],
+    slug: "template-start",
+    name: "Template Start",
+    monthlyPrice: "29",
+    monthlySuffix: "€/Monat",
+    monthlyNote: "24 Monate Mindestlaufzeit",
+    minimumTerm: "24 Monate",
+    description:
+      "Für eine klassische, einseitige Webseite aus einem vorbereiteten Gerüst.",
+    ctaLabel: "Templates anzeigen",
+    ctaHref: "/templates",
     includes: [
-      "Seitenstruktur",
-      "Webdesign",
-      "Responsive Umsetzung",
-      "Kontaktformular",
-      "SEO-Basis",
-      "Launch-Unterstützung",
+      "keine Erstellungskosten",
+      "Template aus der Galerie wählen",
+      "Google-Optimierung",
+      "Website-Pflege inklusive",
+      "Domain und Hosting",
+      "Eigene Farben, Logo und Schriften",
     ],
+    visibleIncludes: 8,
   },
   {
-    name: "Sanierung",
-    price: "1.499",
-    description: "Für Websites, die noch stehen, aber nicht mehr richtig tragen.",
-    ctaLabel: "Sanierung planen",
-    suitableFor: [
-      "Website Relaunch",
-      "veraltete Seiten",
-      "unklare Angebote",
-      "schwache Kontaktwege",
-      "Unternehmen mit Wachstum",
-    ],
+    slug: "website-individuell",
+    name: "Website Individuell",
+    monthlyPrice: "69",
+    monthlySuffix: "€/Monat",
+    monthlyNote: "12 Monate Mindestlaufzeit",
+    description:
+      "Für Selbstständige und kleine Unternehmen, die eine individuelle Website benötigen.",
+    ctaLabel: "Individuell anfragen",
+    ctaHref: "/?paket=website-individuell#kontakt",
     includes: [
-      "Website Analyse",
-      "neuer Grundriss",
-      "UI/UX Überarbeitung",
-      "Frontend Umsetzung",
-      "Performance & Optimierung",
-      "SEO Basis",
-      "Launch-Check",
+      "keine Erstellungskosten",
+      "Website-Pflege",
+      "Google-Optimierung",
+      "Domain und Hosting",
+      "Individuelles Design",
+      "Eigenes Design und Inhalte",
     ],
     visibleIncludes: 6,
     highlight: true,
   },
   {
-    name: "Bauwerk",
-    price: "2.499",
+    slug: "shop-blog",
+    name: "Shop & Blog",
+    monthlyPrice: "89",
+    monthlySuffix: "€/Monat",
+    monthlyNote: "6 Monate Mindestlaufzeit",
     description:
-      "Für intelligente digitale Bauwerke, bei denen nicht nur die Fassade stimmen muss.",
-    ctaLabel: "Bauwerk besprechen",
-    suitableFor: [
-      "Web Apps",
-      "Plattformen",
-      "Dashboards",
-      "KI-Workflows",
-      "individuelle Funktionen",
-      "technische Produktideen",
-    ],
+      "Für Websites, die regelmäßig neue Inhalte brauchen oder einen kleinen Shop benötigen. Auf Basis von WordPress für eigene Inhalte.",
+    ctaLabel: "Shop anfragen",
+    ctaHref: "/?paket=shop-blog#kontakt",
     includes: [
-      "technische Planung",
-      "Full Stack Development",
-      "Frontend und Backend",
-      "API Anbindungen",
-      "KI- und Automatisierungslogik",
-      "Testing",
-      "Launch und Übergabe",
+      "Keine Erstellungskosten",
+      "Website-Pflege",
+      "Google-Optimierung",
+      "Blog oder Shop mit WordPress",
+      "Hosting, SSL und E-Mail",
+      "individuelles Design",
+    ],
+    visibleIncludes: 6,
+  },
+  {
+    slug: "system-wachstum",
+    name: "System & Wachstum",
+    monthlyPrice: "199",
+    monthlySuffix: "€/Monat",
+    monthlyNote: "3 Monate Mindestlaufzeit",
+    description:
+      "Für Websites, die mehr als eine Visitenkarte sein sollen. Mit CRM, Automatisierung und Ausbau für schnelleres Wachstum.",
+    ctaLabel: "System anfragen",
+    ctaHref: "/?paket=system-wachstum#kontakt",
+    includes: [
+      "Keine Erstellungskosten",
+      "Website-Pflege",
+      "Google-Optimierung",
+      "CRM-Integration",
+      "Automatisierungen und Workflows",
+      "Hosting, SSL und E-Mail",
+      "Individuelles Design",
     ],
     visibleIncludes: 6,
   },
 ] satisfies readonly PricingTier[];
 
-export const maintenanceOffer = {
-  title: "Digitales Facility Management",
-  price: "ab 59 €/Monat",
-  description:
-    "Damit dein digitales Bauwerk nach dem Launch nicht wieder zur Baustelle wird.",
-  ctaLabel: "Facility Management einplanen",
-  features: [
-    "Monitoring",
-    "Kleine Änderungen",
-    "Search-Console-Sichtung",
-    "Backup/Updates",
-    "Monatlicher Mini-Report",
-  ],
-} as const;
+export const pricingAddOns = [
+  {
+    name: "Lokale SEO-Einträge",
+    price: "+9 €/Monat",
+    secondaryPrice: "19 €/Monat einzeln",
+    description:
+      "Verzeichnisse, Profile und Basisdaten eintragen. Vor allem für lokale Dienstleister sinnvoll.",
+  },
+  {
+    name: "SEO & Content-Ausbau",
+    price: "ab 149 €/Monat",
+    description:
+      "Neue Inhalte, Landingpages und Search-Console-Blick, wenn die Seite nach dem Launch weiter wachsen soll.",
+  },
+  {
+    name: "Zusätzliche Sprache",
+    price: "ab 19 €/Monat",
+    description:
+      "Für übersetzte Seitenbereiche, wenn die zweite Sprache nicht nur halb mitlaufen soll.",
+  },
+  {
+    name: "Zusätzliche Domain",
+    price: "+3 €/Monat",
+    description:
+      "Für weitere Domains, Kampagnenadressen oder Weiterleitungen.",
+  },
+  {
+    name: "Zusätzliches E-Mail-Postfach",
+    price: "+2 €/Monat",
+    description:
+      "Für weitere Postfächer im Setup. Vor allem für kleine Unternehmen mit mehreren Mitarbeitenden sinnvoll.",
+  },
+  {
+    name: "Sonderwünsche",
+    price: "nach Absprache",
+    description:
+      "Für Integrationen, Animationen oder CMS-Logik, die besser kurz besprochen als pauschal bepreist wird.",
+  },
+] satisfies readonly PricingAddOn[];
+
+export const websiteCheckOffer = {
+  slug: "website-check",
+  name: "Website Check",
+  price: "99 €",
+  description: "wird bei anschließendem Abo angerechnet",
+} satisfies WebsiteCheckOffer;
 
 export type FaqLink = {
   label: string;
@@ -250,7 +310,7 @@ export type Faq = {
 export const faqs: readonly Faq[] = [
   {
     q: "Was kostet eine professionelle Website für ein kleines Unternehmen?",
-    a: "Der Rohbau startet mit 11 % Neukundenrabatt ab 799 € statt 899 €. Der genaue Preis hängt vom Seitenumfang, den Inhalten und den Integrationen ab.",
+    a: "Der template-nahe Einstieg startet ab 29 € pro Monat. Die empfohlene individuelle Website liegt bei 69 € pro Monat. Shop & Blog startet bei 89 € pro Monat, System & Wachstum ab 199 € pro Monat. Der genaue Umfang hängt von Seitenanzahl, Inhalten und Integrationen ab.",
     links: [
       {
         label: "Website erstellen lassen",

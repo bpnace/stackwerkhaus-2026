@@ -8,22 +8,27 @@ const landingPages = [
   [
     "/website-erstellen-lassen-deutschland",
     "Schnelle professionelle Website erstellen lassen, deutschlandweit",
+    "Wann eine neue Website passt?",
   ],
   [
     "/webdesign-kleine-unternehmen",
     "Webdesign für kleine Unternehmen, Dienstleister und Gründer",
+    "Webdesign auch für kleine Unternehmen?",
   ],
   [
     "/landingpage-erstellen-lassen",
     "Landingpage erstellen lassen für Angebote, Kampagnen und Anfragen",
+    "Eine eigene Landingpage erstellen lassen?",
   ],
   [
     "/nextjs-website-erstellen-lassen",
     "Next.js Website erstellen lassen für schnelle moderne Webauftritte",
+    "Mit Next.js eine Website erstellen lassen?",
   ],
   [
     "/ki-website-automatisierung",
     "Website mit KI-Automatisierung erstellen lassen",
+    "KI und Automatisierung sinnvoll einsetzen?",
   ],
 ];
 
@@ -121,7 +126,7 @@ async function assertRobotsAllowsAiSearch() {
 }
 
 async function assertLandingPages() {
-  for (const [pathname, h1] of landingPages) {
+  for (const [pathname, h1, answerHeading] of landingPages) {
     const response = await fetch(new URL(pathname, baseUrl));
     assert.equal(response.status, 200, `${pathname} returned ${response.status}`);
     const html = await response.text();
@@ -133,7 +138,7 @@ async function assertLandingPages() {
     );
     assert.match(
       html,
-      /Kurz gesagt/,
+      new RegExp(escapeRegExp(answerHeading)),
       `${pathname} missing compact answer section`,
     );
     assert.match(

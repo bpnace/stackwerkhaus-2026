@@ -87,10 +87,8 @@
     @apply py-14 md:py-25;
   }
 
-  @media (min-width: 768px) {
-    [data-hero-intro="loading"] {
-      visibility: hidden;
-    }
+  [data-hero-intro="loading"] {
+    visibility: hidden;
   }
 
   .eyebrow {
@@ -145,6 +143,20 @@
     padding-bottom: 0.12em;
     margin-bottom: -0.12em;
     overflow: visible;
+  }
+
+  .hero-mobile-title {
+    display: block;
+    font-size: clamp(3.45rem, 16.5vw, 4.25rem);
+    line-height: 0.92;
+  }
+
+  .hero-mobile-title > span {
+    display: block;
+  }
+
+  .hero-mobile-title > span + span {
+    margin-top: -0.12em;
   }
 
   .hero-word-text {
@@ -661,6 +673,37 @@
 
     .mobile-deferred-section[data-mobile-deferred-size="large"] {
       contain-intrinsic-size: 0 1200px;
+    }
+
+    :where(#ccm-widget.ccm-modal.ccm-show) .ccm-modal-inner {
+      max-height: min(72svh, 34rem) !important;
+    }
+
+    :where(#ccm-widget.ccm-modal.ccm-show) .ccm-modal--body {
+      max-height: min(54svh, 25rem) !important;
+    }
+
+    :where(#ccm-widget.ccm-modal.ccm-show) .ccm-widget--text {
+      margin-inline: auto !important;
+      max-height: 10rem !important;
+    }
+
+    :where(#ccm-widget.ccm-modal.ccm-show) .ccm-inner-overflow {
+      max-height: 10rem !important;
+      padding-right: 0.35rem !important;
+    }
+
+    :where(#ccm-widget.ccm-modal.ccm-show) .ccm-widget--title {
+      font-size: 1.25rem !important;
+      line-height: 1.05 !important;
+    }
+
+    :where(#ccm-widget.ccm-modal.ccm-show) .ccm-widget--introduction,
+    :where(#ccm-widget.ccm-modal.ccm-show) .ccm--p {
+      max-height: 4.5rem !important;
+      overflow-y: auto !important;
+      font-size: 0.8125rem !important;
+      line-height: 1.45 !important;
     }
   }
 

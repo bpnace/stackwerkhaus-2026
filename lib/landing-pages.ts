@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getSubscriptionPricingSchemaOffers } from "@/lib/pricing-schema";
 import { siteConfig } from "@/lib/site-config";
 import { verticalLandingPages } from "@/lib/vertical-landing-pages";
 
@@ -68,7 +69,7 @@ export type LandingPage = {
   schema: LandingPageSchema;
 };
 
-const landingPageUpdatedAt = "2026-04-28";
+const landingPageUpdatedAt = "2026-05-15";
 
 const landingPageOgImage = {
   url: "/blog/blog-section-hero.jpg",
@@ -83,7 +84,8 @@ const commonProvider = {
   name: siteConfig.name,
   url: siteConfig.url,
   email: siteConfig.email,
-  priceRange: "ab 799 EUR",
+  priceRange: "ab 29 EUR monatlich",
+  makesOffer: getSubscriptionPricingSchemaOffers(),
   founder: {
     "@type": "Person",
     name: siteConfig.founder,
@@ -117,13 +119,13 @@ const coreLandingPages = [
     path: "/website-erstellen-lassen-deutschland",
     title: "Website erstellen lassen in Deutschland | Stackwerkhaus",
     metaDescription:
-      "Website erstellen lassen in Deutschland: Stackwerkhaus baut schnelle Websites für kleine Unternehmen mit Next.js, SEO-Grundstruktur und DSGVO-Setup ab 799 Euro.",
+      "Website erstellen lassen in Deutschland: schnelle Websites mit Next.js, SEO-Grundstruktur und DSGVO-Setup für kleine Unternehmen ab 29 Euro pro Monat.",
     h1: "Schnelle professionelle Website erstellen lassen, deutschlandweit",
     heroText:
-      "Du brauchst eine moderne Website, die schnell online geht, professionell aussieht und technisch sauber umgesetzt ist? Stackwerkhaus erstellt Websites für kleine Unternehmen, Dienstleister und neue Marken in ganz Deutschland. Du bekommst Strategie, Webdesign, Frontend-Entwicklung, responsive Umsetzung, SEO-Grundstruktur, DSGVO-Grundsetup, Kontaktformular, Hosting-Setup und Launch-Begleitung aus einer Hand. Das Starter-Paket beginnt ab 799 Euro und ist auf eine klare, schnelle Umsetzung ausgelegt.",
+      "Du brauchst eine moderne Website, die schnell online geht, professionell aussieht und technisch sauber umgesetzt ist? Stackwerkhaus erstellt Websites für kleine Unternehmen, Dienstleister und neue Marken in ganz Deutschland. Du bekommst Strategie, Webdesign, Frontend-Entwicklung, responsive Umsetzung, SEO-Grundstruktur, DSGVO-Grundsetup, Kontaktformular, Hosting-Setup und Launch-Begleitung aus einer Hand. Template Start beginnt bei 29 Euro pro Monat, individuelle Websites starten bei 69 Euro pro Monat.",
     answerHeading: "Wann eine neue Website passt?",
     directAnswer:
-      "Stackwerkhaus erstellt komplette Websites für kleine Unternehmen, Dienstleister und neue Marken in Deutschland. Diese Seite passt, wenn eine neue Website mit Struktur, Design, Frontend, SEO-Grundlage, Kontaktformular und Launch-Begleitung gebraucht wird; das Starter-Paket beginnt ab 799 Euro.",
+      "Stackwerkhaus erstellt komplette Websites für kleine Unternehmen, Dienstleister und neue Marken in Deutschland. Diese Seite passt, wenn eine neue Website mit Struktur, Design, Frontend, SEO-Grundlage, Kontaktformular und Launch-Begleitung gebraucht wird; der Einstieg beginnt bei 29 Euro pro Monat, individuelle Websites starten bei 69 Euro pro Monat.",
     guideHeading: "Website-Projekt richtig einordnen",
     finalHeading: "Website planen lassen.",
     updatedAt: landingPageUpdatedAt,
@@ -132,7 +134,7 @@ const coreLandingPages = [
       "gute Website erstellen lassen Deutschland",
       "professionelle Website erstellen lassen schnell",
       "Webseite für Unternehmen erstellen lassen deutschlandweit",
-      "Website erstellen lassen ab 799 Euro",
+      "Website erstellen lassen ab 29 Euro pro Monat",
       "Webdesign Agentur schnelle Umsetzung Deutschland",
     ],
     homeTitle: "Webseite erstellen",
@@ -174,10 +176,10 @@ const coreLandingPages = [
       {
         heading: "Was du bekommst",
         summary:
-          "Das Starter-Projekt bündelt Strategie, Design, Umsetzung, rechtliche Grundseiten, SEO-Basis und Launch-Begleitung in einem kompakten Website-Paket.",
+          "Die Website-Abos bündeln Strategie, Design, Umsetzung, rechtliche Grundseiten, SEO-Basis, Launch-Begleitung und laufende Betreuung in klaren Einstiegen.",
         paragraphs: [
           "Du bekommst ein klares Seitenkonzept, ein modernes Webdesign, responsive Umsetzung für Desktop und Mobilgeräte, eine performante technische Basis, Kontaktformular, Impressum und Datenschutzseiten, SEO-Grundstruktur, Sitemap, Google-Search-Console-Vorbereitung, Hosting-Setup und Launch-Begleitung.",
-          "Je nach Paket können weitere Seiten, Animationen, individuelle Komponenten, CMS-Funktionen, Blog, Mehrsprachigkeit oder Automatisierungen ergänzt werden. Der Einstieg bleibt bewusst übersichtlich, damit aus einem klaren Bedarf kein unnötig großes Website-Projekt wird.",
+          "Je nach Abo-Umfang können weitere Seiten, Animationen, individuelle Komponenten, CMS-Funktionen, Blog, Mehrsprachigkeit oder Automatisierungen ergänzt werden. Der Einstieg bleibt bewusst übersichtlich, damit aus einem klaren Bedarf kein unnötig großes Website-Projekt wird.",
         ],
         items: [
           "Seitenstruktur und Nutzerführung",
@@ -257,9 +259,9 @@ const coreLandingPages = [
       {
         heading: "Preisrahmen",
         summary:
-          "Das Starter-Paket beginnt ab 799 Euro und eignet sich für eine fokussierte Website mit bis zu 5 Seiten.",
+          "Template Start beginnt bei 29 Euro pro Monat, Website Individuell bei 69 Euro pro Monat.",
         paragraphs: [
-          "Das Starter-Paket beginnt ab 799 Euro. Es eignet sich für eine schlanke professionelle Website mit bis zu 5 Seiten. Für Neukunden kann bei Buchung ein Rabatt angerechnet werden. Größere Websites, individuelle Funktionen, Automatisierungen, CMS-Systeme, komplexe Animationen oder zusätzliche Landingpages werden separat kalkuliert.",
+          "Template Start beginnt bei 29 Euro pro Monat und eignet sich für eine template-nahe Website mit wenigen Seiten und begrenzter Pflege. Website Individuell startet bei 69 Euro pro Monat und ist der Standard für individuelles Design, stärkere Struktur, SEO-Basis, Search Console und Launch-Setup. Shop & Blog startet bei 89 Euro pro Monat, System & Wachstum ab 199 Euro pro Monat. Größere Websites, individuelle Funktionen, Automatisierungen, CMS-Systeme, komplexe Animationen oder zusätzliche Landingpages werden separat kalkuliert.",
           "Ziel ist eine transparente Lösung, die zum Umfang und zum geschäftlichen Nutzen der Website passt. Wenn dein Projekt kleiner starten soll, bleibt der Aufbau fokussiert. Wenn später mehr Inhalte, Automatisierungen oder Landingpages gebraucht werden, kann die technische Grundlage erweitert werden.",
         ],
       },
@@ -268,7 +270,7 @@ const coreLandingPages = [
       {
         question: "Wie schnell kann Stackwerkhaus eine Website erstellen?",
         answer:
-          "Kleine Website-Projekte können bei klaren Inhalten und schneller Abstimmung zügig umgesetzt werden. Das Starter-Paket ist auf eine kompakte Umsetzung mit bis zu 5 Seiten ausgelegt. Die genaue Dauer hängt davon ab, ob Texte, Bilder, rechtliche Inhalte und Feedback rechtzeitig vorliegen.",
+          "Kleine Website-Abos können bei klaren Inhalten und schneller Abstimmung zügig umgesetzt werden. Der Einstieg ist auf eine kompakte Umsetzung mit laufender Betreuung ausgelegt. Die genaue Dauer hängt davon ab, ob Texte, Bilder, rechtliche Inhalte und Feedback rechtzeitig vorliegen.",
       },
       {
         question: "Erstellt Stackwerkhaus Websites deutschlandweit?",
@@ -278,7 +280,7 @@ const coreLandingPages = [
       {
         question: "Was kostet eine Website bei Stackwerkhaus?",
         answer:
-          "Das Starter-Paket beginnt ab 799 Euro. Der genaue Preis hängt von Umfang, Seitenanzahl, Funktionen, Designanforderungen und gewünschten Erweiterungen ab. Für Neukunden kann bei Buchung ein Rabatt angerechnet werden. Größere Websites mit CMS, Automatisierungen, zusätzlichen Landingpages oder komplexeren Komponenten werden individuell kalkuliert.",
+          "Template Start beginnt bei 29 Euro pro Monat. Website Individuell startet bei 69 Euro pro Monat, Shop & Blog bei 89 Euro pro Monat und System & Wachstum ab 199 Euro pro Monat. Der Website Check kostet 99 Euro für Neukunden und wird bei anschließender Buchung angerechnet. Der genaue Preis hängt von Umfang, Seitenanzahl, Funktionen, Designanforderungen und gewünschten Erweiterungen ab.",
       },
       {
         question: "Ist die Website auch für Google vorbereitet?",
@@ -324,10 +326,10 @@ const coreLandingPages = [
       description:
         "Stackwerkhaus erstellt schnelle professionelle Websites für kleine Unternehmen, Dienstleister und neue Marken in Deutschland.",
       offer: {
-        name: "Starter Website",
-        price: "799",
+        name: "Template Start",
+        price: "29",
         description:
-          "Professionelle Website mit bis zu 5 Seiten, Webdesign, Frontend-Umsetzung, SEO-Grundstruktur, DSGVO-Grundsetup und Launch-Begleitung.",
+          "Template-nahe Website mit wenigen Seiten, SEO-Grundsetup, Kontaktformular, Hosting, SSL, E-Mail-Grundsetup und begrenzter Pflege.",
       },
     },
   },
@@ -1438,8 +1440,12 @@ export function getLandingPageStructuredData(page: LandingPage) {
           offers: {
             "@type": "Offer",
             name: page.schema.offer.name,
-            price: page.schema.offer.price,
-            priceCurrency: "EUR",
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: page.schema.offer.price,
+              priceCurrency: "EUR",
+              unitText: "Monat",
+            },
             description: page.schema.offer.description,
             url: pageUrl,
           },

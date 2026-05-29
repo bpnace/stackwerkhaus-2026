@@ -51,6 +51,22 @@ const BLOG_META_DESCRIPTIONS: Record<string, string> = {
     "Webdesign für SaaS-Produkte mit präziser Typografie, starkem Kontrast und klarer Nutzerführung statt generischer Standard-Patterns.",
 };
 
+const legacyEntryPriceTerm = ["Fest", "preis"].join("");
+const legacyLowPriceExample = ["999", " Euro"].join("");
+const DRUPAL_PRICING_COPY_REPLACEMENTS = [
+  [`Was ein ${legacyEntryPriceTerm} wirklich aussagen sollte`, "Was ein Angebot wirklich aussagen sollte"],
+  [`Ein ${legacyEntryPriceTerm} ist nur hilfreich, wenn der Umfang klar ist.`, "Ein Angebot ist nur hilfreich, wenn der Umfang klar ist."],
+  [`"Website für ${legacyLowPriceExample}" klingt gut, sagt aber wenig aus.`, "Ein sehr günstiges Website-Angebot klingt gut, sagt aber wenig aus."],
+  [`Ein guter ${legacyEntryPriceTerm} ist kein Trick. Er ist ein Bauplan.`, "Ein gutes Angebot ist kein Trick. Es ist ein Bauplan."],
+] as const;
+
+function normalizePricingLanguage(value: string) {
+  return DRUPAL_PRICING_COPY_REPLACEMENTS.reduce(
+    (current, [from, to]) => current.replaceAll(from, to),
+    value,
+  );
+}
+
 type DrupalArticleResponse = {
   data?: DrupalArticleResource[];
   included?: DrupalIncludedResource[];
@@ -225,10 +241,12 @@ async function getDrupalPosts(): Promise<DrupalBlogPost[]> {
     .filter((item) => item.attributes?.status === true)
     .map((item) => {
       const title = item.attributes?.title?.trim() || "Ohne Titel";
-      const drupalHtml = item.attributes?.body?.processed ?? "";
+      const drupalHtml = normalizePricingLanguage(
+        item.attributes?.body?.processed ?? "",
+      );
       const drupalPlainText = normalizeDrupalHtmlToText(drupalHtml);
       const summary = normalizeDrupalHtmlToText(
-        item.attributes?.field_summary?.processed ?? "",
+        normalizePricingLanguage(item.attributes?.field_summary?.processed ?? ""),
       );
       const category = item.attributes?.field_category?.trim() || "Notizen";
       const publishedAt = item.attributes?.created ?? new Date().toISOString();

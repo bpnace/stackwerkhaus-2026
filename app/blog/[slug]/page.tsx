@@ -244,7 +244,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   src={heroImage}
                   alt={post.imageAlt || post.title}
                   fill
-                  priority
+                  loading="eager"
+                  fetchPriority="high"
                   sizes="(min-width: 1024px) 34vw, (min-width: 768px) 40vw, 100vw"
                   className="object-cover"
                 />

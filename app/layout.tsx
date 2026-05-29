@@ -24,14 +24,6 @@ const interDisplay = Inter({
 const ccm19ScriptId = "ccm19";
 const ccm19ScriptSrc =
   "https://cloud.ccm19.de/app.js?apiKey=eefc8fecf37d0d4d42423ebb8d2ff0c38ee07663469480b8&domain=69c4664129605f52500e0082";
-const clarityProjectId = "wmex88aqgx";
-const clarityScript = `
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "${clarityProjectId}");
-`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -102,13 +94,8 @@ export default function RootLayout({
       lang="de"
       data-scroll-behavior="smooth"
       className={`${interSans.variable} ${interDisplay.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
-      <head>
-        <script
-          id="microsoft-clarity"
-          dangerouslySetInnerHTML={{ __html: clarityScript }}
-        />
-      </head>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
         <ResourceHints />
         <Script

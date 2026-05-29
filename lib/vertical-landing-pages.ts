@@ -1,6 +1,6 @@
 import type { LandingPage } from "@/lib/landing-pages";
 
-const verticalLandingPageUpdatedAt = "2026-05-04";
+const verticalLandingPageUpdatedAt = "2026-05-15";
 
 type VerticalPageConfig = {
   slug: string;
@@ -120,7 +120,8 @@ function createVerticalLandingPage(config: VerticalPageConfig): LandingPage {
         heading: "Preisrahmen",
         summary: config.priceSummary,
         paragraphs: [
-          "Der Preis hängt vor allem von Seitenumfang, Inhaltsarbeit, Designanspruch, Formularen, Terminlogik, CMS, Tracking, Automatisierung und Abstimmungsaufwand ab. Deshalb ist ein Preisrahmen ehrlicher als ein pauschaler Festpreis ohne Kontext.",
+          "Die sichtbaren Preise werden als Abo-Einstieg verstanden. Sie geben Orientierung für den laufenden Rahmen, nicht für jedes Detail eines individuellen Projekts.",
+          "Der Preis hängt vor allem von Seitenumfang, Inhaltsarbeit, Designanspruch, Formularen, Terminlogik, CMS, Tracking, Automatisierung und Abstimmungsaufwand ab. Deshalb ist ein monatlicher Preisrahmen ehrlicher als eine pauschale Zahl ohne Kontext.",
         ],
         table: {
           caption: `${config.h1}: Preisrahmen`,
@@ -150,13 +151,13 @@ export const verticalLandingPages = [
     slug: "webdesign-therapeuten-berlin",
     title: "Webdesign für Therapeuten in Berlin | Stackwerkhaus",
     metaDescription:
-      "Webdesign für Therapeuten in Berlin: vertrauensvolle Praxis-Website mit klaren Leistungen, Terminweg, Datenschutz-Basis, FAQ und Preisrahmen ab 799 Euro.",
+      "Webdesign für Therapeuten in Berlin: Praxis-Website mit Leistungen, Terminweg, Datenschutz-Basis, FAQ und Preisrahmen ab 69 Euro pro Monat.",
     h1: "Webdesign für Therapeuten in Berlin",
     heroText:
       "Therapie-Websites müssen ruhig, seriös und verständlich wirken. Stackwerkhaus baut Praxis-Websites für Therapeuten, Heilpraktiker und therapeutische Angebote in Berlin, die Leistungen behutsam erklären, Vertrauen aufbauen und den Weg zur Kontaktaufnahme klar machen. Wichtig sind sensible Sprache, mobile Darstellung, Datenschutz-Basis, Terminlogik, FAQ und eine Struktur, die nicht nach aggressiver Werbung klingt.",
     answerHeading: "Eine neue Webseite für Therapeuten und Praxen?",
     directAnswer:
-      "Eine gute Website für Therapeuten in Berlin erklärt Spezialisierung, Ablauf, Kostenrahmen, Kontaktweg und Vertrauen, ohne reißerisch zu wirken. Stackwerkhaus baut dafür ruhige Praxis-Websites ab 799 Euro; Relaunches mit mehr Struktur starten meist ab 1.499 Euro.",
+      "Eine gute Website für Therapeuten in Berlin erklärt Spezialisierung, Ablauf, Kostenrahmen, Kontaktweg und Vertrauen, ohne reißerisch zu wirken. Stackwerkhaus baut dafür ruhige Praxis-Websites ab 69 Euro pro Monat; Relaunches mit mehr Struktur starten meist ab 199 Euro pro Monat.",
     guideHeading: "Praxis-Website einordnen",
     finalHeading: "Praxisauftritt planen.",
     keywords: [
@@ -198,11 +199,11 @@ export const verticalLandingPages = [
       label: "uncloud ansehen",
     },
     priceSummary:
-      "Eine schlanke Praxis-Website startet ab 799 Euro. Ein Relaunch mit Inhaltsstruktur, mehreren Leistungsseiten und Terminlogik liegt meist ab 1.499 Euro.",
+      "Eine schlanke Praxis-Website startet ab 69 Euro pro Monat. Ein Relaunch mit Inhaltsstruktur, mehreren Leistungsseiten und Terminlogik liegt meist ab 199 Euro pro Monat.",
     priceRows: [
-      ["Rohbau", "ab 799 Euro", "Für eine klare Praxis-Website mit wenigen Seiten und Kontaktweg."],
-      ["Sanierung", "ab 1.499 Euro", "Für bestehende Praxis-Websites mit unklarer Struktur oder veralteter Wirkung."],
-      ["Erweiterung", "ab 2.499 Euro", "Wenn Terminbuchung, CMS, Automatisierung oder komplexere Inhalte nötig sind."],
+      ["Website Individuell", "ab 69 Euro pro Monat", "Für eine klare Praxis-Website mit wenigen Seiten und Kontaktweg."],
+      ["System & Wachstum", "ab 199 Euro pro Monat", "Für bestehende Praxis-Websites mit unklarer Struktur oder veralteter Wirkung."],
+      ["System-Ausbau", "ab 199 Euro pro Monat, Ausbau separat", "Wenn Terminbuchung, CMS, Automatisierung oder komplexere Inhalte nötig sind."],
     ],
     extraSection: {
       heading: "BFSG und Terminbuchung vorsichtig prüfen",
@@ -222,7 +223,7 @@ export const verticalLandingPages = [
       {
         question: "Was kostet Webdesign für Therapeuten in Berlin?",
         answer:
-          "Eine schlanke Praxis-Website startet bei Stackwerkhaus ab 799 Euro. Ein Relaunch mit mehr Struktur, mehreren Leistungsseiten und Terminlogik liegt meist ab 1.499 Euro.",
+          "Eine schlanke Praxis-Website startet bei Stackwerkhaus ab 69 Euro pro Monat. Ein Relaunch mit mehr Struktur, mehreren Leistungsseiten und Terminlogik liegt meist ab 199 Euro pro Monat.",
       },
       {
         question: "Kann eine Praxis-Website einen Online-Termin enthalten?",
@@ -270,7 +271,7 @@ export const verticalLandingPages = [
       areaServed: "Berlin",
       offer: {
         name: "Praxis-Website",
-        price: "799",
+        price: "69",
         description:
           "Praxis-Website mit Struktur, Webdesign, responsiver Umsetzung, SEO-Grundlage und Kontaktweg.",
       },
@@ -280,13 +281,13 @@ export const verticalLandingPages = [
     slug: "webdesign-coaching-praxis",
     title: "Webdesign für Coaching-Praxen | Stackwerkhaus",
     metaDescription:
-      "Webdesign für Coaching-Praxen: klare Positionierung, Angebotslogik, Erstgespräch-CTA, FAQ, Testimonials und Website-Struktur ab 799 Euro.",
+      "Webdesign für Coaching-Praxen: klare Positionierung, Angebotslogik, Erstgespräch-CTA, FAQ, Testimonials und Website-Struktur ab 69 Euro pro Monat.",
     h1: "Webdesign für Coaching-Praxen",
     heroText:
       "Coaching-Websites müssen schnell erklären, für wen das Angebot ist, welches Problem gelöst wird und warum ein Erstgespräch sinnvoll ist. Stackwerkhaus baut Websites für Coaches, Berater und Coaching-Praxen mit klarer Positionierung, Angebotsstruktur, Termin-CTA, FAQ, Vertrauenselementen und einer technischen Grundlage für spätere Landingpages oder Automatisierung.",
     answerHeading: "Eine neue Website für Coaches und Coaching-Teams?",
     directAnswer:
-      "Eine gute Coaching-Website verkauft nicht über Lautstärke, sondern über Klarheit: Zielgruppe, Problem, Methode, Ablauf, Preisrahmen und Erstgespräch müssen schnell verständlich sein. Stackwerkhaus baut solche Seiten ab 799 Euro.",
+      "Eine gute Coaching-Website verkauft nicht über Lautstärke, sondern über Klarheit: Zielgruppe, Problem, Methode, Ablauf, Preisrahmen und Erstgespräch müssen schnell verständlich sein. Stackwerkhaus baut solche Seiten ab 69 Euro pro Monat.",
     guideHeading: "Coaching-Angebot strukturieren",
     finalHeading: "Coaching-Website klären.",
     keywords: [
@@ -328,11 +329,11 @@ export const verticalLandingPages = [
       label: "Codariq ansehen",
     },
     priceSummary:
-      "Eine fokussierte Coaching-Website startet ab 799 Euro. Wenn Positionierung, Textstruktur und mehrere Angebotsseiten neu aufgebaut werden, ist ein Rahmen ab 1.499 Euro realistischer.",
+      "Eine fokussierte Coaching-Website startet ab 69 Euro pro Monat. Wenn Positionierung, Textstruktur und mehrere Angebotsseiten neu aufgebaut werden, ist ein Rahmen ab 199 Euro pro Monat realistischer.",
     priceRows: [
-      ["Rohbau", "ab 799 Euro", "Für eine schlanke Website mit Angebot, Profil, FAQ und Kontakt."],
-      ["Sanierung", "ab 1.499 Euro", "Für Relaunch, neue Positionierung und bessere Angebotsstruktur."],
-      ["Landingpage", "ab 799 Euro", "Für ein einzelnes Coaching-Angebot oder eine Kampagne."],
+      ["Website Individuell", "ab 69 Euro pro Monat", "Für eine schlanke Website mit Angebot, Profil, FAQ und Kontakt."],
+      ["System & Wachstum", "ab 199 Euro pro Monat", "Für Relaunch, neue Positionierung und bessere Angebotsstruktur."],
+      ["Template Start", "ab 29 Euro pro Monat", "Für ein einzelnes Coaching-Angebot oder eine Kampagne."],
     ],
     faqs: [
       {
@@ -343,7 +344,7 @@ export const verticalLandingPages = [
       {
         question: "Was kostet eine Coaching-Website?",
         answer:
-          "Der Einstieg liegt bei Stackwerkhaus ab 799 Euro. Ein Relaunch mit Textstruktur, Angebotslogik und mehreren Seiten startet meist ab 1.499 Euro.",
+          "Der Einstieg liegt bei Stackwerkhaus ab 69 Euro pro Monat. Ein Relaunch mit Textstruktur, Angebotslogik und mehreren Seiten startet meist ab 199 Euro pro Monat.",
       },
       {
         question: "Sollte ein Coach Preise auf der Website zeigen?",
@@ -390,7 +391,7 @@ export const verticalLandingPages = [
         "Stackwerkhaus erstellt Websites für Coaching-Praxen mit klarer Positionierung, Angebotslogik und Erstgespräch-Führung.",
       offer: {
         name: "Coaching-Website",
-        price: "799",
+        price: "69",
         description:
           "Website für Coaches mit Angebotsstruktur, Webdesign, responsiver Umsetzung, FAQ und Kontaktweg.",
       },
@@ -400,13 +401,13 @@ export const verticalLandingPages = [
     slug: "webdesign-saas-startup",
     title: "Webdesign für SaaS-Startups | Stackwerkhaus",
     metaDescription:
-      "Webdesign für SaaS-Startups: Produktstory, Demo-CTA, Pricing-Struktur, Next.js-Frontend, Casebezug und Preisrahmen ab 1.499 Euro.",
+      "Webdesign für SaaS-Startups: Produktstory, Demo-CTA, Pricing-Struktur, Next.js-Frontend, Casebezug und Preisrahmen ab 199 Euro pro Monat.",
     h1: "Webdesign für SaaS-Startups",
     heroText:
       "SaaS-Websites müssen Produktwert schneller erklären als generische Unternehmensseiten. Stackwerkhaus baut SaaS-Websites und Produkt-Landingpages mit klarer Hero-Story, Use Cases, Demo-CTA, Pricing-Struktur, technischen Vertrauenselementen und performanter Next.js-Basis. Der Fokus liegt auf Verständlichkeit, Conversion und einem Frontend, das später wachsen kann.",
     answerHeading: "Was muss eine SaaS-Website leisten?",
     directAnswer:
-      "Eine SaaS-Website braucht Produktklarheit, Demo-Führung, Use Cases, Pricing-Orientierung, technische Glaubwürdigkeit und schnelle Ladezeiten. Stackwerkhaus baut SaaS-Landingpages ab 1.499 Euro und größere Produkt-Websites ab 2.499 Euro.",
+      "Eine SaaS-Website braucht Produktklarheit, Demo-Führung, Use Cases, Pricing-Orientierung, technische Glaubwürdigkeit und schnelle Ladezeiten. Stackwerkhaus baut SaaS-Landingpages ab 199 Euro pro Monat und größere Produkt-Websites ab 199 Euro pro Monat, Ausbau separat.",
     guideHeading: "SaaS-Auftritt planen",
     finalHeading: "SaaS-Story schärfen.",
     keywords: [
@@ -448,17 +449,17 @@ export const verticalLandingPages = [
       label: "Zynapse ansehen",
     },
     priceSummary:
-      "Eine SaaS-Landingpage startet meist ab 1.499 Euro. Eine größere Produkt-Website mit mehreren Use Cases, Pricing und Next.js-Struktur liegt eher ab 2.499 Euro.",
+      "Eine SaaS-Landingpage startet meist ab 199 Euro pro Monat. Eine größere Produkt-Website mit mehreren Use Cases, Pricing und Next.js-Struktur liegt eher ab 199 Euro pro Monat, Ausbau separat.",
     priceRows: [
-      ["MVP-Landingpage", "ab 1.499 Euro", "Für einen klaren Produktpitch, Waitlist oder Demo-CTA."],
-      ["Produkt-Website", "ab 2.499 Euro", "Für Use Cases, Pricing, Integrationserklärung und technische Struktur."],
+      ["MVP-Landingpage", "ab 199 Euro pro Monat", "Für einen klaren Produktpitch, Waitlist oder Demo-CTA."],
+      ["Produkt-Website", "ab 199 Euro pro Monat, Ausbau separat", "Für Use Cases, Pricing, Integrationserklärung und technische Struktur."],
       ["Web-App-Nähe", "individuell", "Wenn Frontend, Dashboard, API oder Authentifizierung Teil des Projekts werden."],
     ],
     faqs: [
       {
         question: "Was kostet eine SaaS-Website?",
         answer:
-          "Eine fokussierte SaaS-Landingpage startet meist ab 1.499 Euro. Eine umfangreichere Produkt-Website mit Use Cases, Pricing und technischer Basis liegt eher ab 2.499 Euro.",
+          "Eine fokussierte SaaS-Landingpage startet meist ab 199 Euro pro Monat. Eine umfangreichere Produkt-Website mit Use Cases, Pricing und technischer Basis liegt eher ab 199 Euro pro Monat, Ausbau separat.",
       },
       {
         question: "Braucht ein SaaS-Startup eine Website oder nur eine Landingpage?",
@@ -510,7 +511,7 @@ export const verticalLandingPages = [
         "Stackwerkhaus erstellt SaaS-Websites und Produkt-Landingpages mit Produktstory, Demo-CTA, Pricing-Struktur und performanter Frontend-Basis.",
       offer: {
         name: "SaaS Produkt-Website",
-        price: "1499",
+        price: "199",
         description:
           "SaaS-Landingpage oder Produkt-Website mit Produktstory, Use Cases, CTA-Struktur, Webdesign und Frontend-Umsetzung.",
       },
@@ -526,13 +527,13 @@ export const verticalLandingPages = [
     slug: "webdesign-zahnarztpraxis-berlin",
     title: "Webdesign für Zahnarztpraxen in Berlin | Stackwerkhaus",
     metaDescription:
-      "Webdesign für Zahnarztpraxen in Berlin: Leistungen, Team, Terminweg, Vertrauen, BFSG-Prüfung nach Bedarf, FAQ und Preisrahmen ab 1.499 Euro.",
+      "Webdesign für Zahnarztpraxen in Berlin: Leistungen, Team, Terminweg, Vertrauen, BFSG-Prüfung nach Bedarf, FAQ und Preisrahmen ab 199 Euro pro Monat.",
     h1: "Webdesign für Zahnarztpraxen in Berlin",
     heroText:
       "Zahnarzt-Websites müssen Vertrauen, Leistungen, Team, Terminweg und lokale Sichtbarkeit sauber verbinden. Stackwerkhaus erstellt Praxis-Websites für Zahnarztpraxen in Berlin mit klarer Leistungsstruktur, ruhiger Gestaltung, mobiler Nutzerführung, FAQ, Datenschutz-Basis und optionaler Prüfung von Barrierefreiheit und Terminbuchung.",
     answerHeading: "Was muss eine Website für Zahnarztpraxen leisten?",
     directAnswer:
-      "Eine Website für eine Zahnarztpraxis in Berlin sollte Leistungen, Team, Terminbuchung, Notfall- oder Kontaktwege, Bewertungen und Barrierefreiheit klar strukturieren. Realistische Relaunch-Projekte starten meist ab 1.499 Euro.",
+      "Eine Website für eine Zahnarztpraxis in Berlin sollte Leistungen, Team, Terminbuchung, Notfall- oder Kontaktwege, Bewertungen und Barrierefreiheit klar strukturieren. Realistische Relaunch-Projekte starten meist ab 199 Euro pro Monat.",
     guideHeading: "Zahnarztpraxis digital ordnen",
     finalHeading: "Praxis-Website prüfen.",
     keywords: [
@@ -574,10 +575,10 @@ export const verticalLandingPages = [
       label: "Bloom ansehen",
     },
     priceSummary:
-      "Für Zahnarztpraxen ist ein Rahmen ab 1.499 Euro realistischer, weil Leistungen, Team, Terminlogik, lokale SEO und Compliance-Fragen meist mehr Abstimmung brauchen.",
+      "Für Zahnarztpraxen ist ein Rahmen ab 199 Euro pro Monat realistischer, weil Leistungen, Team, Terminlogik, lokale SEO und Compliance-Fragen meist mehr Abstimmung brauchen.",
     priceRows: [
-      ["Relaunch", "ab 1.499 Euro", "Für bestehende Praxis-Websites mit neuer Struktur und besserer Wirkung."],
-      ["Erweiterte Praxis-Website", "ab 2.499 Euro", "Für mehrere Leistungsseiten, CMS, Terminlogik oder mehrere Standorte."],
+      ["Relaunch", "ab 199 Euro pro Monat", "Für bestehende Praxis-Websites mit neuer Struktur und besserer Wirkung."],
+      ["Erweiterte Praxis-Website", "ab 199 Euro pro Monat, Ausbau separat", "Für mehrere Leistungsseiten, CMS, Terminlogik oder mehrere Standorte."],
       ["Kurzcheck", "kostenloser Einstieg", "Für erste Einschätzung von Struktur, Kontaktweg und technischer Grundlage."],
     ],
     extraSection: {
@@ -593,7 +594,7 @@ export const verticalLandingPages = [
       {
         question: "Was kostet eine Website für eine Zahnarztpraxis?",
         answer:
-          "Ein realistischer Relaunch startet meist ab 1.499 Euro. Bei vielen Leistungsseiten, Terminbuchung, CMS oder mehreren Standorten kann der Umfang ab 2.499 Euro liegen.",
+          "Ein realistischer Relaunch startet meist ab 199 Euro pro Monat. Bei vielen Leistungsseiten, Terminbuchung, CMS oder mehreren Standorten kann der Umfang ab 199 Euro pro Monat, Ausbau separat liegen.",
       },
       {
         question: "Welche Inhalte braucht eine Zahnarzt-Website?",
@@ -646,7 +647,7 @@ export const verticalLandingPages = [
       areaServed: "Berlin",
       offer: {
         name: "Zahnarztpraxis-Website",
-        price: "1499",
+        price: "199",
         description:
           "Praxis-Website oder Relaunch für Zahnarztpraxen mit Leistungsstruktur, Team, Terminweg, FAQ und SEO-Grundlage.",
       },
@@ -656,13 +657,13 @@ export const verticalLandingPages = [
     slug: "landingpage-pre-seed",
     title: "Landingpage für Pre-Seed-Startups | Stackwerkhaus",
     metaDescription:
-      "Landingpage für Pre-Seed-Startups: Produktpitch, Waitlist, Pilotkunden, Tracking, Investorenfähigkeit und Next.js-Basis ab 1.499 Euro.",
+      "Landingpage für Pre-Seed-Startups: Produktpitch, Waitlist, Pilotkunden, Tracking, Investorenfähigkeit und Next.js-Basis ab 199 Euro pro Monat.",
     h1: "Landingpage für Pre-Seed-Startups",
     heroText:
       "Vor der Seed-Runde muss eine Landingpage nicht alles können. Sie muss die Produktthese, Zielgruppe, Problem, Nutzen, Proof, Waitlist oder Demo-Anfrage schnell verständlich machen. Stackwerkhaus baut Pre-Seed-Landingpages für Startups, die Pilotkunden, Investorengespräche oder Marktsignale erzeugen wollen, ohne direkt eine große Website aufzubauen.",
     answerHeading: "Was braucht eine Pre-Seed-Landingpage?",
     directAnswer:
-      "Eine Pre-Seed-Landingpage sollte Produktthese, Zielgruppe, Problem, Nutzen, Demo- oder Waitlist-CTA und Tracking klar zeigen. Stackwerkhaus baut solche MVP-Landingpages ab 1.499 Euro; größere Produkt-Websites starten eher ab 2.499 Euro.",
+      "Eine Pre-Seed-Landingpage sollte Produktthese, Zielgruppe, Problem, Nutzen, Demo- oder Waitlist-CTA und Tracking klar zeigen. Stackwerkhaus baut solche MVP-Landingpages ab 199 Euro pro Monat; größere Produkt-Websites starten eher ab 199 Euro pro Monat, Ausbau separat.",
     guideHeading: "Pre-Seed-Launch sortieren",
     finalHeading: "Pitch-Seite bauen.",
     keywords: [
@@ -704,17 +705,17 @@ export const verticalLandingPages = [
       label: "Zynapse ansehen",
     },
     priceSummary:
-      "Eine Pre-Seed-Landingpage startet ab 1.499 Euro, weil Produktstory, Struktur, Design, Frontend und Tracking zusammenpassen müssen.",
+      "Eine Pre-Seed-Landingpage startet ab 199 Euro pro Monat, weil Produktstory, Struktur, Design, Frontend und Tracking zusammenpassen müssen.",
     priceRows: [
-      ["MVP-Landingpage", "ab 1.499 Euro", "Für Produktthese, Waitlist, Demo-CTA und Tracking."],
-      ["Pitch-Website", "ab 2.499 Euro", "Für mehrere Zielgruppen, Use Cases, Pricing und Investorenmaterial."],
+      ["MVP-Landingpage", "ab 199 Euro pro Monat", "Für Produktthese, Waitlist, Demo-CTA und Tracking."],
+      ["Pitch-Website", "ab 199 Euro pro Monat, Ausbau separat", "Für mehrere Zielgruppen, Use Cases, Pricing und Investorenmaterial."],
       ["Produkt-Frontend", "individuell", "Wenn App-UI, Dashboard oder API-Anbindung Teil des Projekts werden."],
     ],
     faqs: [
       {
         question: "Was kostet eine Landingpage für ein Pre-Seed-Startup?",
         answer:
-          "Eine fokussierte MVP- oder Waitlist-Landingpage startet bei Stackwerkhaus ab 1.499 Euro. Mehrere Use Cases, Pricing oder Produkt-Frontend erhöhen den Umfang.",
+          "Eine fokussierte MVP- oder Waitlist-Landingpage startet bei Stackwerkhaus ab 199 Euro pro Monat. Mehrere Use Cases, Pricing oder Produkt-Frontend erhöhen den Umfang.",
       },
       {
         question: "Wann reicht eine Landingpage statt kompletter Startup-Website?",
@@ -766,7 +767,7 @@ export const verticalLandingPages = [
         "Stackwerkhaus erstellt Pre-Seed-Landingpages für Startups mit Produktthese, Waitlist, Demo-CTA und Tracking-Grundsetup.",
       offer: {
         name: "Pre-Seed Landingpage",
-        price: "1499",
+        price: "199",
         description:
           "Fokussierte Startup-Landingpage mit Produktstory, CTA, Webdesign, Frontend-Umsetzung und Tracking-Grundsetup.",
       },
@@ -782,13 +783,13 @@ export const verticalLandingPages = [
     slug: "webdesign-handwerk-berlin",
     title: "Webdesign für Handwerk in Berlin | Stackwerkhaus",
     metaDescription:
-      "Webdesign für Handwerksbetriebe in Berlin: hochwertige Website mit Leistungen, Referenzen, lokaler Sichtbarkeit, FAQ und Preisrahmen ab 799 Euro.",
+      "Webdesign für Handwerksbetriebe in Berlin: hochwertige Website mit Leistungen, Referenzen, lokaler Sichtbarkeit, FAQ und Preisrahmen ab 69 Euro pro Monat.",
     h1: "Webdesign für Handwerk in Berlin",
     heroText:
       "Handwerks-Websites müssen Qualität sichtbar machen, ohne nach austauschbarer Angebotsseite zu wirken. Stackwerkhaus baut Websites für Handwerksbetriebe, Werkstätten, Innenausbau, Manufakturen und lokale Dienstleister in Berlin mit klaren Leistungen, starken Referenzen, lokaler Struktur, Kontaktweg und hochwertiger visueller Führung.",
     answerHeading: "Eine neue Webseite für Handwerk und Dienstleistungen?",
     directAnswer:
-      "Eine gute Website für Handwerk in Berlin zeigt Leistungen, Materialqualität, Referenzen, Einzugsgebiet, Ablauf und Kontaktweg klar. Stackwerkhaus baut schlanke Handwerks-Websites ab 799 Euro; Relaunches mit Referenzstruktur starten meist ab 1.499 Euro.",
+      "Eine gute Website für Handwerk in Berlin zeigt Leistungen, Materialqualität, Referenzen, Einzugsgebiet, Ablauf und Kontaktweg klar. Stackwerkhaus baut schlanke Handwerks-Websites ab 69 Euro pro Monat; Relaunches mit Referenzstruktur starten meist ab 199 Euro pro Monat.",
     guideHeading: "Handwerk digital zeigen",
     finalHeading: "Handwerksauftritt bauen.",
     keywords: [
@@ -830,17 +831,17 @@ export const verticalLandingPages = [
       label: "Atelier Heimat ansehen",
     },
     priceSummary:
-      "Eine klare Handwerks-Website startet ab 799 Euro. Mit Referenzbereich, mehreren Leistungsseiten und lokaler SEO-Struktur liegt der Relaunch meist ab 1.499 Euro.",
+      "Eine klare Handwerks-Website startet ab 69 Euro pro Monat. Mit Referenzbereich, mehreren Leistungsseiten und lokaler SEO-Struktur liegt der Relaunch meist ab 199 Euro pro Monat.",
     priceRows: [
-      ["Rohbau", "ab 799 Euro", "Für eine schlanke Website mit Leistungen, Kontakt und SEO-Basis."],
-      ["Sanierung", "ab 1.499 Euro", "Für Relaunch mit Referenzen, Bildführung und besserer Angebotsstruktur."],
-      ["Erweiterung", "ab 2.499 Euro", "Für CMS, mehrere Standorte, Konfigurator oder komplexere Formulare."],
+      ["Website Individuell", "ab 69 Euro pro Monat", "Für eine schlanke Website mit Leistungen, Kontakt und SEO-Basis."],
+      ["System & Wachstum", "ab 199 Euro pro Monat", "Für Relaunch mit Referenzen, Bildführung und besserer Angebotsstruktur."],
+      ["System-Ausbau", "ab 199 Euro pro Monat, Ausbau separat", "Für CMS, mehrere Standorte, Konfigurator oder komplexere Formulare."],
     ],
     faqs: [
       {
         question: "Was kostet eine Website für Handwerker in Berlin?",
         answer:
-          "Eine schlanke Website startet ab 799 Euro. Ein Relaunch mit Referenzen, mehreren Leistungsseiten und lokaler SEO-Struktur startet meist ab 1.499 Euro.",
+          "Eine schlanke Website startet ab 69 Euro pro Monat. Ein Relaunch mit Referenzen, mehreren Leistungsseiten und lokaler SEO-Struktur startet meist ab 199 Euro pro Monat.",
       },
       {
         question: "Welche Inhalte braucht eine Handwerks-Website?",
@@ -893,7 +894,7 @@ export const verticalLandingPages = [
       areaServed: "Berlin",
       offer: {
         name: "Handwerks-Website",
-        price: "799",
+        price: "69",
         description:
           "Website für Handwerksbetriebe mit Leistungsstruktur, Referenzen, Webdesign, SEO-Grundlage und Kontaktweg.",
       },
@@ -909,13 +910,13 @@ export const verticalLandingPages = [
     slug: "webdesign-immobilienmarkler",
     title: "Webdesign für Immobilienmakler | Stackwerkhaus",
     metaDescription:
-      "Webdesign für Immobilienmakler: Objektanfragen, Vertrauen, lokale Sichtbarkeit, Bewertungsnähe, Lead-Formulare und Preisrahmen ab 1.499 Euro.",
+      "Webdesign für Immobilienmakler: Objektanfragen, Vertrauen, lokale Sichtbarkeit, Bewertungsnähe, Lead-Formulare und Preisrahmen ab 199 Euro pro Monat.",
     h1: "Webdesign für Immobilienmakler",
     heroText:
       "Immobilienmakler brauchen eine Website, die Vertrauen aufbaut, Leistungen verständlich erklärt und Eigentümer, Käufer oder Interessenten schnell zum passenden Kontaktweg führt. Stackwerkhaus baut Makler-Websites mit klarer Angebotslogik, lokaler Sichtbarkeit, Objekt- oder Referenzbereichen, Lead-Formularen, Bewertungsnähe und technischer Basis für spätere Automatisierung.",
     answerHeading: "Eine neue Website für Immobilienmakler und Immobilienberater?",
     directAnswer:
-      "Eine Website für Immobilienmakler muss Vertrauen, Leistung, Region, Objektlogik, Referenzen und Anfrageweg schnell verständlich machen. Stackwerkhaus baut Makler-Websites ab 1.499 Euro; komplexere Lead-Strecken oder Plattformnähe starten meist ab 2.499 Euro.",
+      "Eine Website für Immobilienmakler muss Vertrauen, Leistung, Region, Objektlogik, Referenzen und Anfrageweg schnell verständlich machen. Stackwerkhaus baut Makler-Websites ab 199 Euro pro Monat; komplexere Lead-Strecken oder Plattformnähe starten meist ab 199 Euro pro Monat, Ausbau separat.",
     guideHeading: "Makler-Website planen",
     finalHeading: "Makler-Auftritt ordnen.",
     keywords: [
@@ -958,17 +959,17 @@ export const verticalLandingPages = [
       label: "Immo-Pal ansehen",
     },
     priceSummary:
-      "Eine Makler-Website startet meist ab 1.499 Euro. Wenn Lead-Formulare, Objektlogik, Automatisierung oder Plattformnähe dazukommen, ist ein Rahmen ab 2.499 Euro realistischer.",
+      "Eine Makler-Website startet meist ab 199 Euro pro Monat. Wenn Lead-Formulare, Objektlogik, Automatisierung oder Plattformnähe dazukommen, ist ein Rahmen ab 199 Euro pro Monat, Ausbau separat realistischer.",
     priceRows: [
-      ["Makler-Website", "ab 1.499 Euro", "Für Leistungen, Vertrauen, lokale Sichtbarkeit und Kontaktweg."],
-      ["Lead-Strecke", "ab 2.499 Euro", "Für Eigentümerformulare, Vorqualifizierung, Automatisierung oder mehrere Zielgruppen."],
+      ["Makler-Website", "ab 199 Euro pro Monat", "Für Leistungen, Vertrauen, lokale Sichtbarkeit und Kontaktweg."],
+      ["Lead-Strecke", "ab 199 Euro pro Monat, Ausbau separat", "Für Eigentümerformulare, Vorqualifizierung, Automatisierung oder mehrere Zielgruppen."],
       ["Plattformnähe", "individuell", "Wenn Daten, Dashboard, Auth oder API-Anbindung Teil des Projekts sind."],
     ],
     faqs: [
       {
         question: "Was kostet eine Website für Immobilienmakler?",
         answer:
-          "Eine Makler-Website startet bei Stackwerkhaus meist ab 1.499 Euro. Wenn Lead-Formulare, Automatisierung, Objektlogik oder mehrere Zielgruppen dazukommen, liegt der Umfang eher ab 2.499 Euro.",
+          "Eine Makler-Website startet bei Stackwerkhaus meist ab 199 Euro pro Monat. Wenn Lead-Formulare, Automatisierung, Objektlogik oder mehrere Zielgruppen dazukommen, liegt der Umfang eher ab 199 Euro pro Monat, Ausbau separat.",
       },
       {
         question: "Welche Inhalte braucht eine Immobilienmakler-Website?",
@@ -1020,7 +1021,7 @@ export const verticalLandingPages = [
         "Stackwerkhaus erstellt Websites für Immobilienmakler mit Vertrauensaufbau, lokaler Sichtbarkeit, Lead-Strecken und technischer Erweiterbarkeit.",
       offer: {
         name: "Immobilienmakler-Website",
-        price: "1499",
+        price: "199",
         description:
           "Makler-Website mit Angebotslogik, Lead-Strecke, Webdesign, Frontend-Umsetzung und technischer Struktur.",
       },
@@ -1086,9 +1087,9 @@ export const verticalLandingPages = [
     priceSummary:
       "Der Website-Preis bleibt projektabhängig. Für Förderlogik sind klare Angebote, Leistungsbausteine und Prozessnutzen wichtiger als ein pauschaler Zuschuss-Hinweis.",
     priceRows: [
-      ["Website-Grundlage", "ab 799 Euro", "Wenn zunächst eine professionelle Website mit SEO-Basis gebraucht wird."],
-      ["Relaunch", "ab 1.499 Euro", "Wenn Struktur, Inhalte, Design und Technik neu geordnet werden."],
-      ["Digitalisierung", "ab 2.499 Euro", "Wenn Automatisierung, Formulare, CRM oder Workflows Teil des Projekts sind."],
+      ["Website-Grundlage", "ab 69 Euro pro Monat", "Wenn zunächst eine professionelle Website mit SEO-Basis gebraucht wird."],
+      ["Relaunch", "ab 199 Euro pro Monat", "Wenn Struktur, Inhalte, Design und Technik neu geordnet werden."],
+      ["Digitalisierung", "ab 199 Euro pro Monat, Ausbau separat", "Wenn Automatisierung, Formulare, CRM oder Workflows Teil des Projekts sind."],
     ],
     extraSection: {
       heading: "Offizielle Programme vorsichtig prüfen",
@@ -1167,7 +1168,7 @@ export const verticalLandingPages = [
         "Stackwerkhaus strukturiert Website-, Relaunch- und Automatisierungsprojekte so, dass Ziele, Prozessnutzen, Kostenrahmen und Digitalisierungsbezug klarer werden.",
       offer: {
         name: "Digitalisierungsorientierte Website-Planung",
-        price: "799",
+        price: "69",
         description:
           "Website- oder Relaunch-Projekt mit klarer Leistungsstruktur, Digitalisierungsbezug und Angebot als Grundlage für Prüfung oder Umsetzung.",
       },
@@ -1177,13 +1178,13 @@ export const verticalLandingPages = [
     slug: "webdesign-berlin-wilmersdorf",
     title: "Webdesign in Berlin-Wilmersdorf | Stackwerkhaus",
     metaDescription:
-      "Webdesign Berlin-Wilmersdorf: Websites für lokale Dienstleister, Praxen, Berater und kleine Unternehmen mit Preisrahmen ab 799 Euro.",
+      "Webdesign Berlin-Wilmersdorf: Websites für lokale Dienstleister, Praxen, Berater und kleine Unternehmen mit Preisrahmen ab 69 Euro pro Monat.",
     h1: "Webdesign aus Berlin-Wilmersdorf",
     heroText:
       "Stackwerkhaus ist ein Webdesign- und Frontend-Studio aus Berlin / Remote. Für Unternehmen in Wilmersdorf, Charlottenburg-Wilmersdorf und Umgebung entstehen Websites mit klarer Struktur, professioneller Gestaltung, lokaler Sichtbarkeit, Kontaktwegen, SEO-Grundlage und schneller technischer Umsetzung.",
     answerHeading: "Was bringt Webdesign in Berlin-Wilmersdorf?",
     directAnswer:
-      "Webdesign in Berlin-Wilmersdorf lohnt sich für lokale Dienstleister, Praxen, Berater und kleine Unternehmen, die online klarer gefunden und schneller angefragt werden möchten. Stackwerkhaus baut Websites ab 799 Euro und Relaunches ab 1.499 Euro.",
+      "Webdesign in Berlin-Wilmersdorf lohnt sich für lokale Dienstleister, Praxen, Berater und kleine Unternehmen, die online klarer gefunden und schneller angefragt werden möchten. Stackwerkhaus baut Websites ab 69 Euro pro Monat und Relaunches ab 199 Euro pro Monat.",
     guideHeading: "Lokale Website planen",
     finalHeading: "Lokalen Auftritt starten.",
     keywords: [
@@ -1225,17 +1226,17 @@ export const verticalLandingPages = [
       label: "Atelier Heimat ansehen",
     },
     priceSummary:
-      "Eine lokale Website startet ab 799 Euro. Ein Relaunch mit mehreren Seiten, Referenzen und lokaler SEO-Struktur liegt meist ab 1.499 Euro.",
+      "Eine lokale Website startet ab 69 Euro pro Monat. Ein Relaunch mit mehreren Seiten, Referenzen und lokaler SEO-Struktur liegt meist ab 199 Euro pro Monat.",
     priceRows: [
-      ["Rohbau", "ab 799 Euro", "Für eine kleine lokale Website mit Kontaktweg."],
-      ["Sanierung", "ab 1.499 Euro", "Für bestehende lokale Websites mit neuer Struktur und SEO-Basis."],
-      ["Branchen-Ausbau", "ab 2.499 Euro", "Wenn mehrere Branchen- oder Standortseiten geplant sind."],
+      ["Website Individuell", "ab 69 Euro pro Monat", "Für eine kleine lokale Website mit Kontaktweg."],
+      ["System & Wachstum", "ab 199 Euro pro Monat", "Für bestehende lokale Websites mit neuer Struktur und SEO-Basis."],
+      ["Branchen-Ausbau", "ab 199 Euro pro Monat, Ausbau separat", "Wenn mehrere Branchen- oder Standortseiten geplant sind."],
     ],
     faqs: [
       {
         question: "Was kostet Webdesign in Berlin-Wilmersdorf?",
         answer:
-          "Eine schlanke Website startet bei Stackwerkhaus ab 799 Euro. Relaunches mit mehr Struktur, Referenzen oder lokaler SEO starten meist ab 1.499 Euro.",
+          "Eine schlanke Website startet bei Stackwerkhaus ab 69 Euro pro Monat. Relaunches mit mehr Struktur, Referenzen oder lokaler SEO starten meist ab 199 Euro pro Monat.",
       },
       {
         question: "Muss ich für Webdesign in Wilmersdorf vor Ort sein?",
@@ -1288,7 +1289,7 @@ export const verticalLandingPages = [
       areaServed: "Berlin",
       offer: {
         name: "Lokale Website",
-        price: "799",
+        price: "69",
         description:
           "Lokale Website mit Webdesign, Struktur, Kontaktweg, SEO-Grundlage und Launch-Begleitung.",
       },
@@ -1348,9 +1349,9 @@ export const verticalLandingPages = [
     priceSummary:
       "Der Preisrahmen bleibt unabhängig von möglicher Förderung. Wichtig ist, dass Angebot, Umfang und Digitalisierungsbezug vor Projektstart sauber formuliert sind.",
     priceRows: [
-      ["Website", "ab 799 Euro", "Für kleine Berliner Unternehmen, die eine klare Grundlage brauchen."],
-      ["Relaunch", "ab 1.499 Euro", "Für bestehende Websites mit neuer Struktur und besserem Kontaktweg."],
-      ["Digitalisierung", "ab 2.499 Euro", "Für Formulare, Automatisierung, CRM-Übergabe oder technische Erweiterung."],
+      ["Website", "ab 69 Euro pro Monat", "Für kleine Berliner Unternehmen, die eine klare Grundlage brauchen."],
+      ["Relaunch", "ab 199 Euro pro Monat", "Für bestehende Websites mit neuer Struktur und besserem Kontaktweg."],
+      ["Digitalisierung", "ab 199 Euro pro Monat, Ausbau separat", "Für Formulare, Automatisierung, CRM-Übergabe oder technische Erweiterung."],
     ],
     extraSection: {
       heading: "Was 2026 in Berlin vorsichtig zu sagen ist",
@@ -1430,7 +1431,7 @@ export const verticalLandingPages = [
       areaServed: "Berlin",
       offer: {
         name: "Berlin Website-Projektplanung",
-        price: "799",
+        price: "69",
         description:
           "Website- oder Relaunch-Planung mit Angebotsstruktur, Digitalisierungsbezug und Projektumfang für weitere Prüfung.",
       },

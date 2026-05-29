@@ -5,11 +5,25 @@ import { usePathname } from "next/navigation";
 import Script from "next/script";
 
 const measurementId = "G-9WPXK6PNZ7";
-const analyticsEmbeddingName = "Google Analytics 4";
+const googleAnalyticsEmbeddingName = "Google Analytics 4";
+const clarityEmbeddingNames = ["Microsoft Clarity", "Clarity"] as const;
+const clarityProjectId = "wmex88aqgx";
+const clarityScript = `
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "${clarityProjectId}");
+`;
 
 type Ccm19Embedding = {
   id?: string;
   name?: string;
+};
+
+type TrackingConsent = {
+  googleAnalytics: boolean;
+  microsoftClarity: boolean;
 };
 
 declare global {
@@ -20,37 +34,59 @@ declare global {
   }
 }
 
-function isAnalyticsEmbedding(name: string | undefined) {
-  return name?.trim().toLowerCase() === analyticsEmbeddingName.toLowerCase();
+function isEmbeddingName(
+  name: string | undefined,
+  expectedNames: readonly string[],
+) {
+  const normalizedName = name?.trim().toLowerCase();
+
+  return expectedNames.some(
+    (expectedName) => normalizedName === expectedName.toLowerCase(),
+  );
 }
 
-function hasAnalyticsConsent() {
+function hasEmbeddingConsent(expectedNames: readonly string[]) {
   return (
     window.CCM?.acceptedEmbeddings?.some((embedding) =>
-      isAnalyticsEmbedding(embedding.name),
+      isEmbeddingName(embedding.name, expectedNames),
     ) ?? false
   );
 }
 
+function getTrackingConsent(): TrackingConsent {
+  return {
+    googleAnalytics: hasEmbeddingConsent([googleAnalyticsEmbeddingName]),
+    microsoftClarity: hasEmbeddingConsent(clarityEmbeddingNames),
+  };
+}
+
 export function Analytics() {
-  const [analyticsAllowed, setAnalyticsAllowed] = useState(false);
+  const [trackingConsent, setTrackingConsent] = useState<TrackingConsent>({
+    googleAnalytics: false,
+    microsoftClarity: false,
+  });
   const pathname = usePathname();
   const trackedInitialPath = useRef<string | null>(null);
 
   useEffect(() => {
     const syncConsent = () => {
-      setAnalyticsAllowed(hasAnalyticsConsent());
+      setTrackingConsent(getTrackingConsent());
     };
 
     const handleEmbeddingAccepted = (event: Event) => {
       const acceptedEmbedding = event as CustomEvent<Ccm19Embedding>;
+      const acceptedName = acceptedEmbedding.detail?.name;
 
-      if (
-        isAnalyticsEmbedding(acceptedEmbedding.detail?.name) ||
-        hasAnalyticsConsent()
-      ) {
-        setAnalyticsAllowed(true);
-      }
+      setTrackingConsent((currentConsent) => ({
+        googleAnalytics:
+          currentConsent.googleAnalytics ||
+          isEmbeddingName(acceptedName, [googleAnalyticsEmbeddingName]) ||
+          hasEmbeddingConsent([googleAnalyticsEmbeddingName]),
+        microsoftClarity:
+          currentConsent.microsoftClarity ||
+          isEmbeddingName(acceptedName, clarityEmbeddingNames) ||
+          hasEmbeddingConsent(clarityEmbeddingNames),
+      }));
     };
 
     syncConsent();
@@ -72,7 +108,7 @@ export function Analytics() {
   }, []);
 
   useEffect(() => {
-    if (!analyticsAllowed) {
+    if (!trackingConsent.googleAnalytics) {
       trackedInitialPath.current = null;
       return;
     }
@@ -97,27 +133,36 @@ export function Analytics() {
       page_location: window.location.href,
       page_title: document.title,
     });
-  }, [analyticsAllowed, pathname]);
+  }, [trackingConsent.googleAnalytics, pathname]);
 
-  if (!analyticsAllowed) {
+  if (!trackingConsent.googleAnalytics && !trackingConsent.microsoftClarity) {
     return null;
   }
 
   return (
     <>
-      <Script
-        id="google-analytics-loader"
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics-config" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${measurementId}');
-        `}
-      </Script>
+      {trackingConsent.googleAnalytics ? (
+        <>
+          <Script
+            id="google-analytics-loader"
+            src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics-config" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${measurementId}');
+            `}
+          </Script>
+        </>
+      ) : null}
+      {trackingConsent.microsoftClarity ? (
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {clarityScript}
+        </Script>
+      ) : null}
     </>
   );
 }

@@ -1,15 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { useRef } from "react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { LoopingScrambleText } from "@/components/ui/LoopingScrambleText";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { WordMaskRevealController } from "@/components/ui/WordMaskRevealController";
 import type { Project } from "@/lib/projects";
-import {
-  renderWordMaskText,
-  useWordMaskHeadingReveal,
-} from "@/lib/word-mask-heading";
+import { renderWordMaskText } from "@/lib/word-mask-text";
 
 const projectsIntro = "Sieht gut aus. Funktioniert noch besser.";
 
@@ -33,22 +28,19 @@ type ProjectsProps = {
 };
 
 export function Projects({ projects }: ProjectsProps) {
-  const scope = useRef<HTMLDivElement | null>(null);
-
-  useWordMaskHeadingReveal(scope, [projects.length]);
-
   return (
     <section className="section-space">
       <div className="section-shell">
         <SectionHeader id="projekte" label="Projekte" marker="(SKWKHS® — 02)" />
         <div className="mb-10 grid gap-8 md:mb-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.55fr)] lg:items-center lg:gap-14">
-          <div ref={scope} className="max-w-3xl space-y-4">
+          <div data-word-mask-scope="true" className="max-w-3xl space-y-4">
             <h2 className="display-lg">{renderWordMaskText(projectsIntro)}</h2>
             <p className="text-lg leading-8 text-muted">
               Hier landen keine drapierten Showcase-Screens, sondern Projekte,
               bei denen Design, Nutzerführung und technische Umsetzung gemeinsam
               dafür sorgen, dass aus Aufmerksamkeit auch echtes Interesse wird.
             </p>
+            <WordMaskRevealController dependencyKey={projects.length} />
           </div>
           <aside
             aria-label="Projekt-Schwerpunkte"

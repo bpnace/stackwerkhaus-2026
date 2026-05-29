@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { buildingResults, publicInspectionFields } from "@/lib/baustellencheck.mjs";
+import { stringifyJsonLd } from "@/lib/json-ld";
+import { getWebsiteCheckSchemaOffer } from "@/lib/pricing-schema";
 import { siteConfig } from "@/lib/site-config";
 import { TrackedHashLink } from "@/components/analytics/TrackedHashLink";
 import { AuditOffer } from "@/components/baustellencheck/AuditOffer";
@@ -12,7 +14,7 @@ const pagePath = "/webseitecheck";
 const pageUrl = `${siteConfig.url}${pagePath}`;
 const pageTitle = "Website Check | STACKWERKHAUS Baustellencheck";
 const pageDescription =
-  "Der STACKWERKHAUS Baustellencheck prüft Fundament, Struktur, Design und Technik deiner Website und zeigt konkrete nächste Schritte.";
+  "Der kostenlose STACKWERKHAUS Baustellencheck prüft deine Website; der vertiefende Website Check für Neukunden kostet 99 € und zeigt nächste Schritte.";
 const pageImage = "/og-baustellencheck.png";
 
 export const metadata: Metadata = {
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: "Penthouse, Plattenbau oder Rohbau?",
     description:
-      "Prüfe den Bauzustand deiner Website mit dem STACKWERKHAUS Baustellencheck.",
+      "Prüfe deine Website kostenlos und buche den vertiefenden Website Check für 99 €.",
     images: [
       {
         url: pageImage,
@@ -104,6 +106,7 @@ const structuredData = {
         target: `${pageUrl}#webseitecheck-form`,
         name: "Baustellencheck starten",
       },
+      offers: getWebsiteCheckSchemaOffer(pageUrl),
     },
     {
       "@type": "BreadcrumbList",
@@ -131,7 +134,7 @@ export default function BaustellencheckPage() {
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: stringifyJsonLd(structuredData) }}
       />
       <section className="section-space pt-8 md:pt-0">
         <div className="section-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
@@ -193,7 +196,8 @@ export default function BaustellencheckPage() {
               src="/pagecheck1.png"
               alt="Stackwerkhaus Architekturkonzept als Bauplan-Grafik"
               fill
-              priority
+              loading="eager"
+              fetchPriority="high"
               sizes="(min-width: 1280px) 23rem, (min-width: 1024px) 21rem, (min-width: 768px) 26rem, 92vw"
               className="object-contain"
             />

@@ -2,9 +2,9 @@ import { TrackedHashLink } from "@/components/analytics/TrackedHashLink";
 import { LinkRippleText } from "@/components/ui/LinkRippleText";
 
 const auditFacts = [
-  "48h Lieferung",
-  "5–8 Seiten",
-  "Anrechnung bei Projektbuchung",
+  "99 € für Neukunden",
+  "konkrete Einschätzung mit nächsten Schritten",
+  "Anrechnung bei anschließendem Abo",
 ] as const;
 
 type AuditOfferProps = {
@@ -31,10 +31,10 @@ export function AuditOffer({ variant = "section" }: AuditOfferProps) {
             compact || inverted ? "text-background/62" : "text-foreground/75"
           }`}
         >
-          Bezahlter Befund
+          Website Check
         </div>
         <h2
-          className={`mt-4 font-display font-black leading-[0.96] tracking-[-0.045em] ${
+          className={`mt-4 font-display font-black leading-[0.96] tracking-normal ${
             compact
               ? "max-w-[14ch] text-3xl text-background"
               : inverted
@@ -43,8 +43,8 @@ export function AuditOffer({ variant = "section" }: AuditOfferProps) {
           }`}
         >
           {compact
-            ? "Willst du den vollständigen Befund?"
-            : "Website Audit / Bauzustandsbericht – 249\u00a0€"}
+            ? "Willst du den nächsten klaren Schritt?"
+            : "Website Check für Neukunden – 99\u00a0€"}
         </h2>
         <p
           className={`mt-5 max-w-2xl text-base leading-7 ${
@@ -54,8 +54,8 @@ export function AuditOffer({ variant = "section" }: AuditOfferProps) {
           }`}
         >
           {compact
-            ? "Der kostenlose Check gibt dir die erste Richtung. Der vollständige Befund geht tiefer und zeigt dir konkret, was zuerst repariert werden sollte."
-            : "Wenn du nach dem kostenlosen Check den kompletten Bauzustand willst, bekommst du einen klaren Audit mit priorisierten Befunden und nächsten Schritten."}
+            ? "Der kostenlose Check gibt dir die erste Richtung. Der Website Check macht daraus eine konkrete Einschätzung und wird bei Buchung angerechnet."
+            : "Wenn du nach dem kostenlosen Check genauer wissen willst, was zuerst passieren sollte, bekommst du eine klare Einschätzung mit nächsten Schritten."}
         </p>
       </div>
       <div className={compact ? "mt-6" : ""}>
@@ -77,7 +77,7 @@ export function AuditOffer({ variant = "section" }: AuditOfferProps) {
           ))}
         </ul>
         <TrackedHashLink
-          href="/?angebot=website-audit#kontakt"
+          href="/?angebot=website-check#kontakt"
           eventName="booking_click_after_check"
           eventParams={{
             placement: compact
@@ -92,7 +92,7 @@ export function AuditOffer({ variant = "section" }: AuditOfferProps) {
               : "bg-foreground text-background hover:bg-foreground/90"
           }`}
         >
-          <LinkRippleText text="Audit für 249 € buchen" baseWeight={760} />
+          <LinkRippleText text="Website Check für 99 € buchen" baseWeight={760} />
           <span aria-hidden>+</span>
         </TrackedHashLink>
       </div>

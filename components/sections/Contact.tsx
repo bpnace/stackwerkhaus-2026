@@ -1,9 +1,8 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { pricingTiers } from "@/lib/site-data";
+import { pricingTiers, websiteCheckOffer } from "@/lib/site-data";
 import { siteConfig } from "@/lib/site-config";
 import { TrackedHashLink } from "@/components/analytics/TrackedHashLink";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -22,55 +21,69 @@ type Status = {
 const initialStatus: Status = { type: "idle", message: "" };
 const PRESET_LIMIT = 3;
 
-const facilityManagementPrefill = {
-  title: "Digitales Facility Management",
-  price: "ab 59 €/Monat",
-  bullets: [
-    "Monitoring",
-    "Kleine Änderungen",
-    "Search-Console-Sichtung",
-    "Backup/Updates",
-    "Monatlicher Mini-Report",
-  ],
-} as const;
-
 const offerPrefills = {
-  "website-audit": {
-    title: "Website Audit / Bauzustandsbericht",
-    price: "249 €",
+  "website-check": {
+    title: websiteCheckOffer.name,
+    price: websiteCheckOffer.price,
     bullets: [
-      "48h Lieferung",
-      "5–8 Seiten",
-      "Anrechnung bei Projektbuchung",
+      "für Neukunden",
+      websiteCheckOffer.description,
+      "konkrete Einschätzung mit nächsten Schritten",
     ],
   },
-  "facility-management": facilityManagementPrefill,
-  "wartung-wachstum": facilityManagementPrefill,
 } as const;
 
-function buildTierPriceSummary(tier: PricingTier) {
-  const base = `ab ${tier.price} €`;
-  if (!tier.originalPrice && !tier.discountLabel) {
-    return base;
-  }
+const legacyOfferAliases = {
+  care: "website-individuell",
+  growth: "system-wachstum",
+  "website-abo": "template-start",
+  "facility-management": "website-individuell",
+  "wartung-wachstum": "system-wachstum",
+  "website-audit": "website-check",
+  rohbau: "template-start",
+  sanierung: "website-individuell",
+  bauwerk: "system-wachstum",
+} as const;
 
-  const discountParts = [
-    tier.originalPrice ? `statt ${tier.originalPrice} €` : "",
-    tier.discountLabel ?? "",
-  ].filter(Boolean);
-
-  return `${base} (${discountParts.join(", ")})`;
-}
-
-function buildPackageProjectMessage(selectedPackage: string | null): string {
-  const packageSlug = selectedPackage?.toLowerCase().trim();
-  if (!packageSlug) {
+function normalizeOfferSlug(value: string | null) {
+  const slug = value?.toLowerCase().trim();
+  if (!slug) {
     return "";
   }
 
-  const tier = pricingTiers.find(
-    (entry: PricingTier) => entry.name.toLowerCase() === packageSlug,
+  return legacyOfferAliases[slug as keyof typeof legacyOfferAliases] ?? slug;
+}
+
+function buildTierPriceSummary(tier: PricingTier) {
+  return `${tier.monthlyPrice} ${tier.monthlySuffix} (${tier.monthlyNote}).`;
+}
+
+function buildPricingInterestLine(tier: PricingTier) {
+  return `Ich interessiere mich für das Paket "${tier.name}".`;
+}
+
+function findPricingTier(selectedPackage: string | null, selectedOffer: string | null) {
+  const offerSlug = normalizeOfferSlug(selectedOffer);
+  const packageSlug = normalizeOfferSlug(selectedPackage);
+  const requestedSlug = offerSlug || packageSlug;
+
+  if (!requestedSlug) {
+    return undefined;
+  }
+
+  return pricingTiers.find(
+    (entry: PricingTier) =>
+      entry.slug === requestedSlug ||
+      entry.name.toLowerCase() === requestedSlug,
   );
+}
+
+function buildPricingProjectMessage(
+  selectedPackage: string | null,
+  selectedOffer: string | null,
+  selectedTemplate: string | null = null,
+): string {
+  const tier = findPricingTier(selectedPackage, selectedOffer);
   if (!tier) {
     return "";
   }
@@ -79,15 +92,21 @@ function buildPackageProjectMessage(selectedPackage: string | null): string {
 
   const featureText =
     topFeatures.length > 0 ? `\n\nEnthalten:\n- ${topFeatures.join("\n- ")}` : "";
+  const templateText =
+    tier.slug === "template-start" && selectedTemplate
+      ? `\n\nGewähltes Template: ${selectedTemplate}`
+      : "";
 
-  return `Wir interessieren uns für das Paket "${tier.name}".\n\n`
-    + `Kurz: ${buildTierPriceSummary(tier)}.`
+  return `${buildPricingInterestLine(tier)}\n\n`
+    + `Preis: ${buildTierPriceSummary(tier)}`
+    + templateText
     + featureText
-    + "\n\nErgänze bitte:\n- Dein Ziel\n- Gewünschter Umfang\n- Wann soll gestartet werden?\n\nWir freuen uns auf dein Update!";
+    + "\n\nErgänze bitte:\n- Dein Ziel\n- aktueller Website-Stand\n- gewünschter Start";
 }
 
 function buildOfferProjectMessage(selectedOffer: string | null): string {
-  const offerSlug = selectedOffer?.toLowerCase().trim();
+  const offerSlug = normalizeOfferSlug(selectedOffer);
+
   if (!offerSlug || !(offerSlug in offerPrefills)) {
     return "";
   }
@@ -104,23 +123,93 @@ type ContactFormProps = {
   selectedOffer: string | null;
 };
 
+type UrlSelection = {
+  selectedPackage: string | null;
+  selectedOffer: string | null;
+  selectedTemplate: string | null;
+};
+
+function readUrlSelection(
+  selectedPackage: string | null,
+  selectedOffer: string | null,
+): UrlSelection {
+  if (typeof window === "undefined") {
+    return { selectedPackage, selectedOffer, selectedTemplate: null };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const packageParam = params.get("paket");
+  const offerParam = params.get("angebot");
+  const templateParam = params.get("template");
+
+  return {
+    selectedPackage: packageParam ?? selectedPackage,
+    selectedOffer: offerParam ?? selectedOffer,
+    selectedTemplate: templateParam,
+  };
+}
+
+function buildInitialProjectMessage(
+  selectedPackage: string | null,
+  selectedOffer: string | null,
+  selectedTemplate: string | null = null,
+) {
+  return (
+    buildPricingProjectMessage(
+      selectedPackage,
+      selectedOffer,
+      selectedTemplate,
+    ) ||
+    buildOfferProjectMessage(selectedOffer) ||
+    buildOfferProjectMessage(selectedPackage)
+  );
+}
+
 function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
   const [status, setStatus] = useState<Status>(initialStatus);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showValidationHint, setShowValidationHint] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(() =>
+    buildInitialProjectMessage(selectedPackage, selectedOffer),
+  );
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [urlSelection, setUrlSelection] = useState<UrlSelection>(() => ({
+    selectedPackage,
+    selectedOffer,
+    selectedTemplate: null,
+  }));
 
   useEffect(() => {
-    const prefill =
-      buildPackageProjectMessage(selectedPackage) ||
-      buildOfferProjectMessage(selectedOffer);
+    function updateUrlSelection() {
+      setUrlSelection(readUrlSelection(selectedPackage, selectedOffer));
+    }
+
+    updateUrlSelection();
+    window.addEventListener("popstate", updateUrlSelection);
+    window.addEventListener("stackwerkhaus:urlchange", updateUrlSelection);
+
+    return () => {
+      window.removeEventListener("popstate", updateUrlSelection);
+      window.removeEventListener("stackwerkhaus:urlchange", updateUrlSelection);
+    };
+  }, [selectedPackage, selectedOffer]);
+
+  useEffect(() => {
+    const prefill = buildInitialProjectMessage(
+      urlSelection.selectedPackage,
+      urlSelection.selectedOffer,
+      urlSelection.selectedTemplate,
+    );
     if (prefill) {
       setMessage(prefill);
     }
-  }, [selectedPackage, selectedOffer]);
+  }, [
+    urlSelection.selectedPackage,
+    urlSelection.selectedOffer,
+    urlSelection.selectedTemplate,
+  ]);
 
   const isNameValid = name.trim().length >= 2;
   const isEmailReady = email.trim().length > 0;
@@ -337,17 +426,10 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
   );
 }
 
-function ContactFormWithSearchParams() {
-  const searchParams = useSearchParams();
-  return (
-    <ContactForm
-      selectedPackage={searchParams.get("paket")}
-      selectedOffer={searchParams.get("angebot")}
-    />
-  );
-}
-
-export function Contact() {
+export function Contact({
+  selectedPackage = null,
+  selectedOffer = null,
+}: Partial<ContactFormProps>) {
   const titleScope = useRef<HTMLDivElement | null>(null);
 
   useWordMaskHeadingReveal(titleScope, [], {
@@ -395,12 +477,10 @@ export function Contact() {
             </div>
           </div>
         </div>
-
-        <Suspense
-          fallback={<ContactForm selectedPackage={null} selectedOffer={null} />}
-        >
-          <ContactFormWithSearchParams />
-        </Suspense>
+        <ContactForm
+          selectedPackage={selectedPackage}
+          selectedOffer={selectedOffer}
+        />
       </div>
     </section>
   );

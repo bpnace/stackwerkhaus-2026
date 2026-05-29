@@ -1,5 +1,5 @@
 {
-  "name": "stackwerkhaus-bootstrap",
+  "name": "stackwerkhaus-2026",
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.33.0",
@@ -21,7 +21,13 @@
     "lighthouse": "node scripts/lighthouse.mjs all",
     "lighthouse:home": "node scripts/lighthouse.mjs home",
     "lighthouse:blog": "node scripts/lighthouse.mjs blog",
-    "lighthouse:project": "node scripts/lighthouse.mjs project"
+    "lighthouse:project": "node scripts/lighthouse.mjs project",
+    "remotion:studio": "remotion studio remotion/index.ts",
+    "remotion:compositions": "remotion compositions remotion/index.ts",
+    "remotion:still": "remotion still remotion/index.ts AnimatedBarChart output/animated-bar-chart-frame60.png --frame=60 --scale=0.35",
+    "remotion:render": "remotion render remotion/index.ts AnimatedBarChart output/animated-bar-chart.mp4",
+    "remotion:tiktok:still": "remotion still remotion/index.ts AnimatedBarChartTikTok output/animated-bar-chart-tiktok-frame60.png --frame=60 --scale=0.35",
+    "remotion:tiktok:render": "remotion render remotion/index.ts AnimatedBarChartTikTok output/animated-bar-chart-tiktok.mp4"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -38,6 +44,7 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
+    "@remotion/cli": "^4.0.461",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -45,14 +52,20 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "lighthouse": "13.1.0",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
+    "remotion": "^4.0.461",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
   "pnpm": {
     "overrides": {
       "basic-ftp": "5.3.1",
+      "brace-expansion@5.0.5": "5.0.6",
       "ip-address": "10.1.1",
-      "postcss": "8.5.14"
+      "postcss": "8.5.14",
+      "ws@8.17.1": "8.20.1",
+      "ws@8.20.0": "8.20.1"
     }
   }
 }

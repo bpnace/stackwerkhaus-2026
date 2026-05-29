@@ -19,6 +19,10 @@ function isModifiedEvent(event: MouseEvent<HTMLAnchorElement>) {
   );
 }
 
+function notifyUrlChange() {
+  window.dispatchEvent(new Event("stackwerkhaus:urlchange"));
+}
+
 export function HashLink({ href, onClick, scroll, children, ...props }: HashLinkProps) {
   const pathname = usePathname();
   const parsedHref = (() => {
@@ -53,6 +57,7 @@ export function HashLink({ href, onClick, scroll, children, ...props }: HashLink
         "",
         `${targetUrl.pathname}${targetUrl.search}`,
       );
+      notifyUrlChange();
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -75,6 +80,7 @@ export function HashLink({ href, onClick, scroll, children, ...props }: HashLink
       "",
       `${targetUrl.pathname}${targetUrl.search}`,
     );
+    notifyUrlChange();
     target.scrollIntoView({
       behavior: "smooth",
       block: "start",
