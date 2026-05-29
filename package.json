@@ -36,11 +36,11 @@
     "hast-util-to-jsx-runtime": "^2.3.6",
     "next": "16.2.6",
     "next-mdx-remote": "^6.0.0",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "rehype-parse": "^9.0.1",
     "rehype-sanitize": "^6.0.0",
-    "resend": "^6.11.0",
+    "resend": "^6.12.4",
     "unified": "^11.0.5"
   },
   "devDependencies": {
