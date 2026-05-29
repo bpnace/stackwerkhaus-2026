@@ -6,7 +6,7 @@ export function Pricing() {
   return (
     <section className="section-space">
       <div className="section-shell">
-        <SectionHeader id="pricing" label="Pakete" marker="(SKWKHS® — 07)" />
+        <SectionHeader id="pricing" label="Preise" marker="(SKWKHS® — 07)" />
         <div className="mb-8 max-w-5xl space-y-5 md:mb-10">
           <h2 className="display-lg max-w-[9ch]">Wähle deinen Einstieg</h2>
           <p className="max-w-4xl text-base leading-7 text-muted md:text-lg md:leading-8">
