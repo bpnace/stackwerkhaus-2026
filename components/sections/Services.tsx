@@ -412,7 +412,8 @@ export function Services() {
               <TrackedHashLink
                 href="/webseitecheck"
                 eventName="website_check_cta_click"
-                eventParams={{ placement: "services_process" }}
+                data-growth-view="website_check"
+                eventParams={{ placement: "services_process" }} data-growth-placement="services_process"
                 className="link-arrow w-full justify-between bg-foreground px-5 py-4 text-background"
               >
                 <LinkRippleText

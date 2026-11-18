@@ -17,6 +17,7 @@ export type BaustellencheckFormState = {
 };
 
 export type BaustellencheckApiResult = {
+  success?: boolean;
   message?: string;
 };
 

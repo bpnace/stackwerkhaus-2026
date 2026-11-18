@@ -84,7 +84,8 @@ export function Footer() {
                   <TrackedHashLink
                     href="/webseitecheck"
                     eventName="website_check_cta_click"
-                    eventParams={{ placement: "footer" }}
+                data-growth-view="website_check"
+                    eventParams={{ placement: "footer" }} data-growth-placement="footer"
                     className="hover-weight-link block w-fit hover:text-black"
                   >
                     <LinkRippleText

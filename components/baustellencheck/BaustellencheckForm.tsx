@@ -115,10 +115,12 @@ export function BaustellencheckForm() {
 
   function goToStep(nextStep: BaustellencheckStep) {
     if (!canVisitStep(nextStep)) {
+      trackAnalyticsEvent("growth_form_error", {error_code: "validation", step: String(stepIndex)});
       setShowValidationHint(true);
       return;
     }
 
+    trackAnalyticsEvent("growth_form_step", {step: String(nextStep)});
     setStepIndex(nextStep);
     setShowValidationHint(false);
     setStatus(initialStatus);
@@ -126,6 +128,7 @@ export function BaustellencheckForm() {
 
   function continueToNextStep() {
     if (!isCurrentStepReady()) {
+      trackAnalyticsEvent("growth_form_error", {error_code: "validation", step: String(stepIndex)});
       setShowValidationHint(true);
       return;
     }
@@ -140,6 +143,7 @@ export function BaustellencheckForm() {
     setCurrentState(value);
     setShowValidationHint(false);
     setStatus(initialStatus);
+    trackAnalyticsEvent("growth_form_step", {step: "2"});
     setStepIndex(2);
   }
 
@@ -158,6 +162,7 @@ export function BaustellencheckForm() {
     const form = event.currentTarget;
 
     if (!formReady || !form.reportValidity()) {
+      trackAnalyticsEvent("growth_form_error", {error_code: "validation", step: String(getFirstIncompleteStep())});
       setStepIndex(getFirstIncompleteStep());
       setShowValidationHint(true);
       return;
@@ -201,7 +206,8 @@ export function BaustellencheckForm() {
 
       const result = await readBaustellencheckResponse(response);
 
-      if (!response.ok) {
+      if (!response.ok || result.success !== true) {
+        trackAnalyticsEvent("growth_form_error", {error_code: response.status === 429 ? "rate_limited" : response.status >= 500 ? "server" : !response.ok ? "rejected" : "invalid_response", step: "3"});
         throw new Error(
           result.message || "Der Baustellencheck konnte nicht gesendet werden.",
         );
@@ -219,6 +225,7 @@ export function BaustellencheckForm() {
       await new Promise((resolve) => setTimeout(resolve, 720));
       router.push("/webseitecheck/danke");
     } catch (error) {
+      if (error instanceof TypeError) trackAnalyticsEvent("growth_form_error", {error_code: "network", step: "3"});
       setStatus({
         type: "error",
         message:
@@ -232,7 +239,7 @@ export function BaustellencheckForm() {
   }
 
   return (
-    <form data-clarity-mask="true" onSubmit={onSubmit} className="border-t border-border">
+    <form data-clarity-mask="true" data-growth-form="website_check" data-growth-placement="checker_form" onSubmit={onSubmit} className="border-t border-border">
       <div className="grid gap-8 py-7 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)] lg:py-9">
         <aside className="space-y-7">
           <div>

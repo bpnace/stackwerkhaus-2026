@@ -201,6 +201,7 @@ export function Nav() {
               key={item.href}
               href={item.href}
               data-growth-cta={item.label === "Kontakt" ? "contact" : undefined}
+              data-growth-placement={item.label === "Kontakt" ? "nav_desktop" : undefined}
               className={`hover-weight-link hover:text-foreground ${
                 item.label === "Kontakt"
                   ? `nav-contact-link ${introCovered ? "text-foreground" : ""}`
@@ -246,6 +247,7 @@ export function Nav() {
               key={item.href}
               href={item.href}
               data-growth-cta={item.label === "Kontakt" ? "contact" : undefined}
+              data-growth-placement={item.label === "Kontakt" ? "nav_mobile" : undefined}
               onClick={() => setOpen(false)}
               className="hover-weight-link border-b border-border pb-4"
             >

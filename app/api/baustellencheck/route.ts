@@ -29,6 +29,7 @@ type BaustellencheckPayload = {
 };
 
 type WebhookResult = {
+  success?: boolean;
   status?: string;
   code?: string;
   message?: string;
@@ -147,16 +148,17 @@ export async function POST(request: Request) {
       ? upstreamPayload.httpStatus
       : webhookResponse.status;
 
-  if (!webhookResponse.ok) {
+  if (!webhookResponse.ok || upstreamPayload?.success === false || upstreamStatus >= 400) {
     return NextResponse.json(
       {
         message: getDefaultWebhookMessage(upstreamStatus),
       },
-      { status: upstreamStatus >= 400 ? upstreamStatus : 502 },
+      { status: Number.isInteger(upstreamStatus) && upstreamStatus >= 400 && upstreamStatus <= 599 ? upstreamStatus : 502 },
     );
   }
 
   return NextResponse.json({
+    success: true,
     message: "Dein Baustellencheck ist eingetragen.",
   });
 }

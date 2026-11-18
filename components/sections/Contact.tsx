@@ -207,6 +207,7 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
     const form = event.currentTarget;
 
     if (!isFormValid || !form.reportValidity()) {
+      form.dispatchEvent(new CustomEvent("growth:form-error", {bubbles: true, detail: {code: "validation"}}));
       setShowValidationHint(true);
       return;
     }
@@ -239,12 +240,15 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
         body: JSON.stringify(payload),
       });
 
-      const result = (await response.json()) as { message?: string };
+      const result = (await response.json()) as { message?: string; success?: boolean };
 
-      if (!response.ok) {
+      if (!response.ok || result.success !== true) {
+        const code = response.status === 429 ? "rate_limited" : response.status >= 500 ? "server" : !response.ok ? "rejected" : "invalid_response";
+        form.dispatchEvent(new CustomEvent("growth:form-error", {bubbles: true, detail: {code}}));
         throw new Error(result.message || "Die Anfrage konnte nicht gesendet werden.");
       }
 
+      form.dispatchEvent(new Event("growth:form-accepted", { bubbles: true }));
       setStatus({
         type: "success",
         message: result.message || "Danke. Die Anfrage wurde aufgenommen.",
@@ -255,6 +259,8 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
       setMessage("");
       setTermsAccepted(false);
     } catch (error) {
+      if (error instanceof SyntaxError) form.dispatchEvent(new CustomEvent("growth:form-error", {bubbles: true, detail: {code: "invalid_response"}}));
+      if (error instanceof TypeError) form.dispatchEvent(new CustomEvent("growth:form-error", {bubbles: true, detail: {code: "network"}}));
       setStatus({
         type: "error",
         message:
@@ -268,7 +274,7 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
   }
 
   return (
-    <form data-clarity-mask="true" onSubmit={onSubmit} className="pt-12 md:pt-26">
+    <form data-clarity-mask="true" data-growth-form="contact" data-growth-placement="contact_section" onSubmit={onSubmit} className="pt-12 md:pt-26">
       <div className="grid gap-5 md:grid-cols-2">
         <div>
           <label htmlFor="name" className="eyebrow text-white">
@@ -453,7 +459,8 @@ export function Contact({
               <TrackedHashLink
                 href="/webseitecheck"
                 eventName="website_check_cta_click"
-                eventParams={{ placement: "contact_alt_cta" }}
+                data-growth-view="website_check"
+                eventParams={{ placement: "contact_alt_cta" }} data-growth-placement="contact_alt_cta"
                 className="link-arrow mt-5 w-fit text-foreground"
               >
                 <LinkRippleText text="Website Check starten" baseWeight={700} />

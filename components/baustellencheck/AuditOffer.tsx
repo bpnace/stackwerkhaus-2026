@@ -79,6 +79,7 @@ export function AuditOffer({ variant = "section" }: AuditOfferProps) {
         <TrackedHashLink
           href="/?angebot=website-check#kontakt"
           eventName="booking_click_after_check"
+                data-growth-view="booking"
           eventParams={{
             placement: compact
               ? "thank_you_audit_offer"
