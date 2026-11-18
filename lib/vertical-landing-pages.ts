@@ -378,11 +378,6 @@ export const verticalLandingPages = [
         label: "KI-Website-Automatisierung",
         description: "Für Erstgesprächsformulare, Lead-Qualifizierung und CRM-Übergabe.",
       },
-      {
-        href: "/webdesign-berater-berlin",
-        label: "Webdesign für Berater",
-        description: "Für stärker B2B-orientierte Beratungsangebote.",
-      },
     ],
     schema: {
       serviceName: "Webdesign für Coaching-Praxen",
