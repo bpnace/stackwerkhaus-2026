@@ -232,7 +232,7 @@ export function BaustellencheckForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="border-t border-border">
+    <form data-clarity-mask="true" onSubmit={onSubmit} className="border-t border-border">
       <div className="grid gap-8 py-7 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)] lg:py-9">
         <aside className="space-y-7">
           <div>

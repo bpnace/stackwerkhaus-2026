@@ -1,0 +1,15 @@
+--- a/dist/utils/get-root-dirs.js
++++ b/dist/utils/get-root-dirs.js
+@@ -13,7 +13,11 @@
+  * Process a Next.js root directory glob.
+  */ var processRootDir = function(rootDir) {
+     return (0, _fastglob.globSync)(rootDir.replace(/\\/g, '/'), {
+-        onlyDirectories: true
++        onlyDirectories: true,
++        expandDirectories: false,
++        absolute: require("node:path").isAbsolute(rootDir)
++    }).map(function(dir) {
++        return dir.length > 1 ? dir.replace(/\/$/, "") : dir;
+     });
+ };
+ var getRootDirs = function(context) {

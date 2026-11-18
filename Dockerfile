@@ -1,23 +1,19 @@
-FROM node:22-alpine AS base
+FROM node:22.23.4-alpine3.24 AS build
 WORKDIR /app
-
-FROM base AS deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+ENV NEXT_TELEMETRY_DISABLED=1 STACKWERKHAUS_CMS_URL=https://cms.stackwerkhaus.de
 RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
-RUN pnpm install --frozen-lockfile
-
-FROM base AS builder
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV STACKWERKHAUS_CMS_URL=https://cms.stackwerkhaus.de
-RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
+RUN pnpm install --frozen-lockfile
+RUN pnpm test:content && pnpm test:drupal-richtext && pnpm test:baustellencheck
 RUN pnpm build
-
-FROM base AS runner
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+FROM node:22.23.4-alpine3.24 AS runtime
+WORKDIR /app
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
+RUN apk upgrade --no-cache && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn*
+COPY --from=build /app/.next/standalone ./
+COPY --from=build /app/.next/static ./.next/static
+COPY --from=build /app/public ./public
+COPY --from=build /app/content ./content
 ENV STACKWERKHAUS_CMS_URL=https://cms.stackwerkhaus.de
-COPY --from=builder /app ./
 EXPOSE 3000
-CMD ["sh", "-c", "corepack enable && corepack prepare pnpm@10.33.0 --activate && pnpm start --hostname 0.0.0.0 --port 3000"]
+CMD ["node", "server.js"]

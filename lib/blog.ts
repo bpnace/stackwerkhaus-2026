@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { collectDrupalArticles } from "@/lib/drupal-pagination.mjs";
 import {
   getExcerptFromText,
   getReadingTimeFromText,
@@ -68,6 +69,7 @@ function normalizePricingLanguage(value: string) {
 }
 
 type DrupalArticleResponse = {
+  links?: { next?: string | { href: string } | null };
   data?: DrupalArticleResource[];
   included?: DrupalIncludedResource[];
 };
@@ -207,7 +209,9 @@ function normalizeDrupalSources(value: DrupalLinkField[] | DrupalLinkField | nul
 }
 
 async function getDrupalPosts(): Promise<DrupalBlogPost[]> {
-  const response = await fetch(DRUPAL_ARTICLE_ENDPOINT, {
+  const json = await collectDrupalArticles(DRUPAL_ARTICLE_ENDPOINT, async (url) => {
+  const response = await fetch(url, {
+    redirect: "error",
     headers: {
       Accept: "application/vnd.api+json",
     },
@@ -220,7 +224,8 @@ async function getDrupalPosts(): Promise<DrupalBlogPost[]> {
     throw new Error(`Drupal JSON:API request failed with ${response.status}`);
   }
 
-  const json = (await response.json()) as DrupalArticleResponse;
+  return (await response.json()) as DrupalArticleResponse;
+  });
   const included = json.included ?? [];
 
   const filesById = new Map(

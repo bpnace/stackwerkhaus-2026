@@ -247,7 +247,11 @@ type GithubContributionGridProps = {
   fallbackSrc: string;
 };
 
-export function GithubContributionGrid({
+export function GithubContributionGrid(props: GithubContributionGridProps) {
+  return <GithubContributionGridContent key={props.username} {...props} />;
+}
+
+function GithubContributionGridContent({
   username,
   className,
   fallbackAlt,
@@ -262,24 +266,18 @@ export function GithubContributionGrid({
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
-    revealStartedRef.current = false;
-    setData(null);
-    setIsUnavailable(false);
-    setShouldLoad(false);
-    setShouldAnimate(false);
-  }, [username]);
-
-  useEffect(() => {
     const node = shellRef.current;
 
     if (!node || !username) {
       return;
     }
 
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-      setShouldLoad(true);
-      setShouldAnimate(true);
-      return;
+    if (typeof IntersectionObserver === "undefined") {
+      const frame = window.requestAnimationFrame(() => {
+        setShouldLoad(true);
+        setShouldAnimate(true);
+      });
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const preloadObserver = new IntersectionObserver(
@@ -325,13 +323,7 @@ export function GithubContributionGrid({
   }, [shouldAnimate, shouldLoad, username]);
 
   useEffect(() => {
-    if (!shouldLoad) {
-      return;
-    }
-
-    if (!username) {
-      setIsUnavailable(true);
-      setData(null);
+    if (!shouldLoad || !username) {
       return;
     }
 

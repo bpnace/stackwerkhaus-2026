@@ -20,9 +20,7 @@ const cmsHostnames = Array.from(
 );
 
 const nextConfig: NextConfig = {
-  experimental: {
-    viewTransition: true,
-  },
+  output: "standalone",
   async redirects() {
     return [
       {

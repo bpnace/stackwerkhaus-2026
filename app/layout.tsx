@@ -105,6 +105,7 @@ export default function RootLayout({
           referrerPolicy="origin"
         />
         <Analytics />
+        <Script src="/growth-events.js" strategy="afterInteractive" />
         <HashScrollRestorer />
         <div className="relative flex min-h-screen flex-col">
           <Nav />

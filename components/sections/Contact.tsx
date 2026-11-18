@@ -175,15 +175,15 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
     buildInitialProjectMessage(selectedPackage, selectedOffer),
   );
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [urlSelection, setUrlSelection] = useState<UrlSelection>(() => ({
-    selectedPackage,
-    selectedOffer,
-    selectedTemplate: null,
-  }));
-
   useEffect(() => {
     function updateUrlSelection() {
-      setUrlSelection(readUrlSelection(selectedPackage, selectedOffer));
+      const selection = readUrlSelection(selectedPackage, selectedOffer);
+      const prefill = buildInitialProjectMessage(
+        selection.selectedPackage,
+        selection.selectedOffer,
+        selection.selectedTemplate,
+      );
+      if (prefill) setMessage(prefill);
     }
 
     updateUrlSelection();
@@ -195,21 +195,6 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
       window.removeEventListener("stackwerkhaus:urlchange", updateUrlSelection);
     };
   }, [selectedPackage, selectedOffer]);
-
-  useEffect(() => {
-    const prefill = buildInitialProjectMessage(
-      urlSelection.selectedPackage,
-      urlSelection.selectedOffer,
-      urlSelection.selectedTemplate,
-    );
-    if (prefill) {
-      setMessage(prefill);
-    }
-  }, [
-    urlSelection.selectedPackage,
-    urlSelection.selectedOffer,
-    urlSelection.selectedTemplate,
-  ]);
 
   const isNameValid = name.trim().length >= 2;
   const isEmailReady = email.trim().length > 0;
@@ -283,7 +268,7 @@ function ContactForm({ selectedPackage, selectedOffer }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="pt-12 md:pt-26">
+    <form data-clarity-mask="true" onSubmit={onSubmit} className="pt-12 md:pt-26">
       <div className="grid gap-5 md:grid-cols-2">
         <div>
           <label htmlFor="name" className="eyebrow text-white">

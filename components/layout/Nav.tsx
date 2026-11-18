@@ -200,6 +200,7 @@ export function Nav() {
             <HashLink
               key={item.href}
               href={item.href}
+              data-growth-cta={item.label === "Kontakt" ? "contact" : undefined}
               className={`hover-weight-link hover:text-foreground ${
                 item.label === "Kontakt"
                   ? `nav-contact-link ${introCovered ? "text-foreground" : ""}`
@@ -244,6 +245,7 @@ export function Nav() {
             <HashLink
               key={item.href}
               href={item.href}
+              data-growth-cta={item.label === "Kontakt" ? "contact" : undefined}
               onClick={() => setOpen(false)}
               className="hover-weight-link border-b border-border pb-4"
             >

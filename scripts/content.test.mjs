@@ -709,7 +709,11 @@ test("SEO route inventory exposes crawlable hubs and hides APIs", async () => {
   await fs.access(path.join(root, "app", "[slug]", "page.tsx"));
 
   assert.ok(analyticsSource.includes("usePathname"), "analytics missing route-change tracking");
-  assert.ok(analyticsSource.includes("page_path"), "analytics missing GA4 page_path tracking");
+  const runtimeSource = await fs.readFile(path.join(root, "public", "stack-tracking.js"), "utf8");
+  assert.ok(analyticsSource.includes("/stack-tracking.js"), "analytics missing consent runtime");
+  assert.ok(runtimeSource.includes("G-9WPXK6PNZ7"), "runtime missing GA4 destination");
+  assert.ok(runtimeSource.includes("pageChangesEnabled"), "GA4 must own SPA page measurement");
+  assert.ok(!analyticsSource.includes('window.gtag("config"'), "React must not duplicate SPA page views");
   const ccm19Index = layoutSource.indexOf("id={ccm19ScriptId}");
   const analyticsIndex = layoutSource.indexOf("<Analytics />");
 
@@ -717,8 +721,8 @@ test("SEO route inventory exposes crawlable hubs and hides APIs", async () => {
   assert.notEqual(analyticsIndex, -1, "layout missing consent-gated analytics component");
   assert.ok(ccm19Index < analyticsIndex, "CCM19 must render before consent-gated analytics");
   assert.ok(!layoutSource.includes("microsoft-clarity"), "layout must not load Clarity before CCM19");
-  assert.ok(analyticsSource.includes("microsoft-clarity"), "analytics missing consent-gated Microsoft Clarity script");
-  assert.ok(analyticsSource.includes("wmex88aqgx"), "analytics missing Microsoft Clarity project id");
+  assert.ok(runtimeSource.includes("stackwerkhaus-clarity-loader"), "analytics missing consent-gated Microsoft Clarity script");
+  assert.ok(runtimeSource.includes("wmex88aqgx"), "analytics missing Microsoft Clarity project id");
 });
 
 test("vertical landing pages stay discoverable and schema-backed", async () => {
