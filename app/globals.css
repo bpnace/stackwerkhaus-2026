@@ -87,8 +87,10 @@
     @apply py-14 md:py-25;
   }
 
-  [data-hero-intro="loading"] {
-    visibility: hidden;
+  @media (min-width: 768px) {
+    [data-hero-intro="loading"] {
+      visibility: hidden;
+    }
   }
 
   .eyebrow {

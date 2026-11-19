@@ -133,11 +133,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: pageTitle,
     description: pageDescription,
+    images: [{ url: "/blog/blog-section-hero.jpg", width: 1600, height: 900, alt: "STACKWERKHAUS – Websites und digitale Systeme" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: pageTitle,
     description: pageDescription,
+    images: ["/blog/blog-section-hero.jpg"],
   },
 };
 
