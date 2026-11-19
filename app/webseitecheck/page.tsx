@@ -15,7 +15,7 @@ const pageUrl = `${siteConfig.url}${pagePath}`;
 const pageTitle = "Website Check | STACKWERKHAUS Baustellencheck";
 const pageDescription =
   "Der kostenlose STACKWERKHAUS Baustellencheck prüft deine Website; der vertiefende Website Check für Neukunden kostet 99 € und zeigt nächste Schritte.";
-const pageImage = "/og-baustellencheck.png";
+const pageImage = "/blog/blog-section-hero.jpg";
 
 export const metadata: Metadata = {
   title: {
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: pageImage,
-        width: 1200,
-        height: 630,
-        alt: "Stackwerkhaus Baustellencheck als digitale Bauzustandsprüfung",
+        width: 1600,
+        height: 900,
+        alt: "STACKWERKHAUS – Websites und digitale Systeme",
       },
     ],
   },
@@ -79,8 +79,8 @@ const structuredData = {
       primaryImageOfPage: {
         "@type": "ImageObject",
         url: `${siteConfig.url}${pageImage}`,
-        width: 1200,
-        height: 630,
+        width: 1600,
+        height: 900,
       },
     },
     {
